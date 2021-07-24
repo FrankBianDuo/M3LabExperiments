@@ -18,13 +18,13 @@
     <b-container class="align-bottom" :style="this.windowsize">
       <img
         :src="require('../../assets/Free Response/Free Response 12.png')"
-        style="width: 50%; height: auto; transform: translate(-50%, 0%); margin-left: 50%;"
+        style="width: 60%; height: auto; transform: translate(-50%, -10%); margin-left: 50%;"
       />
       <b-form-textarea
         style="transform: translate(0%, 20%);"
         id="textarea"
         v-model="text"
-        placeholder="Please write 1 - 3 full sentences here."
+        placeholder="They would probably choose option ___ because..."
         rows="5"
         max-rows="5"
       ></b-form-textarea>
