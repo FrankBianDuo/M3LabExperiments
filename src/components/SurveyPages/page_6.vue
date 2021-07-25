@@ -16,6 +16,25 @@
     :hide-header-close="true"
   >
     <b-container class="align-bottom" :style="this.windowsize">
+      <img
+        :src="require('../../assets/Instructions/Text Only Pages/Debriefing.png')"
+        style="width: 90%; height: auto; transform: translate(-50%, 0%); margin-left: 50%;"
+      />
+<!-- FRANK, I altered this page to display the debriefing form.  I essentially tried to stitch in this new page but messed up something and I don't know what that 
+is. I copied in here everything from survey page 5 and made changes from ther.  I successfully, added the new debriefing form.png and was able to get the BACK and 
+NEXT buttons working.  But it will not upload to s3.  Do you know how to get this working?  If you can't fix this, feel free to restore the survey to the origional 
+form.  I just need a way to display the debriefing form.-->
+    </b-container>
+    <b-button variant="outline-primary" @click="this.go_to_back" size="lg">Back</b-button>
+    <b-button
+      style="float: right;"
+      @click="this.go_to_next"
+      variant="outline-primary"
+      size="lg"
+    >Next</b-button>
+  </b-modal>
+</template>
+    <!-- <b-container class="align-bottom" :style="this.windowsize">
       <b-form>
         <b-form-group
           id="input-group-8"
@@ -72,79 +91,17 @@
       size="lg"
     >Next</b-button>
   </b-modal>
-</template>
+</template> -->
 
 <script>
 export default {
-  name: "Survey5",
+  name: "Survey6",
   props: ["windowsize"],
   components: {},
   data() {
     return {
-      page_num: "5",
-      form: {
-        bigfive06: "",
-        bigfive07: "",
-        bigfive08: "",
-        bigfive09: "",
-        bigfive10: "",
-        agree: "",
-      },
-      bigfive06: [
-        { text: "Select One", value: null },
-        "Disagree strongly",
-        "Disagree moderately",
-        "Disagree a little",
-        "Neither agree nor disagree",
-        "Agree a little",
-        "Agree moderately",
-        "Agree strongly",
-      ],
-      bigfive07: [
-        { text: "Select One", value: null },
-        "Disagree strongly",
-        "Disagree moderately",
-        "Disagree a little",
-        "Neither agree nor disagree",
-        "Agree a little",
-        "Agree moderately",
-        "Agree strongly",
-      ],
-      bigfive08: [
-        { text: "Select One", value: null },
-        "Disagree strongly",
-        "Disagree moderately",
-        "Disagree a little",
-        "Neither agree nor disagree",
-        "Agree a little",
-        "Agree moderately",
-        "Agree strongly",
-      ],
-      bigfive09: [
-        { text: "Select One", value: null },
-        "Disagree strongly",
-        "Disagree moderately",
-        "Disagree a little",
-        "Neither agree nor disagree",
-        "Agree a little",
-        "Agree moderately",
-        "Agree strongly",
-      ],
-      bigfive10: [
-        { text: "Select One", value: null },
-        "Disagree strongly",
-        "Disagree moderately",
-        "Disagree a little",
-        "Neither agree nor disagree",
-        "Agree a little",
-        "Agree moderately",
-        "Agree strongly",
-      ],
-      agree: [
-        { text: "Select One", value: null },
-        "Yes, include my data",
-        "No, exclude my data",
-      ],
+      page_num: "6",
+      text: "",
     };
   },
   computed: {
@@ -152,37 +109,28 @@ export default {
       return "modal-center-survey" + this.page_num;
     },
     center_title() {
-      return "Survey page " + this.page_num + " of 5";
-    },
-    block() {
-      return !(
-        this.form.bigfive06 != "" &&
-        this.form.bigfive07 != "" &&
-        this.form.bigfive08 != "" &&
-        this.form.bigfive09 != "" &&
-        this.form.bigfive10 != "" &&
-        this.form.agree != ""
-      );
+      return "Debriefing Form";
     },
   },
   methods: {
     go_to_next() {
       this.$bvModal.hide("modal-center-survey" + this.page_num);
-      this.$bvModal.show(
-        "modal-center-survey" + (Number(this.page_num) + 1).toString()
-      );
-      this.$emit("Survey5Done", this.form);
+      this.$bvModal.show("modal-center-end");
+      this.$emit("Survey6Done", this.form);
     },
     go_to_back() {
       this.$bvModal.hide("modal-center-survey" + this.page_num);
       this.$bvModal.show(
         "modal-center-survey" + (Number(this.page_num) - 1).toString()
       );
-      this.$emit("Survey5Done", this.form);
+      this.$emit("Survey6Done", this.form);
     },
   },
 };
 </script>
+
+
+
 
 
 <style scoped>

@@ -210,7 +210,7 @@
 
 <script>
 import trialOneTrialData from "./trialData.js";
-import datasheet_sample from "./newSample2.json";
+import datasheet_sample from "./newSample3.json";
 // The origional payoff structures come from "./payoff.json", so to revert back just delete the '2'.
 import payoff_structure from "./payoff3.json";
 export default {

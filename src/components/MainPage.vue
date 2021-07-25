@@ -299,6 +299,7 @@
     <Survey3 @Survey3Done="Survey3Finished" :windowsize="this.window_size" />
     <Survey4 @Survey4Done="Survey4Finished" :windowsize="this.window_size" />
     <Survey5 @Survey5Done="Survey5Finished" :windowsize="this.window_size" />
+    <Survey6 @Survey6Done="Survey6Finished" :windowsize="this.window_size" />
     <Trystuffout :windowsize="this.window_size" />
     <Absurdity :windowsize="this.window_size" />
     <Silly :windowsize="this.window_size" />
@@ -318,7 +319,7 @@
       id="modal-center-end"
       size="xl"
       centered
-      title="Loading your end of experiment URL.  If the URL fails to load within 20 seconds, please email your data as an attachment to gregstan@umich.edu.  To do this, click the grey area of this screen, and click the Download Data button."
+      title="Loading your end of experiment URL.  If the url fails to load within 20 seconds, screenshot this page and mail it as an attachment to gregstan@umich.edu to demonstrate that you completed the experiment.  If you would like to view your data file, click the grey area of this screen, and click the Download Data button."
       :hide-footer="true"
       :header-bg-variant="headerBgVariant"
       :header-text-variant="headerTextVariant"
@@ -542,6 +543,7 @@ import Survey2 from "./SurveyPages/page_2.vue";
 import Survey3 from "./SurveyPages/page_3.vue";
 import Survey4 from "./SurveyPages/page_4.vue";
 import Survey5 from "./SurveyPages/page_5.vue";
+import Survey6 from "./SurveyPages/page_6.vue";
 import json from "./dataSample.json";
 import Vue from "vue";
 
@@ -553,6 +555,7 @@ export default {
     Survey3,
     Survey4,
     Survey5,
+    Survey6,
     FRpage1,
     FRpage2,
     FRpage3,
