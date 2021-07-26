@@ -24,7 +24,8 @@
         style="transform: translate(0%, 20%);"
         id="textarea"
         v-model="text"
-        placeholder="They would probably choose option ___ because..."
+        placeholder="In 1-3 sentences, please explain which option they would choose and why in terms of beliefs, desires, emotions, and other mental states.
+They would probably choose option ___ because..."
         rows="5"
         max-rows="5"
       ></b-form-textarea>
