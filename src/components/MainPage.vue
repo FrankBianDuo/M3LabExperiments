@@ -1188,8 +1188,20 @@ export default {
       this.end_survey_form.bigfive10 = results.bigfive10;
       this.end_survey_form.agree = results.agree;
       this.updateDataSheet();
+    },
+    Survey6Finished(results) {
       // eslint-disable-next-line no-console
-      console.log("survey 5 finished!");
+      console.log(results);
+      // Generate form data at the end of our survey
+      // this.end_survey_form.bigfive06 = results.bigfive06;
+      // this.end_survey_form.bigfive07 = results.bigfive07;
+      // this.end_survey_form.bigfive08 = results.bigfive08;
+      // this.end_survey_form.bigfive09 = results.bigfive09;
+      // this.end_survey_form.bigfive10 = results.bigfive10;
+      // this.end_survey_form.agree = results.agree;
+      this.updateDataSheet();
+      // eslint-disable-next-line no-console
+      console.log("survey 6 finished!");
       this.fetchPresignedUrl();
     },
     updateDataSheet() {
