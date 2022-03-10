@@ -3,11 +3,10 @@
     <h1>{{ msg }}</h1>
     <!-- Here is the vue Page for the index interface on our program -->
     <p>
-      (1) Complete the instructions, (2) experiment 1, (3) the written response section, (4) the survey, and
-      <br />(5) send a message to the experimenter with your participant ID and the completion URL at the end.
-      <br />If your completion URL fails to load within 20 seconds, please download your data file and attach 
-      <br />it in an email to gregstan@umich.edu.  You are also free to view and keep your data.
-      <br />Please Ignore Experiments 2 and 3 and never refresh the page.
+      (1) Complete the instructions, (2) experiment 1, (3) experiment 3, (4) the survey.  Your data will be
+      <br />automatically sent to our server once you see the completion URL.  Email Greg at gregstan@umich.edu  
+      <br />with this URL, your participant ID below, and with any questions.  You are free to download and keep 
+      <br />your data file.  Ignore experiment 2 and the written response section.  Never refresh the page!
     </p>
     <div class="bv-example-row bv-example-row-flex-cols">
       <!-- Button for firing the instruction modal -->
@@ -59,7 +58,9 @@
       >
         <b-button>Download Data</b-button>
       </download-csv>
-      <b-row class="my-4 justify-content-center">Participant ID: {{ this.form.name }}</b-row>
+      <!-- <b-row class="my-4 justify-content-center">Participant ID: {{ this.form.name }}</b-row> -->
+      <b-row class="my-4 justify-content-center">Participant ID: {{ this.participant_generated_id }}</b-row>
+      
       <b-row class="my-4 justify-content-center"></b-row>
     </div>
 
@@ -77,16 +78,23 @@
         <b-form-group id="input-group-2" label="Date:" label-for="input-2">
           <b-form-input id="input-2" v-model="form.date" required></b-form-input>
         </b-form-group>
-        <b-form-group id="input-group-2" label="Gender:" label-for="input-2">
+        <!-- <b-form-group id="input-group-2" label="Gender:" label-for="input-2">
           <b-form-select v-model="form.gender" :options="gender_options"></b-form-select>
+        </b-form-group> -->
+
+        <b-form-group id="input-group-2" label="optn_1_4:" label-for="input-2">
+          <b-form-select v-model="form.optn_1_4" :options="form.optn_1_4"></b-form-select>
         </b-form-group>
 
         <b-form-group id="input-group-2" label="RA Present:" label-for="input-2">
           <b-form-select v-model="form.ra" :options="ra_options"></b-form-select>
         </b-form-group>
 
-        <b-form-group id="input-group-2" label="Age:" label-for="input-2">
+        <!-- <b-form-group id="input-group-2" label="Age:" label-for="input-2">
           <b-form-input id="input-2" v-model="form.age" required></b-form-input>
+        </b-form-group> -->
+        <b-form-group id="input-group-2" label="optn_1_3:" label-for="input-2">
+          <b-form-input id="input-2" v-model="form.optn_1_3" required></b-form-input>
         </b-form-group>
 
         <b-form-group id="input-group-2" label="Number of Older Brother(s):" label-for="input-2">
@@ -176,6 +184,7 @@
     <ProgBar :windowsize="this.window_size" />
     <KeyHands :windowsize="this.window_size" />
     <EndInstr :windowsize="this.window_size" />
+    <SimInstr :windowsize="this.window_size" />
     <GameFlow1 :windowsize="this.window_size" />
     <GameFlow2 :windowsize="this.window_size" />
     <GameFlow3 :windowsize="this.window_size" />
@@ -294,10 +303,14 @@
     <FRpage11 @FR11Done="FR11Finished" :windowsize="this.window_size" />
     <FRpage12 @FR12Done="FR12Finished" :windowsize="this.window_size" />
     <FRpage13 @FR13Done="FR13Finished" :windowsize="this.window_size" />
-    <Survey1 @Survey1Done="Survey1Finished" :windowsize="this.window_size" />
-    <Survey2 @Survey2Done="Survey2Finished" :windowsize="this.window_size" />
-    <Survey3 @Survey3Done="Survey3Finished" :windowsize="this.window_size" />
-    <Survey4 @Survey4Done="Survey4Finished" :windowsize="this.window_size" />
+    <!-- <Survey1 @Survey1Done="Survey1Finished" :windowsize="this.window_size" /> -->
+    <Survey1b @Survey1Done="Survey1Finished" :windowsize="this.window_size" />
+    <!-- <Survey2 @Survey2Done="Survey2Finished" :windowsize="this.window_size" /> -->
+    <Survey2b @Survey2Done="Survey2Finished" :windowsize="this.window_size" />
+    <!-- <Survey3 @Survey3Done="Survey3Finished" :windowsize="this.window_size" /> -->
+    <Survey3b @Survey3Done="Survey3Finished" :windowsize="this.window_size" />
+    <!-- <Survey4 @Survey4Done="Survey4Finished" :windowsize="this.window_size" /> -->
+    <Survey4b @Survey4Done="Survey4Finished" :windowsize="this.window_size" />
     <Survey5 @Survey5Done="Survey5Finished" :windowsize="this.window_size" />
     <Survey6 @Survey6Done="Survey6Finished" :windowsize="this.window_size" />
     <Trystuffout :windowsize="this.window_size" />
@@ -347,6 +360,7 @@
 import moment from "moment";
 import BlockOne from "./blockOne.vue";
 import BlockTwo from "./blockTwo.vue";
+// import BlockThree from "./blockThreeb.vue";
 import BlockThree from "./blockThree.vue";
 import BotStopper from "./tutorialPages/BotStopper.vue";
 import Consent from "./tutorialPages/Consent.vue";
@@ -415,6 +429,7 @@ import EndTF2 from "./tutorialPages/EndTF2.vue";
 import ProgBar from "./tutorialPages/ProgBar.vue";
 import KeyHands from "./tutorialPages/KeyHands.vue";
 import EndInstr from "./tutorialPages/EndInstr.vue";
+import SimInstr from "./tutorialPages/InstrSimilarity.vue";
 import GameFlow1 from "./tutorialPages/GameFlow1.vue";
 import GameFlow2 from "./tutorialPages/GameFlow2.vue";
 import GameFlow3 from "./tutorialPages/GameFlow3.vue";
@@ -538,10 +553,14 @@ import FRpage10 from "./FreeResponsePages/page_10.vue";
 import FRpage11 from "./FreeResponsePages/page_11.vue";
 import FRpage12 from "./FreeResponsePages/page_12.vue";
 import FRpage13 from "./FreeResponsePages/page_13.vue";
-import Survey1 from "./SurveyPages/page_1.vue";
-import Survey2 from "./SurveyPages/page_2.vue";
-import Survey3 from "./SurveyPages/page_3.vue";
-import Survey4 from "./SurveyPages/page_4.vue";
+// import Survey1 from "./SurveyPages/page_1.vue";
+import Survey1b from "./SurveyPages/page_1b.vue";
+// import Survey2 from "./SurveyPages/page_2.vue";
+import Survey2b from "./SurveyPages/page_2b.vue";
+// import Survey3 from "./SurveyPages/page_3.vue";
+import Survey3b from "./SurveyPages/page_3b.vue";
+// import Survey4 from "./SurveyPages/page_4.vue";
+import Survey4b from "./SurveyPages/page_4b.vue";
 import Survey5 from "./SurveyPages/page_5.vue";
 import Survey6 from "./SurveyPages/page_6.vue";
 import json from "./dataSample.json";
@@ -550,10 +569,14 @@ import Vue from "vue";
 export default {
   name: "MainPage",
   components: {
-    Survey1,
-    Survey2,
-    Survey3,
-    Survey4,
+    // Survey1,
+    // Survey2,
+    // Survey3,
+    // Survey4,
+    Survey1b,
+    Survey2b,
+    Survey3b,
+    Survey4b,
     Survey5,
     Survey6,
     FRpage1,
@@ -639,6 +662,7 @@ export default {
     ProgBar,
     KeyHands,
     EndInstr,
+    SimInstr,
     GameFlow1,
     GameFlow2,
     GameFlow3,
@@ -798,6 +822,7 @@ export default {
       index: 0,
       // ---------------------------------------------
       end_survey_form: new Object(),
+      similarity_scores: new Object(), //This may need to be deleted 02.23.22
       FRResults: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
       blockOneRawResults: null,
       blockOneResults: null,
@@ -828,6 +853,8 @@ export default {
       instrucStart: 0,
       instrucEnd: 0,
       instrucTime: 0,
+      Sim_Score_1: "",
+      Sim_Score_2: "",
     };
   },
   created: function () {
@@ -1134,47 +1161,64 @@ export default {
     Survey1Finished(results) {
       // eslint-disable-next-line no-console
       console.log(results);
-      this.end_survey_form.school = results.school;
-      this.end_survey_form.happy = results.avatars;
-      this.end_survey_form.love = results.loves;
-      this.end_survey_form.age = results.yob;
-      this.end_survey_form.gender = results.genders;
+      // this.end_survey_form.option_1_1 = results.option_1_1;
+      // this.end_survey_form.option_1_2 = results.option_1_2;
+      // this.end_survey_form.option_1_3 = results.option_1_3;
+      // this.end_survey_form.option_1_4 = results.option_1_4;
+      // this.end_survey_form.school = results.school;
+      // this.end_survey_form.happy = results.avatars;
+      this.end_survey_form.optn_1_1 = results.optn_1_1;
+      this.end_survey_form.optn_1_2 = results.optn_1_2;
+      this.end_survey_form.optn_1_3 = results.optn_1_3;
+      this.end_survey_form.optn_1_4 = results.optn_1_4;
       this.updateDataSheet();
     },
     Survey2Finished(results) {
       // eslint-disable-next-line no-console
       console.log(results);
-      this.end_survey_form.olderBro = results.older_bro;
-      this.end_survey_form.olderSis = results.older_sis;
-      this.end_survey_form.youngerBro = results.younger_bro;
-      this.end_survey_form.youngerSis = results.younger_sis;
-      this.end_survey_form.english = results.english;
-      this.end_survey_form.country = results.countries;
+      // this.end_survey_form.olderBro = results.older_bro;
+      // this.end_survey_form.olderSis = results.older_sis;
+      // this.end_survey_form.youngerBro = results.younger_bro;
+      // this.end_survey_form.youngerSis = results.younger_sis;
+      // this.end_survey_form.english = results.english;
+      // this.end_survey_form.country = results.countries;
+      this.end_survey_form.optn_2_1 = results.optn_2_1;
+      this.end_survey_form.optn_2_2 = results.optn_2_2;
+      this.end_survey_form.optn_2_3 = results.optn_2_3;
+      this.end_survey_form.optn_2_4 = results.optn_2_4;
       this.updateDataSheet();
     },
     Survey3Finished(results) {
       // eslint-disable-next-line no-console
       console.log(results);
       // Generate form data at the end of our survey
-      this.end_survey_form.money = results.money;
-      this.end_survey_form.gods = results.divine;
-      this.end_survey_form.political = results.political;
-      this.end_survey_form.attractive = results.view;
-      this.end_survey_form.power = results.interact;
-      this.end_survey_form.race = results.race;
+      // this.end_survey_form.money = results.money;
+      // this.end_survey_form.gods = results.divine;
+      // this.end_survey_form.political = results.political;
+      // this.end_survey_form.attractive = results.view;
+      // this.end_survey_form.power = results.interact;
+      // this.end_survey_form.race = results.race;
+      this.end_survey_form.optn_3_1 = results.optn_3_1;
+      this.end_survey_form.optn_3_2 = results.optn_3_2;
+      this.end_survey_form.optn_3_3 = results.optn_3_3;
+      this.end_survey_form.optn_3_4 = results.optn_3_4;
       this.updateDataSheet();
     },
     Survey4Finished(results) {
       // eslint-disable-next-line no-console
       console.log(results);
       // Generate form data at the end of our survey
-      this.end_survey_form.sleep01 = results.sleep01;
-      this.end_survey_form.sleep02 = results.sleep02;
-      this.end_survey_form.bigfive01 = results.bigfive01;
-      this.end_survey_form.bigfive02 = results.bigfive02;
-      this.end_survey_form.bigfive03 = results.bigfive03;
-      this.end_survey_form.bigfive04 = results.bigfive04;
-      this.end_survey_form.bigfive05 = results.bigfive05;
+      // this.end_survey_form.sleep01 = results.sleep01;
+      // this.end_survey_form.sleep02 = results.sleep02;
+      // this.end_survey_form.bigfive01 = results.bigfive01;
+      // this.end_survey_form.bigfive02 = results.bigfive02;
+      // this.end_survey_form.bigfive03 = results.bigfive03;
+      // this.end_survey_form.bigfive04 = results.bigfive04;
+      // this.end_survey_form.bigfive05 = results.bigfive05;
+      this.end_survey_form.optn_4_1 = results.optn_4_1;
+      this.end_survey_form.optn_4_2 = results.optn_4_2;
+      this.end_survey_form.optn_4_3 = results.optn_4_3;
+      this.end_survey_form.optn_4_4 = results.optn_4_4;
       this.updateDataSheet();
     },
     Survey5Finished(results) {
@@ -1206,6 +1250,7 @@ export default {
     },
     updateDataSheet() {
       this.blockOneResults = this.processOneResults(this.blockOneRawResults);
+      // this.blockThreeResults = this.processThreeResults(this.blockThreeRawResults); //BE CAREFUL!  This is a test to combine experiment 1 and 3 data files.  Delete this if problems occur.
     },
     blockOneFinished(results) {
       // this.b_show_1 = false
@@ -1214,10 +1259,18 @@ export default {
       this.updateDataSheet();
       this.finished_1 = true;
     },
+    blockTwoFinished(results) {
+      // this.b_show_2 = false
+      // this.b_show_3 = true
+      this.finished_2 = true;
+      this.blockTwoResults = this.processTwoResults(results);
+    },    
     blockThreeFinished(results) {
       // this.b_show_3 = false
       this.finished_3 = true;
       this.blockThreeResults = this.processThreeResults(results);
+      // this.similarity_scores = results.prediction3; //Delete
+      // this.updateDataSheet();                       //Delete
     },
     // processOneResults serves the functionality that converts raw recorded data to our target format
     processOneResults(raw) {
@@ -1228,11 +1281,12 @@ export default {
       // eslint-disable-next-line no-console
       console.log(this.participant_generated_id);
       for (i = 0; i < raw.length; i++) {
-        if (raw[i].triplets in triplets_id) {
-          triplets_id[raw[i].triplets] += "I"
-        } else {
-          triplets_id[raw[i].triplets] = "I"
-        }
+        // if (raw[i].triplets in triplets_id) {
+        //   triplets_id[raw[i].triplets] += "I"
+        // } else {
+        //   triplets_id[raw[i].triplets] = "I"
+        // }
+        triplets_id[raw[i].triplets] += "I"
         var enctr_1_flipped = raw[i].enctr_1_reverse.toString();
         // eslint-disable-next-line no-console
         console.log("enctr_1_flipped: " + enctr_1_flipped);
@@ -1275,67 +1329,79 @@ export default {
           Res_Comb: null,
           Control_Rat: null,
           Subject_Prob: null,
-          
-          
+          // Similarity_Score: raw[i].form,       //Testing importing experiment 3 results here.
+          // Reaction_Time: raw[i].reaction_time, //Testing importing experiment 3 results here.
+
+          InstructionTimeSpent: this.instrucTime,
+          InstructionAnswers: this.parsed_answers,
+          InstructionWrongAns: this.parsed_wrong_ans,
+
+          Survey_1: this.end_survey_form.optn_1_1 + this.end_survey_form.optn_1_2 + this.end_survey_form.optn_1_3 + this.end_survey_form.optn_1_4,
+          Survey_2: this.end_survey_form.optn_2_1 + this.end_survey_form.optn_2_2 + this.end_survey_form.optn_2_3 + this.end_survey_form.optn_2_4,
+          Survey_3: this.end_survey_form.optn_3_1 + this.end_survey_form.optn_3_2 + this.end_survey_form.optn_3_3 + this.end_survey_form.optn_3_4,
+          Survey_4: this.end_survey_form.optn_4_1 + this.end_survey_form.optn_4_2 + this.end_survey_form.optn_4_3 + this.end_survey_form.optn_4_4,
+
           // 'Inst_Rat': this.instRat(raw[i].prediction, raw[i].trust),
           // 'Rat_Sure': this.ratSure(),
           // 'Rat_Act': this.ratAct(),
           // 'Rat_Deg': this.ratDeg(),
           // 'Red_Flag': this.redFlag(raw),
           // The generating functions here are still bugged... using None values for now
-          InstructionTimeSpent: this.instrucTime,
-          InstructionAnswers: this.parsed_answers,
-          InstructionWrongAns: this.parsed_wrong_ans,
+
+          // Similarity_Score_1: this.raw[i].sim_score,
+          // Similarity_Score_2: this.similarity_scores.simi_score,
+          // Similarity: this.raw[i].sim_score,
           // Date: this.end_survey_form.date,
-          Age: this.end_survey_form.age,
-          Gender: this.end_survey_form.gender,
-          Old_bro: this.end_survey_form.olderBro,
-          Old_sis: this.end_survey_form.olderSis,
-          Yng_bro: this.end_survey_form.youngerBro,
-          Yng_sis: this.end_survey_form.youngerSis,
-          Happy: this.end_survey_form.happy,
-          Love: this.end_survey_form.love,
-          English: this.end_survey_form.english,
-          School: this.end_survey_form.school,
-          Money: this.end_survey_form.money,
-          Gods: this.end_survey_form.gods,
-          Political: this.end_survey_form.political,
-          Attractive: this.end_survey_form.attractive,
-          Power: this.end_survey_form.power,
-          Country: this.end_survey_form.country,
-          Race: this.end_survey_form.race,
-          sleep01: this.end_survey_form.sleep01,
-          sleep02: this.end_survey_form.sleep02,
-          bigfive01: this.end_survey_form.bigfive01,
-          bigfive02: this.end_survey_form.bigfive02,
-          bigfive03: this.end_survey_form.bigfive03,
-          bigfive04: this.end_survey_form.bigfive04,
-          bigfive05: this.end_survey_form.bigfive05,
-          bigfive06: this.end_survey_form.bigfive06,
-          bigfive07: this.end_survey_form.bigfive07,
-          bigfive08: this.end_survey_form.bigfive08,
-          bigfive09: this.end_survey_form.bigfive09,
-          bigfive10: this.end_survey_form.bigfive10,
-          Agreement: this.end_survey_form.agree,
-          WRQ01: this.FRResults[1],
-          WRQ02: this.FRResults[2],
-          WRQ03: this.FRResults[3],
-          WRQ04: this.FRResults[4],
-          WRQ05: this.FRResults[5],
-          WRQ06: this.FRResults[6],
-          WRQ07: this.FRResults[7],
-          WRQ08: this.FRResults[8],
-          WRQ09: this.FRResults[9],
-          WRQ10: this.FRResults[10],
-          WRQ11: this.FRResults[11],
-          WRQ12: this.FRResults[12],
-          WRQ13: this.FRResults[13],
+          // Age: this.end_survey_form.optn_1_3,
+          // Gender: this.end_survey_form.gender,
+          // Old_bro: this.end_survey_form.olderBro,
+          // Old_sis: this.end_survey_form.olderSis,
+          // Yng_bro: this.end_survey_form.youngerBro,
+          // Yng_sis: this.end_survey_form.youngerSis,
+          // Happy: this.end_survey_form.happy,
+          // Love: this.end_survey_form.love,
+          // English: this.end_survey_form.english,
+          // School: this.end_survey_form.school,
+          // Money: this.end_survey_form.money,
+          // Gods: this.end_survey_form.gods,
+          // Political: this.end_survey_form.political,
+          // Attractive: this.end_survey_form.attractive,
+          // Power: this.end_survey_form.power,
+          // Country: this.end_survey_form.country,
+          // Race: this.end_survey_form.race,
+          // sleep01: this.end_survey_form.sleep01,
+          // sleep02: this.end_survey_form.sleep02,
+          // bigfive01: this.end_survey_form.bigfive01,
+          // bigfive02: this.end_survey_form.bigfive02,
+          // bigfive03: this.end_survey_form.bigfive03,
+          // bigfive04: this.end_survey_form.bigfive04,
+          // bigfive05: this.end_survey_form.bigfive05,
+          // bigfive06: this.end_survey_form.bigfive06,
+          // bigfive07: this.end_survey_form.bigfive07,
+          // bigfive08: this.end_survey_form.bigfive08,
+          // bigfive09: this.end_survey_form.bigfive09,
+          // bigfive10: this.end_survey_form.bigfive10,
+          // Agreement: this.end_survey_form.agree,
+          // WRQ01: this.FRResults[1],
+          // WRQ02: this.FRResults[2],
+          // WRQ03: this.FRResults[3],
+          // WRQ04: this.FRResults[4],
+          // WRQ05: this.FRResults[5],
+          // WRQ06: this.FRResults[6],
+          // WRQ07: this.FRResults[7],
+          // WRQ08: this.FRResults[8],
+          // WRQ09: this.FRResults[9],
+          // WRQ10: this.FRResults[10],
+          // WRQ11: this.FRResults[11],
+          // WRQ12: this.FRResults[12],
+          // WRQ13: this.FRResults[13],
         };
         if (raw[i].triplets in triplets_response) {
           triplets_response[raw[i].triplets] += (',' + current.Resp_Comb)
         } else {
           triplets_response[raw[i].triplets] = current.Resp_Comb
         }
+        
         output.push(current);
       }
       for (var k = 0; k < output.length; k++) {
@@ -1376,42 +1442,42 @@ export default {
       }
       var result = ""
       if (res_sequence[0] == 'A') {
-        result += "G"
+        result += "B"
       } else {
-        result += "K"
+        result += "N"
       }
       if (res_sequence[3] == 'A') {
-        result += "G"
+        result += "B"
       } else {
-        result += "K"
+        result += "N"
       }
       if (res_sequence[6] == 'A') {
-        result += "G"
+        result += "B"
       } else {
-        result += "K"
+        result += "N"
       }
       return result
     },
     control_rat(choices) {
-      if (choices == "KKK" || choices == "GKK" || choices == "GGK" || choices == "GGG") {
+      if (choices == "NNN" || choices == "BNN" || choices == "BBN" || choices == "BBB") {
         return 1
-      } else if (choices == "KKG" || choices == "KGK" || choices == "KGG" || choices == "GKG") {
+      } else if (choices == "NNB" || choices == "NBN" || choices == "NBB" || choices == "BNB") {
         return 0
       } else {
         return "N"
       }
     },
     subject_prob(choices) {
-      if (choices == "KKK") {
+      if (choices == "NNN") {
         return -3
       }
-      if (choices == "GKK") {
+      if (choices == "BNN") {
         return -1
       }
-      if (choices == "GGK") {
+      if (choices == "BBN") {
         return 1
       }
-      if (choices == "GGG") {
+      if (choices == "BBB") {
         return 3
       }
       return 0
@@ -1445,10 +1511,10 @@ export default {
           "Avatar Present": raw[i].avatar,
           "Template Selected": raw[i].choice,
           Date: this.form.date,
-          Gender: this.form.gender,
+          Gender: this.form.optn_1_4,
           "RA Present": this.form.ra,
           "Block Order": "123",
-          Age: this.form.age,
+          Age: this.form.optn_1_3,
           "Younger Brother(s)": this.form.youngerBro,
           "Younger Sister(s)": this.form.youngerSis,
           "Older Brother(s)": this.form.olderBro,
@@ -1525,55 +1591,104 @@ export default {
       if (p_rec > 0 && a_rec < 0) return "S";
       if (p_rec > 0 && a_rec > 0) return "M";
     },
+ 
     processThreeResults(raw) {
       var i;
       var output = [];
+      console.log(this.participant_generated_id);
       for (i = 0; i < raw.length; i++) {
+        var enctr_1_flipped = raw[i].enctr_1_reverse.toString();
+        console.log("enctr_1_flipped: " + enctr_1_flipped);
+        var enctr_2_flipped = raw[i].enctr_2_reverse.toString();
+        console.log("enctr_2_flipped: " + enctr_2_flipped);
+        console.log(enctr_1_flipped + enctr_2_flipped);
         var current = {
-          participant_name: this.form.name,
-          "Game Condition": raw[i].game_condition,
-          "Belief Condition": raw[i].belief,
-          Label:
-            raw[i].a_c == "2"
-              ? `Truth = ( ${raw[i].pr_p.p_first} , ${raw[i].pr_p.a_first} ) <- ( ${raw[i].pr_p.p_second} , ${raw[i].pr_p.a_second} ), Belief = ( ${raw[i].t_pr_p.p_first} , ${raw[i].t_pr_p.a_first} ) <- ( ${raw[i].t_pr_p.p_second} , ${raw[i].t_pr_p.a_second} )`
-              : `Truth = ( ${raw[i].pr_p.p_second} , ${raw[i].pr_p.a_second} ) <- ( ${raw[i].pr_p.p_first} , ${raw[i].pr_p.a_first} ), Belief = ( ${raw[i].t_pr_p.p_second} , ${raw[i].t_pr_p.a_second} ) <- ( ${raw[i].t_pr_p.p_first} , ${raw[i].t_pr_p.a_first} )`,
-          "Trust Condition": raw[i].trust_condition,
-          "Trust/Distrust": raw[i].trust,
-          "Reaction Time": raw[i].reaction_time,
-          "Trial Order": raw[i].trial_order,
-          // to be FIXED
-          Avatar: "N/A",
-          Date: this.form.date,
-          Gender: this.form.gender,
-          "RA Present": this.form.ra,
-          // to be FIXED
-          "Block Order": "123",
-          Age: this.form.age,
-          "Younger Brother(s)": this.form.youngerBro,
-          "Younger Sister(s)": this.form.youngerSis,
-          "Older Brother(s)": this.form.olderBro,
-          "Older Sister(s)": this.form.olderSis,
+          Participant_ID: this.participant_generated_id,
+          Trial_Number: raw[i].trial_number,
+          Label: raw[i].label,
+          Vertical_Position: "\"" + enctr_1_flipped + enctr_2_flipped + "\"",
+          Trial_order_segment: String(1 + Math.floor(i / 13)),
+          Trial_order: raw[i].trial_order,
+          Avatar_ID1: raw[i].avatar_id1,
+          Avatar_ID2: raw[i].avatar_id2,
+          Pay_As1: raw[i].Original_As1,
+          Pay_Ao1: raw[i].Original_Ao1,
+          Pay_Bs1: raw[i].Original_Bs1,
+          Pay_Bo1: raw[i].Original_Bo1,
+          Pay_As2: raw[i].Original_As2,
+          Pay_Ao2: raw[i].Original_Ao2,
+          Pay_Bs2: raw[i].Original_Bs2,
+          Pay_Bo2: raw[i].Original_Bo2,
+          Payoff_Difference_Self_1: raw[i].Original_As1 - raw[i].Original_Bs1,
+          Payoff_Difference_Other_1: raw[i].Original_Ao1 - raw[i].Original_Bo1,
+          Outcome_Disparity_1: raw[i].Original_As1 - raw[i].Original_Ao1,
+          Payoff_Difference_Self_2: raw[i].Original_As2 - raw[i].Original_Bs2,
+          Payoff_Difference_Other_2: raw[i].Original_Ao2 - raw[i].Original_Bo2,
+          Outcome_Disparity_2: raw[i].Original_As2 - raw[i].Original_Ao2,
+          Similarity_Score: raw[i].form,
+          Reaction_Time: raw[i].reaction_time,
         };
         output.push(current);
       }
-      output.sort(this.blockThreeSort);
+      output.sort(this.blockOneSort);
       return output;
     },
+
+    // processThreeResults(raw) {
+    //   var i;
+    //   var output = [];
+    //   for (i = 0; i < raw.length; i++) {
+    //     var current = {
+
+    //       participant_name: this.form.name,
+    //       // "Game Condition": raw[i].game_condition,
+    //       // "Belief Condition": raw[i].belief,
+    //       Label:
+    //         raw[i].a_c == "2"
+    //           ? `Truth = ( ${raw[i].pr_p.p_first} , ${raw[i].pr_p.a_first} ) <- ( ${raw[i].pr_p.p_second} , ${raw[i].pr_p.a_second} ), Belief = ( ${raw[i].t_pr_p.p_first} , ${raw[i].t_pr_p.a_first} ) <- ( ${raw[i].t_pr_p.p_second} , ${raw[i].t_pr_p.a_second} )`
+    //           : `Truth = ( ${raw[i].pr_p.p_second} , ${raw[i].pr_p.a_second} ) <- ( ${raw[i].pr_p.p_first} , ${raw[i].pr_p.a_first} ), Belief = ( ${raw[i].t_pr_p.p_second} , ${raw[i].t_pr_p.a_second} ) <- ( ${raw[i].t_pr_p.p_first} , ${raw[i].t_pr_p.a_first} )`,
+    //       // "Trust Condition": raw[i].trust_condition,
+    //       // "Trust/Distrust": raw[i].trust,
+    //       // "Reaction Time": raw[i].reaction_time,
+    //       "Trial Order": raw[i].trial_order,
+    //       // to be FIXED
+    //       Prediction: this.raw[i].prediction,  //Delete this.
+    //       // Similarity: this.raw[i].sim_score,
+    //       // Avatar: "N/A",
+    //       // Date: this.form.date,
+    //       // Gender: this.form.optn_1_4,
+    //       // "RA Present": this.form.ra,
+    //       // // to be FIXED
+    //       // "Block Order": "123",
+    //       // Age: this.form.optn_1_3,
+    //       // "Younger Brother(s)": this.form.youngerBro,
+    //       // "Younger Sister(s)": this.form.youngerSis,
+    //       // "Older Brother(s)": this.form.olderBro,
+    //       // "Older Sister(s)": this.form.olderSis,
+    //     };
+    //     output.push(current);
+    //   }
+    //   output.sort(this.blockThreeSort);
+    //   return output;
+    // },
     blockOneFileName() {
-      return `${this.participant_generated_id}_block_1.csv`;
+      return `M3_Lab_Experiment_Probability_${this.participant_generated_id}.csv`;
     },
     blockTwoFileName() {
-      return `${this.form.id}_block_2.csv`;
+      return `M3_Lab_Experiment_Matching_${this.participant_generated_id}.csv`;
     },
     blockThreeFileName() {
-      return `${this.form.id}_block_3.csv`;
+      return `M3_Lab_Experiment_Similarity_${this.participant_generated_id}.csv`;
     },
-    blockTwoFinished(results) {
-      // this.b_show_2 = false
-      // this.b_show_3 = true
-      this.finished_2 = true;
-      this.blockTwoResults = this.processTwoResults(results);
-    },
+    // blockThreeFileName() {
+    //   return `${this.form.id}_block_3.csv`;
+    // },
+    // blockTwoFinished(results) {
+    //   // this.b_show_2 = false
+    //   // this.b_show_3 = true
+    //   this.finished_2 = true;
+    //   this.blockTwoResults = this.processTwoResults(results);
+    // },
     // Functions that sort the results from BlockOne and BlockThree
     blockOneSort(a, b) {
       if (Number(a["Trial_Number"]) < Number(b["Trial_Number"])) {
@@ -1583,22 +1698,96 @@ export default {
       }
     },
     vertPositMatch(str) {
-      if (str == "HSHS") return 1;
-      if (str == "HSSH") return 2;
-      if (str == "HSWP") return 3;
-      if (str == "HSPW") return 4;
-      if (str == "SHHS") return 5;
-      if (str == "SHSH") return 6;
-      if (str == "SHWP") return 7;
-      if (str == "SHPW") return 8;
-      if (str == "WPHS") return 9;
-      if (str == "WPSH") return 10;
-      if (str == "WPWP") return 11;
-      if (str == "WPPW") return 12;
-      if (str == "PWHS") return 13;
-      if (str == "PWSH") return 14;
-      if (str == "PWWP") return 15;
-      if (str == "PWPW") return 16;
+      if (str == "BBHS") return 9915;
+      if (str == "BBSH") return 9951;
+      if (str == "BBNE") return 9926;
+      if (str == "BBEN") return 9962;
+      if (str == "BBWV") return 9937;
+      if (str == "BBVW") return 9973;
+      if (str == "BBGM") return 9948;
+      if (str == "BBMG") return 9984;
+      if (str == "HSHS") return 1515;
+      if (str == "HSSH") return 1551;
+      if (str == "HSNE") return 1526;
+      if (str == "HSEN") return 1562;
+      if (str == "HSWV") return 1537;
+      if (str == "HSVW") return 1573;
+      if (str == "HSGM") return 1548;
+      if (str == "HSMG") return 1584;
+      if (str == "SHHS") return 5115;
+      if (str == "SHSH") return 5151;
+      if (str == "SHNE") return 5126;
+      if (str == "SHEN") return 5162;
+      if (str == "SHWV") return 5137;
+      if (str == "SHVW") return 5173;
+      if (str == "SHGM") return 5148;
+      if (str == "SHMG") return 5184;
+      if (str == "NEHS") return 2615;
+      if (str == "NESH") return 2651;
+      if (str == "NENE") return 2626;
+      if (str == "NEEN") return 2662;
+      if (str == "NEWV") return 2637;
+      if (str == "NEVW") return 2673;
+      if (str == "NEGM") return 2648;
+      if (str == "NEMG") return 2684;
+      if (str == "ENHS") return 6215;
+      if (str == "ENSH") return 6251;
+      if (str == "ENNE") return 6226;
+      if (str == "ENEN") return 6262;
+      if (str == "ENWV") return 6237;
+      if (str == "ENVW") return 6273;
+      if (str == "ENGM") return 6248;
+      if (str == "ENMG") return 6284;
+      if (str == "WVHS") return 3715;
+      if (str == "WVSH") return 3751;
+      if (str == "WVNE") return 3726;
+      if (str == "WVEN") return 3762;
+      if (str == "WVWV") return 3737;
+      if (str == "WVVW") return 3773;
+      if (str == "WVGM") return 3748;
+      if (str == "WVMG") return 3784;
+      if (str == "VWHS") return 7315;
+      if (str == "VWSH") return 7351;
+      if (str == "VWNE") return 7326;
+      if (str == "VWEN") return 7362;
+      if (str == "VWWV") return 7337;
+      if (str == "VWVW") return 7373;
+      if (str == "VWGM") return 7348;
+      if (str == "VWMG") return 7384;
+      if (str == "GMHS") return 4815;
+      if (str == "GMSH") return 4851;
+      if (str == "GMNE") return 4826;
+      if (str == "GMEN") return 4862;
+      if (str == "GMWV") return 4837;
+      if (str == "GMVW") return 4873;
+      if (str == "GMGM") return 4848;
+      if (str == "GMMG") return 4884;
+      if (str == "MGHS") return 8415;
+      if (str == "MGSH") return 8451;
+      if (str == "MGNE") return 8426;
+      if (str == "MGEN") return 8462;
+      if (str == "MGWV") return 8437;
+      if (str == "MGVW") return 8473;
+      if (str == "MGGM") return 8448;
+      if (str == "MGMG") return 8484;
+
+
+      // if (str == "HSHS") return 1;
+      // if (str == "HSSH") return 2;
+      // if (str == "HSWP") return 3;
+      // if (str == "HSPW") return 4;
+      // if (str == "SHHS") return 5;
+      // if (str == "SHSH") return 6;
+      // if (str == "SHWP") return 7;
+      // if (str == "SHPW") return 8;
+      // if (str == "WPHS") return 9;
+      // if (str == "WPSH") return 10;
+      // if (str == "WPWP") return 11;
+      // if (str == "WPPW") return 12;
+      // if (str == "PWHS") return 13;
+      // if (str == "PWSH") return 14;
+      // if (str == "PWWP") return 15;
+      // if (str == "PWPW") return 16;
       // @Frank: Greg, feel free to add more mappings here now that we have new trials
       return 0;
     },
@@ -1617,29 +1806,29 @@ export default {
       }
       return control_choice_char + prediction_char
     },
-    atomic_choice(trial_id, trust_condition) {
-      var atom_choice = ""
-      if (trial_id >= 1 && trial_id <= 54 && trust_condition <= 3) {
-        atom_choice = 'Ha'
-      } else if (trial_id >= 1 && trial_id <= 54 && trust_condition >= 4) {
-        atom_choice = 'Hc'
-      } else if (trial_id >= 55 && trial_id <= 108 && trust_condition <= 3) {
-        atom_choice = 'Wa'
-      } else if (trial_id >= 55 && trial_id <= 108 && trust_condition >= 4) {
-        atom_choice = 'Wc'
-      } else if (trial_id >= 109 && trial_id <= 162 && trust_condition <= 3) {
-        atom_choice = 'Sa'
-      } else if (trial_id >= 109 && trial_id <= 162 && trust_condition >= 4) {
-        atom_choice = 'Sc'
-      } else if (trial_id >= 163 && trial_id <= 216 && trust_condition <= 3) {
-        atom_choice = 'Pa'
-      } else if (trial_id >= 163 && trial_id <= 216 && trust_condition >= 4) {
-        atom_choice = 'Pc'
-      } else {
-        atom_choice = 'Neptune'
-      }
-      return atom_choice
-    },
+    // atomic_choice(trial_id, trust_condition) {
+    //   var atom_choice = ""
+    //   if (trial_id >= 1 && trial_id <= 54 && trust_condition <= 3) {
+    //     atom_choice = 'Ha'
+    //   } else if (trial_id >= 1 && trial_id <= 54 && trust_condition >= 4) {
+    //     atom_choice = 'Hc'
+    //   } else if (trial_id >= 55 && trial_id <= 108 && trust_condition <= 3) {
+    //     atom_choice = 'Wa'
+    //   } else if (trial_id >= 55 && trial_id <= 108 && trust_condition >= 4) {
+    //     atom_choice = 'Wc'
+    //   } else if (trial_id >= 109 && trial_id <= 162 && trust_condition <= 3) {
+    //     atom_choice = 'Sa'
+    //   } else if (trial_id >= 109 && trial_id <= 162 && trust_condition >= 4) {
+    //     atom_choice = 'Sc'
+    //   } else if (trial_id >= 163 && trial_id <= 216 && trust_condition <= 3) {
+    //     atom_choice = 'Pa'
+    //   } else if (trial_id >= 163 && trial_id <= 216 && trust_condition >= 4) {
+    //     atom_choice = 'Pc'
+    //   } else {
+    //     atom_choice = 'Neptune'
+    //   }
+    //   return atom_choice
+    // },
     UpDown(keypress, enctr_1_reverse) {
       var first_letter, second_letter
       if (enctr_1_reverse == 1) {

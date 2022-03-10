@@ -16,7 +16,7 @@
     :no-close-on-esc="true"
     :hide-header-close="true"
     modal-class="b1style"
-  >
+  >  
     <!-- Encounter #1 Code -->
     <b-container class="bv-example-row" :style="this.windowsize">
       <b-row class="justify-content-center align-items-center my-1">
@@ -76,7 +76,7 @@
           "
         />
         <img :src="require('../assets/Centered Atoms/E1 Box.png')" :style="this.global_size" />
-        <img
+        <!-- <img
           :src="
             require(`../assets/Avatars/Blind Avatars/avb${this.pad(
               this.avatar_list[this.current_avatar],
@@ -84,7 +84,18 @@
             )}.png`)
           "
           :style="this.avatar_1"
+        /> -->
+
+        <img
+          :src="
+            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.combinations[this.current_avatar].av_man1,
+              4
+            )}.png`)
+          "
+          :style="this.avatar_1"
         />
+
         <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_1" />
         <!-- Here are three alternatives of the arrow in encounter #1 {neutral, up, down} -->
         <!-- They will fade in or/and out depending on the current scenario -->
@@ -156,12 +167,21 @@
         <img
           :src="
             require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.avatar_list[this.current_avatar],
+              this.combinations[this.current_avatar].av_man2,
               4
             )}.png`)
           "
           :style="this.avatar_2"
         />
+        <!-- <img
+          :src="
+            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.avatar_list[this.current_avatar],
+              4
+            )}.png`)
+          "
+          :style="this.avatar_2"
+        /> -->
         <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_2" />
         <img
           :src="require(`../assets/Centered Atoms/E2 ${current_arrow}`)"
@@ -210,9 +230,9 @@
 
 <script>
 import trialOneTrialData from "./trialData.js";
-import datasheet_sample from "./newSample4.json";
+import datasheet_sample from "./newSample5.json"; //It should be 5
 // The origional payoff structures come from "./payoff.json", so to revert back just delete the '2'.
-import payoff_structure from "./payoff4.json";
+import payoff_structure from "./payoff5.json"; //It should be 5
 export default {
   name: "BlockOne",
   props: ["participant_name"],
@@ -252,7 +272,7 @@ export default {
       avatar_1:
         "position: absolute; max-width: 8.6%; max-height: auto; left: 16%; top: 19.99%;",
       avatar_2:
-        "position: absolute; max-width:8.6%; max-height:auto; left: 16%; bottom: 26.3%;",
+        "position: absolute; max-width: 8.6%; max-height:auto; left: 16%; bottom: 26.3%;",
 
       // show is the data that toggles the visibility of block #1's modal
       show: false,
@@ -303,13 +323,16 @@ export default {
           .fill()
           .map((x, i) => i)
       ),
+      // avatar_list: [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 154, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 204, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 239, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 274, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 297, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107, 107],
+      // avatar_list: parent.new_comb.avatar_id,
       current_avatar: 0,
       current_progress: 0,
       current_arrow: "Dot Boxes.png",
       show_cur_num: false,
       prediction: null,
       // How many games to run 216 + 8 + 6
-      max_avatar: 234,
+      // max_avatar: 234,
+      max_avatar: 216,
       trial_started: 0,
       avatar_choices: ["3", "2"],
       player_payoff: ["1.5", "2", "2.5"],
@@ -479,6 +502,35 @@ export default {
         return "HS";
       }
     },
+
+    // Helper function to identify the payoff type { M/P H/S }
+    payoff_categorizer(A1, A2, B1, B2) {
+
+      var pds = A1 - B1;
+      var pdo = A2 - B2;
+
+      if (pds == 0 && pdo == 0) {
+        return "BB"; // R2: Baseline
+      } else if (pds < 0 && pdo > 0) {
+        return "HS"; // R2: Helpful           
+      } else if (pds == 0 && pdo > 0) {
+        return "NE"; // R2: Benevolant           
+      } else if (pds > 0 && pdo > 0) {
+        return "WV"; // R2: Win-win           
+      } else if (pds > 0 && pdo == 0) {
+        return "GM"; // R2: Gainful           
+      } else if (pds > 0 && pdo < 0) {
+        return "SH"; // R2: Selfish           
+      } else if (pds == 0 && pdo < 0) {
+        return "EN"; // R2: Sadistic           
+      } else if (pds < 0 && pdo < 0) {
+        return "VW"; // R2: Malicious           
+      } else if (pds < 0 && pdo == 0) {
+        return "MG"; // R2: Masochistic           
+      } 
+    },
+
+
     helper() {
       alert("click the avatar!");
     },
@@ -667,15 +719,17 @@ export default {
         this.current_avatar
       ].trial_order = this.current_progress;
       this.combinations[this.current_avatar].prediction = this.prediction;
-      this.combinations[this.current_avatar].avatar_id = this.avatar_list[
-        this.current_avatar
-      ];
+      // this.combinations[this.current_avatar].avatar_id = this.avatar_list[
+      //   this.current_avatar
+      // ];
       parent.global_size_keep_glow =
         "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%;";
       parent.global_size_give_glow =
         "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%;";
       setTimeout(function () {
         parent.current_avatar += 1;
+        // parent.fixed_avatar += 1;
+        // parent.av_idx2 += 1;
         parent.global_size_ectr_1 =
           "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.5s;";
       }, 400);
@@ -691,10 +745,12 @@ export default {
         parent.$emit("blockOneDone", parent.combinations);
         if (parent.current_avatar == parent.max_avatar) {
           parent.$bvModal.hide("modal-center");
-          alert("Block #1 finished");
+          alert("Experiment #1 finished");
           // FIXME: connect this to the survey pages
           // parent.b_show_1 = false;
-          parent.$bvModal.show("modal-center-FR1");
+          // parent.$bvModal.show("modal-center-FR1");
+          // parent.$bvModal.show("modal-center-3");
+          parent.$bvModal.show("modal-center-SimInstr");
         }
         if (
           parent.current_avatar == 12 ||
@@ -726,7 +782,6 @@ export default {
       while (0 !== currentIndex) {
         // Pick a remaining element...
         randomIndex = Math.floor(Math.random() * currentIndex);
-
         currentIndex -= 1;
 
         // And swap it with the current element.
@@ -734,8 +789,16 @@ export default {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
       }
-
       return array;
+    },
+    // This shuffels the first and second halfs of an array separately.
+    // This helps the avatars to switch their behavior half way through the experiment. 
+    halfHalfShuffel(array) {
+      var half = Math.ceil(array.length / 2); 
+      var firstHalf = this.shuffle(array.slice(0, half));
+      var secondHalf = this.shuffle(array.slice(-half));
+      var firstSecond = firstHalf.concat(secondHalf);
+      return firstHalf.concat(secondHalf);
     },
     // Helper function for vertical positioning balance
     flipPayOff(struct) {
@@ -755,7 +818,80 @@ export default {
     buildCombinations() {
       var i = 0
       var trials = []
+      var av_roles_1 = this.shuffle([8, 56, 107, 123, 154, 204, 239, 274, 297]);
+      var av_roles_2 = []
+      for (var ele of this.shuffle([8, 56, 107, 123, 154, 204, 239, 274, 297])) {
+        if (ele != av_roles_1[0]) {
+          av_roles_2.push(ele)
+        }
+      }
       for (i = 0; i < this.max_avatar; i++) {
+        var halfway = Math.ceil(this.max_avatar / 2);
+        var pds = this.payoff_structure_data[i]["M1AvatarPayoffA"] - this.payoff_structure_data[i]["M1AvatarPayoffB"];
+        var pdo = this.payoff_structure_data[i]["M1ParticipantPayoffA"] - this.payoff_structure_data[i]["M1ParticipantPayoffB"];
+        var New_Av1 = 0;
+        var New_Av2 = 0;
+
+        if (i < halfway) {               // First half of trials
+          if (pds == 0 && pdo == 0) {
+            var New_Av1 = av_roles_1[0]; // R1: Baseline
+            var New_Av2 = av_roles_1[0]; // R2: Baseline
+          } else if (pds < 0 && pdo > 0) {
+            var New_Av1 = av_roles_1[1]; // R1: Helpful
+            var New_Av2 = av_roles_1[1]; // R2: Helpful           
+          } else if (pds == 0 && pdo > 0) {
+            var New_Av1 = av_roles_1[2]; // R1: Benevolant
+            var New_Av2 = av_roles_1[2]; // R2: Benevolant           
+          } else if (pds > 0 && pdo > 0) {
+            var New_Av1 = av_roles_1[3]; // R1: Win-win
+            var New_Av2 = av_roles_1[3]; // R2: Win-win           
+          } else if (pds > 0 && pdo == 0) {
+            var New_Av1 = av_roles_1[4]; // R1: Gainful
+            var New_Av2 = av_roles_1[4]; // R2: Gainful           
+          } else if (pds > 0 && pdo < 0) {
+            var New_Av1 = av_roles_1[5]; // R1: Selfish
+            var New_Av2 = av_roles_1[5]; // R2: Selfish           
+          } else if (pds == 0 && pdo < 0) {
+            var New_Av1 = av_roles_1[6]; // R1: Sadistic
+            var New_Av2 = av_roles_1[6]; // R2: Sadistic           
+          } else if (pds < 0 && pdo < 0) {
+            var New_Av1 = av_roles_1[7]; // R1: Malicious
+            var New_Av2 = av_roles_1[7]; // R2: Malicious           
+          } else if (pds < 0 && pdo == 0) {
+            var New_Av1 = av_roles_1[8]; // R1: Masochistic
+            var New_Av2 = av_roles_1[8]; // R2: Masochistic           
+          } 
+        } else {                         // Second half of trials
+          if (pds == 0 && pdo == 0) {
+            var New_Av1 = av_roles_1[0]; // R1: Baseline
+            var New_Av2 = av_roles_1[0]; // R2: Baseline
+          } else if (pds < 0 && pdo > 0) {
+            var New_Av1 = av_roles_2[0]; // R1: Helpful
+            var New_Av2 = av_roles_2[0]; // R2: Helpful           
+          } else if (pds == 0 && pdo > 0) {
+            var New_Av1 = av_roles_2[1]; // R1: Benevolant
+            var New_Av2 = av_roles_2[1]; // R2: Benevolant           
+          } else if (pds > 0 && pdo > 0) {
+            var New_Av1 = av_roles_2[2]; // R1: Win-win
+            var New_Av2 = av_roles_2[2]; // R2: Win-win           
+          } else if (pds > 0 && pdo == 0) {
+            var New_Av1 = av_roles_2[3]; // R1: Gainful
+            var New_Av2 = av_roles_2[3]; // R2: Gainful           
+          } else if (pds > 0 && pdo < 0) {
+            var New_Av1 = av_roles_2[4]; // R1: Selfish
+            var New_Av2 = av_roles_2[4]; // R2: Selfish           
+          } else if (pds == 0 && pdo < 0) {
+            var New_Av1 = av_roles_2[5]; // R1: Sadistic
+            var New_Av2 = av_roles_2[5]; // R2: Sadistic           
+          } else if (pds < 0 && pdo < 0) {
+            var New_Av1 = av_roles_2[6]; // R1: Malicious
+            var New_Av2 = av_roles_2[6]; // R2: Malicious           
+          } else if (pds < 0 && pdo == 0) {
+            var New_Av1 = av_roles_2[7]; // R1: Masochistic
+            var New_Av2 = av_roles_2[7]; // R2: Masochistic           
+          }           
+        }
+
         var new_comb = {
           label: this.payoff_structure_data[i]["Label"],
           M1AvatarPayoffA: this.payoff_structure_data[i]["M1AvatarPayoffA"],
@@ -779,11 +915,19 @@ export default {
           OriginalM2AvatarPayoffB: this.payoff_structure_data[i]["M2AvatarPayoffB"],
           OriginalM2ParticipantPayoffB: this.payoff_structure_data[i]["M2ParticipantPayoffB"],
           a_c_present: "2",
+
+          // This makes the avatar images depend on the payoff structures. 
+          av_man1: New_Av1,
+          av_man2: New_Av2,
+
           // 1 means flipped and 0 means not flipped
           enctr_1_reverse: Math.floor(Math.random() * 2),
           enctr_2_reverse: Math.floor(Math.random() * 2),
-          enctr_1_type: this.trial_identifier(this.payoff_structure_data[i]["M1AvatarPayoffA"], this.payoff_structure_data[i]["M1ParticipantPayoffA"], this.payoff_structure_data[i]["M1AvatarPayoffB"], this.payoff_structure_data[i]["M1ParticipantPayoffB"]),
-          enctr_2_type: this.trial_identifier(this.payoff_structure_data[i]["M2AvatarPayoffA"], this.payoff_structure_data[i]["M2ParticipantPayoffA"], this.payoff_structure_data[i]["M2AvatarPayoffB"], this.payoff_structure_data[i]["M2ParticipantPayoffB"]),
+          enctr_1_type: this.payoff_categorizer(this.payoff_structure_data[i]["M1AvatarPayoffA"], this.payoff_structure_data[i]["M1ParticipantPayoffA"], this.payoff_structure_data[i]["M1AvatarPayoffB"], this.payoff_structure_data[i]["M1ParticipantPayoffB"]),
+          enctr_2_type: this.payoff_categorizer(this.payoff_structure_data[i]["M2AvatarPayoffA"], this.payoff_structure_data[i]["M2ParticipantPayoffA"], this.payoff_structure_data[i]["M2AvatarPayoffB"], this.payoff_structure_data[i]["M2ParticipantPayoffB"]),
+          // enctr_1_type: this.trial_identifier(this.payoff_structure_data[i]["M1AvatarPayoffA"], this.payoff_structure_data[i]["M1ParticipantPayoffA"], this.payoff_structure_data[i]["M1AvatarPayoffB"], this.payoff_structure_data[i]["M1ParticipantPayoffB"]),
+          // enctr_2_type: this.trial_identifier(this.payoff_structure_data[i]["M2AvatarPayoffA"], this.payoff_structure_data[i]["M2ParticipantPayoffA"], this.payoff_structure_data[i]["M2AvatarPayoffB"], this.payoff_structure_data[i]["M2ParticipantPayoffB"]),
+          // current_avatar: this.paytype_identifier(this.payoff_structure_data[i]["M1AvatarPayoffA"], this.payoff_structure_data[i]["M1ParticipantPayoffA"], this.payoff_structure_data[i]["M1AvatarPayoffB"], this.payoff_structure_data[i]["M1ParticipantPayoffB"]),
           vert_pos: null,
           keypress: "",
           trust: null,
@@ -796,7 +940,10 @@ export default {
           // encnt2_cond: "N/A",
           trial_order: null,
           trial_number: String(i + 1),
-          avatar_id: null,
+          // avatar_id: null,
+          // avatar_id: New_Av1,
+
+        
           // Some fixed column values
           choice_type: this.datasheet_sample_data[i]["Choice_Type"],
           choice_deg: this.datasheet_sample_data[i]["Choice_Deg"],
@@ -807,6 +954,11 @@ export default {
           // choice_deg: "N/A",
           // sure_thing: "N/A",
           // triplets: "N/A",
+        }
+        if (i < halfway) {
+          new_comb.avatar_id = New_Av1
+        } else {
+          new_comb.avatar_id = New_Av2
         }
         if (new_comb.enctr_1_reverse == 1) {
           var tempLeft, tempRight
@@ -836,117 +988,25 @@ export default {
           let temp = new_comb.enctr_2_type[1] + new_comb.enctr_2_type[0];
           new_comb.enctr_2_type = temp;
         }
-        if (i >= 222) {
-          new_comb.enctr_1_type = "CC"
-        } else if (i >= 216) {
-          new_comb.enctr_1_type = "BB"
-        }
+        // if (i >= 222) {
+        //   new_comb.enctr_1_type = "CC"
+        // } else if (i >= 216) {
+        //   new_comb.enctr_1_type = "BB"
+        // }
         new_comb.vert_pos = new_comb.enctr_1_type + new_comb.enctr_2_type;
-        trials.push(new_comb)
+        // new_comb.av_woman = New_Av1;
+        trials.push(new_comb);
       }
-      trials = this.shuffle(trials);
+      // trials = this.shuffle(trials);
+      trials = this.halfHalfShuffel(trials);
       // eslint-disable-next-line no-console
       console.log("combinations!")
       // eslint-disable-next-line no-console
       console.log(trials)
       this.combinations = trials;
+      // this.av_woman = av_man;
     },
-    // buildCombinations() {
-    //   var i, k, j, o;
-    //   var segment = [];
-    //   for (i = 0; i < this.avatar_choices.length; i++) {
-    //     for (k = 0; k < this.player_payoff.length; k++) {
-    //       for (j = 0; j < this.enctr_2_payoff.length; j++) {
-    //         for (o = 0; o < this.enctr_1_payoff.length; o++) {
-    //           var new_comb = {
-    //             a_c: this.avatar_choices[i],
-    //             a_c_present: this.avatar_choices[i],
-    //             pl_p: this.player_payoff[k],
-    //             a_p: this.enctr_2_payoff[j],
-    //             pr_p: this.enctr_1_payoff[o],
-    //             pr_p_present: this.enctr_1_payoff[o],
-    //             a_p_present: this.enctr_2_payoff[j],
-    //             enctr_1_type: this.trial_identifier(this.enctr_1_payoff[o]),
-    //             enctr_2_type: this.trial_identifier(this.enctr_2_payoff[j]),
-    //             enctr_1_reverse: Math.floor(Math.random() * 2),
-    //             enctr_2_reverse: Math.floor(Math.random() * 2),
-    //             vert_pos: null,
-    //             trust: null,
-    //             keypress: "",
-    //             reaction_time_trust: null,
-    //             reaction_time_prediction: null,
-    //             trust_condition: null,
-    //             trial_order: null,
-    //             trial_id: null,
-    //             prediction: null,
-    //             avatar_id: null,
-    //             game_condition:
-    //               this.avatar_choices[i] == "2"
-    //                 ? this.enctr_1_payoff[o].top
-    //                 : this.enctr_1_payoff[o].down,
-    //           };
-    //           // Recognize the six different structures in encounter #2
-    //           if (
-    //             this.player_payoff[k] == "1.5" &&
-    //             this.enctr_2_payoff[j].a_first == "2.5"
-    //           ) {
-    //             new_comb.trust_condition = 1;
-    //           } else if (
-    //             this.player_payoff[k] == "2" &&
-    //             this.enctr_2_payoff[j].a_first == "2.5"
-    //           ) {
-    //             new_comb.trust_condition = 2;
-    //           } else if (
-    //             this.player_payoff[k] == "2.5" &&
-    //             this.enctr_2_payoff[j].a_first == "2.5"
-    //           ) {
-    //             new_comb.trust_condition = 3;
-    //           } else if (
-    //             this.player_payoff[k] == "1.5" &&
-    //             this.enctr_2_payoff[j].a_first == "1.5"
-    //           ) {
-    //             new_comb.trust_condition = 4;
-    //           } else if (
-    //             this.player_payoff[k] == "2" &&
-    //             this.enctr_2_payoff[j].a_first == "1.5"
-    //           ) {
-    //             new_comb.trust_condition = 5;
-    //           } else if (
-    //             this.player_payoff[k] == "2.5" &&
-    //             this.enctr_2_payoff[j].a_first == "1.5"
-    //           ) {
-    //             new_comb.trust_condition = 6;
-    //           }
-    //           new_comb.trial_id = String(
-    //             6 * (Number(new_comb.game_condition) - 1) +
-    //               Number(new_comb.trust_condition)
-    //           );
-              // if (new_comb.enctr_1_reverse == 1) {
-              //   new_comb.pr_p_present = this.flipPayOff(new_comb.pr_p);
-              //   // temp here flipped the enctr type by munipulating the string
-              //   let temp = new_comb.enctr_1_type[1] + new_comb.enctr_1_type[0];
-              //   new_comb.enctr_1_type = temp;
-              //   // Flipping the avatar's choice in ectr1 to reflect the flipped pay off structure
-              //   if (new_comb.a_c == "2") {
-              //     new_comb.a_c_present = "3";
-              //   } else {
-              //     new_comb.a_c_present = "2";
-              //   }
-              // }
-              // if (new_comb.enctr_2_reverse == 1) {
-              //   new_comb.a_p_present = this.flipPayOff(new_comb.a_p);
-              //   let temp = new_comb.enctr_2_type[1] + new_comb.enctr_2_type[0];
-              //   new_comb.enctr_2_type = temp;
-              // }
-    //           new_comb.vert_pos = new_comb.enctr_1_type + new_comb.enctr_2_type;
-    //           segment.push(new_comb);
-    //         }
-    //       }
-    //     }
-    //   }
-    //   segment = this.shuffle(segment);
-    //   this.combinations = segment;
-    // },
+  
     pad(n, width, z) {
       z = z || "0";
       n = n + "";

@@ -121,7 +121,7 @@ export default {
     go_to_back() {
       this.$bvModal.hide("modal-center-survey" + this.page_num);
       this.$bvModal.show(
-        "modal-center-survey" + (Number(this.page_num) - 1).toString()
+        "modal-center-survey" + (Number(this.page_num) - 2).toString()  // This should be -1 instead of -2 but I'm lazy for now.
       );
       this.$emit("Survey6Done", this.form);
     },

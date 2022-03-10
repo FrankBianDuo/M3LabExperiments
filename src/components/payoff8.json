@@ -1,0 +1,45 @@
+[
+    {
+      "Trial_Number": 1,
+      "Label": "(3,3,3,3,1,5,5,1)",
+      "M1AvatarPayoffA": 5,
+      "M1ParticipantPayoffA": 1,
+      "M1AvatarPayoffB": 1,
+      "M1ParticipantPayoffB": 5,
+      "M2AvatarPayoffA": 3,
+      "M2ParticipantPayoffA": 5,
+      "M2AvatarPayoffB": 3,
+      "M2ParticipantPayoffB": 1,
+      "KeepDots": 2
+    },
+    {
+      "Trial_Number": 2,
+      "Label": "(3,3,3,3,1,5,5,1)",
+      "M1AvatarPayoffA": 5,
+      "M1ParticipantPayoffA": 1,
+      "M1AvatarPayoffB": 5,
+      "M1ParticipantPayoffB": 1,
+      "M2AvatarPayoffA": 1,
+      "M2ParticipantPayoffA": 5,
+      "M2AvatarPayoffB": 1,
+      "M2ParticipantPayoffB": 1,
+      "KeepDots": 3
+    },
+    {
+      "Trial_Number": 3,
+      "Label": "(3,3,3,3,1,5,5,1)",
+      "M1AvatarPayoffA": 3,
+      "M1ParticipantPayoffA": 3,
+      "M1AvatarPayoffB": 3,
+      "M1ParticipantPayoffB": 3,
+      "M2AvatarPayoffA": 1,
+      "M2ParticipantPayoffA": 5,
+      "M2AvatarPayoffB": 5,
+      "M2ParticipantPayoffB": 1,
+      "KeepDots": 4
+    }
+]
+
+
+
+

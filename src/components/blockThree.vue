@@ -1,8 +1,8 @@
 <template>
+  <!-- Here is the template section, where all the HTML code takes action -->
   <b-modal
     id="modal-center-3"
     size="xl"
-    centered
     title="Experiment 3"
     v-model="show"
     :hide-footer="true"
@@ -15,8 +15,11 @@
     :no-close-on-backdrop="false"
     :no-close-on-esc="true"
     :hide-header-close="true"
-  >
-    <b-container class="bv-example-row">
+    modal-class="b1style"
+  >  
+    <!-- Encounter #1 Code -->
+    <b-container class="bv-example-row" :style="this.windowsize">
+
       <b-row class="justify-content-center align-items-center my-1">
         <b-progress
           style="width: 100%;"
@@ -26,138 +29,170 @@
           animated
         ></b-progress>
       </b-row>
+
       <b-row
         class="justify-content-center align-items-center my-1"
-        :style="this.prior_choice_style"
-      >
-        <div style="position: absolute; top: 25%; left: 53%;">
-          <h1 style="position: absolute;">{{this.combinations[this.current_avatar].pr_p.a_first}}</h1>
-        </div>
-        <div style="position: absolute;  top: 25%; right: 41%;">
-          <h1
-            style="position: absolute; color: #4B00FF;"
-          >{{this.combinations[this.current_avatar].pr_p.p_first}}</h1>
-        </div>
-        <div style="position: absolute; top: 40%; left: 53%;">
-          <h1 style="position: absolute;">{{this.combinations[this.current_avatar].pr_p.a_second}}</h1>
-        </div>
-        <div style="position: absolute; top: 40%; right: 41%;">
-          <h1
-            style="position: absolute; color: #4B00FF;"
-          >{{this.combinations[this.current_avatar].pr_p.p_second}}</h1>
-        </div>
+        :style="this.primary_images_style">
+        <img :src="require('../assets/Similarity/background.png')" :style="this.global_size" />
         <img
-          :src="require('../assets/Prior Choice Square.2.1.png')"
-          style="position: relative; width: 50%; height: 50%; top: 10px;"
-        />
+          :src="
+            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.avatar_list[this.current_avatar], 4)}.png`)"
+          :style="this.avatar_1A_style" />
         <img
-          :src="require(`../assets/Arrow Bub 0${this.arrow_num}.png`)"
-          style="position: absolute;max-width:30%; max-height:32%; top: 15.9%; left: 35%;"
-        />
+          :src="
+            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.avatar_list[this.current_avatar], 4)}.png`)"
+          :style="this.avatar_1B_style" />
         <img
-          @click="priorAvatar"
-          :src="require(`../assets/avatarsgalore/slice${this.avatar_list[this.current_avatar]}.png`)"
-          style="position: absolute; max-width:8%; max-height:8%; left: 40.5%; top: 33%; cursor: pointer;"
-        />
+          :src="
+            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.avatar_list_2[this.current_avatar], 4)}.png`)"
+          :style="this.avatar_2A_style" />
         <img
-          @click="helper"
-          :src="require('../assets/You Full 1.png')"
-          style="position: absolute;max-width:10%; max-height:10%; right: 31%; top: 32%;"
-        />
-        <div style="position: absolute; top: 18%; left: 39.8%; cursor: pointer;">
-          <h4 style="position: absolute;">{{this.combinations[this.current_avatar].t_pr_p.a_first}}</h4>
-        </div>
-        <div style="position: absolute; top: 18%; left: 42%;">
-          <h4
-            style="position: absolute; color: #4B00FF;"
-          >{{this.combinations[this.current_avatar].t_pr_p.p_first}}</h4>
-        </div>
-        <div style="position: absolute; top: 25%; left: 39.8%;">
-          <h4 style="position: absolute;">{{this.combinations[this.current_avatar].t_pr_p.a_second}}</h4>
-        </div>
-        <div style="position: absolute; top: 25%; left: 42%;">
-          <h4
-            style="position: absolute; color: #4B00FF;"
-          >{{this.combinations[this.current_avatar].t_pr_p.p_second}}</h4>
-        </div>
+          :src="
+            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.avatar_list_2[this.current_avatar], 4)}.png`)"
+          :style="this.avatar_2B_style" />
+
+
+        <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_1A_style" />
+        <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_1B_style" />
+        <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_2A_style" />
+        <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_2B_style" />
+
+        <img :src="require('../assets/Similarity/you_lf.png')" :style="this.global_size" />
+        <img :src="require('../assets/Similarity/you_rt.png')" :style="this.global_size" />
       </b-row>
 
-      <!-- Current Choice Block -->
       <b-row
-        class="justify-content-center align-items-center mt-5 bt-5"
-        :style="this.current_choice_style"
-      >
-        <div style="position: absolute; top: 70%; left: 49%;">
-          <h1 style="position: absolute;">{{this.combinations[this.current_avatar].a_p.a_first}}</h1>
-        </div>
-        <div style="position: absolute;  top: 70%; right: 43%;">
-          <h1
-            style="position: absolute; color: #4B00FF;"
-          >{{this.combinations[this.current_avatar].a_p.p_first}}</h1>
-        </div>
-        <div style="position: absolute; top: 90%; left: 49%;">
-          <h1 style="position: absolute;">{{this.combinations[this.current_avatar].a_p.a_second}}</h1>
-        </div>
-        <div style="position: absolute; top: 90%; right: 43%;">
-          <h1
-            style="position: absolute; color: #4B00FF;"
-          >{{this.combinations[this.current_avatar].a_p.p_second}}</h1>
-        </div>
+        class="justify-content-center align-items-center my-1"
+        :style="this.secondary_images_style">
+
         <img
-          :src="require('../assets/Current Choice Square.2.1.png')"
-          style="position: relative; width: 50%; height: 50%; top: 10px;"
-        />
+          :style="this.dots_style" 
+          :src="
+            require(`../assets/Similarity/Dots/dots_lub_${
+              this.combinations[this.current_avatar].As1}.png`)"/>
         <img
-          @click="otherChoice"
-          :src="require(`../assets/avatarsgalore/slice${this.avatar_list[this.current_avatar]}.png`)"
-          style="position: absolute; max-width:15%; max-height:15%; left: 30%; bottom: 9%; cursor: pointer;"
-        />
+          :style="this.dots_style" 
+          :src="
+            require(`../assets/Similarity/Dots/dots_lup_${
+              this.combinations[this.current_avatar].Ao1}.png`)"/>
         <img
-          :src="require(`../assets/${current_arrow}`)"
-          style="position: absolute;max-width:30%; max-height:30%; bottom: 2%; left: 39%;"
-        />
+          :style="this.dots_style" 
+          :src="
+            require(`../assets/Similarity/Dots/dots_ldb_${
+              this.combinations[this.current_avatar].Bs1}.png`)"/>
         <img
-          @click="selfChoice"
-          :src="require('../assets/You Blank 1.png')"
-          style="position: absolute;max-width:15%; max-height:15%; right: 28%; bottom: 9%; cursor: pointer;"
-        />
-        <div
-          v-if="this.show_cur_num && this.combinations[this.current_avatar].pl_p == '2' "
-          style="position: absolute; top: 80%; right: 33.5%;"
-        >
-          <h1
-            style="position: absolute; color: #4B00FF;"
-          >{{this.combinations[this.current_avatar].pl_p}}</h1>
-        </div>
-        <div v-else-if="this.show_cur_num" style="position: absolute; top: 80%; right: 34.8%;">
-          <h1
-            style="position: absolute; color: #4B00FF;"
-          >{{this.combinations[this.current_avatar].pl_p}}</h1>
-        </div>
+          :style="this.dots_style" 
+          :src="
+            require(`../assets/Similarity/Dots/dots_ldp_${
+              this.combinations[this.current_avatar].Bo1}.png`)"/>
+
+        <img
+          :style="this.dots_style" 
+          :src="
+            require(`../assets/Similarity/Dots/dots_rub_${
+              this.combinations[this.current_avatar].As2}.png`)"/>
+        <img
+          :style="this.dots_style"  
+          :src="
+            require(`../assets/Similarity/Dots/dots_rup_${
+              this.combinations[this.current_avatar].Ao2}.png`)"/>
+        <img
+          :style="this.dots_style" 
+          :src="
+            require(`../assets/Similarity/Dots/dots_rdb_${
+              this.combinations[this.current_avatar].Bs2}.png`)"/>
+        <img
+          :style="this.dots_style" 
+          :src="
+            require(`../assets/Similarity/Dots/dots_rdp_${
+              this.combinations[this.current_avatar].Bo2}.png`)"/>
+
+        <img
+          :src="require(`../assets/Similarity/choice_up_lf.png`)"
+          :style="this.choice_up_style"/>
+        <img
+          :src="require(`../assets/Similarity/choice_dn_lf.png`)"
+          :style="this.choice_dn_style"/>
+        <img
+          :src="require(`../assets/Similarity/choice_up_rt.png`)"
+          :style="this.choice_up_style"/>
+        <img
+          :src="require(`../assets/Similarity/choice_dn_rt.png`)"
+          :style="this.choice_dn_style"/>
       </b-row>
+
+      <b-form>
+        <b-form-group id="input-group-1" label-for="input-1" :style="this.slider_style" 
+          label="Dissimilar ---------------------------------------------------------------------------------------------------------------------------------------------------- Similar">
+          <b-input-group>
+            <b-form-input
+              :disabled="!this.primedSlider" id="input-group-1" type="range" number min="0" max="1" step="0.01" v-model="form.sim_score"> 
+            </b-form-input>
+          </b-input-group>
+        </b-form-group>
+      </b-form>
+
+      <div>
+        <b-button
+          :variant="sbc"
+          size="lg"
+          v-bind:style="{ height: 'auto', marginTop: '0.25%', left: '50%', transform: 'translate(-50%, 0)', position: 'absolute', opacity: this.opacity_presskey, transition: 'opacity 0.5s'}"
+        >Press {{press}}.</b-button>
+      </div>
+
     </b-container>
+    <b-modal ref="my-modal" hide-footer title="Rest Break">
+      <h3 align="center">0{{ this.rb_min }}:{{ this.rb_seczero }}{{ this.rb_sec }}</h3>
+      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Back to Experiment</b-button>
+    </b-modal>
   </b-modal>
 </template>
 
 <script>
+import payoff_structure from "./payoff6.json";
 export default {
   name: "BlockThree",
   props: ["participant_name"],
   components: {},
   data() {
     return {
+      payoff_structure_data: payoff_structure,
+      windowsize: "height: 600px;",
+      global_size: "position: absolute; width: 100%; height: auto; top: -100px;",
+
+      // Rest break data
+      rb_shown: false,
+      rb_min: 0,
+      rb_sec: 15,
+      rb_seczero: "",
+      primary_images_style: `opacity: 100%; transition: opacity 0.75s;`,
+      secondary_images_style: `opacity: ${this.show_current}; transition: opacity 0.5s;`,
+      dots_style: "position: absolute; width: 100%; height: auto; top: -100px; opacity: 0%;",
+      choice_up_style: "position: absolute; width: 100%; height: auto; top: -100px; opacity: 0%; transition: opacity 0.1s;",
+      choice_dn_style: "position: absolute; width: 100%; height: auto; top: -100px; opacity: 0%; transition: opacity 0.1s;",
+      slider_style: "marginTop: 38.85%; opacity: 100%; transition: opacity 0.25s;",
+      avatar_1A_style:
+        "position: absolute; max-width: 8.5%; max-height: auto; left: 5.4%; top: 45.4%; opacity: 100%; transition: opacity 0.75s;",
+      avatar_1B_style:
+        "position: absolute; max-width: 8.5%; max-height: auto; left: 52.3%; top: 9.0%; opacity: 100%; transition: opacity 0.75s;",
+      avatar_2A_style:
+        "position: absolute; max-width: 8.5%; max-height: auto; left: 52.0%; top: 45.4%; opacity: 100%; transition: opacity 0.75s;",
+      avatar_2B_style:
+        "position: absolute; max-width: 8.5%; max-height: auto; left: 63.6%; top: 9.0%; opacity: 100%; transition: opacity 0.75s;",
+      primedRemind: true,
+      opacity_presskey: "100%",
+      press: "space bar",
+
+      // show is the data that toggles the visibility of block #1's modal
       show: false,
       b_show_1: true,
-      variants: [
-        "primary",
-        "secondary",
-        "success",
-        "warning",
-        "danger",
-        "info",
-        "light",
-        "dark",
-      ],
+      you_avatar_type: "1",
+      // Data for styling
+      variants: ["primary", "secondary", "success", "warning", "danger", "info","light","dark"],
       headerBgVariant: "dark",
       headerTextVariant: "light",
       bodyBgVariant: "light",
@@ -167,305 +202,240 @@ export default {
       colors: ["red", "yellow", "brown", "orange", "black"],
       scenarioColor: `height: 280px; backgroundColor: red;`,
       index: 0,
+      // ^^^
       show_current: 0,
       show_prior: 1,
+      // These data help with the fading effect with the arrow in encounter #1
+
+      holder_stype: "White",
+
       arrow_num: "1",
       avatar_num: "1",
-      avatar_list: this.shuffle(
-        Array(1080)
-          .fill()
-          .map((x, i) => i)
-      ),
+      // This generates an array from 0 to 323
+    //   avatar_list: this.shuffle(
+    //     Array(324)
+    //       .fill()
+    //       .map((x, i) => i)
+    //   ),
+
+      avatar_list: this.no_twins(Array(324).fill().map((x, i) => i))[0],
+      avatar_list_2: this.no_twins(Array(324).fill().map((x, i) => i))[1],
       current_avatar: 0,
       current_progress: 0,
-      current_arrow: "Arrows 1.png",
+      current_arrow: "Dot Boxes.png",
       show_cur_num: false,
       prediction: null,
-      // How many games to run
-      max_avatar: 864,
+      form: {sim_score: ""},
+      max_avatar: 169,
+      // max_avatar: 3,     // Change this.  I'm just checking for transitioning between modals.
       trial_started: 0,
-      avatar_choices: ["3", "2"],
-      player_payoff: ["1.5", "2", "2.5"],
-      avatar_payoff: [
-        {
-          p_first: "3",
-          a_first: "1.5",
-          p_second: "1",
-          a_second: "2.5",
-        },
-        {
-          p_first: "3",
-          a_first: "2.5",
-          p_second: "1",
-          a_second: "1.5",
-        },
-      ],
-      prior_payoff: [
-        // 3 3 1 1
-        {
-          a_first: "3",
-          p_first: "3",
-          a_second: "1",
-          p_second: "1",
-          top: 22,
-          down: 4,
-        },
-        // 3 3 1 2
-        {
-          a_first: "3",
-          p_first: "3",
-          a_second: "1",
-          p_second: "2",
-          top: 26,
-          down: 8,
-        },
-        // 3 3 2 1
-        {
-          a_first: "3",
-          p_first: "3",
-          a_second: "2",
-          p_second: "1",
-          top: 32,
-          down: 14,
-        },
-        // 3 3 2 2
-        {
-          a_first: "3",
-          p_first: "3",
-          a_second: "2",
-          p_second: "2",
-          top: 34,
-          down: 16,
-        },
-        // 1 3 3 1
-        {
-          a_first: "1",
-          p_first: "3",
-          a_second: "3",
-          p_second: "1",
-          top: 11,
-          down: 29,
-        },
-        // 1 3 3 2
-        {
-          a_first: "1",
-          p_first: "3",
-          a_second: "3",
-          p_second: "2",
-          top: 12,
-          down: 30,
-        },
-        // 2 3 3 1
-        {
-          a_first: "2",
-          p_first: "3",
-          a_second: "3",
-          p_second: "1",
-          top: 17,
-          down: 35,
-        },
-        // 2 3 3 2
-        {
-          a_first: "2",
-          p_first: "3",
-          a_second: "3",
-          p_second: "2",
-          top: 18,
-          down: 36,
-        },
-        // 8
-        // 3 2 1 1
-        {
-          a_first: "3",
-          p_first: "2",
-          a_second: "1",
-          p_second: "1",
-          top: 21,
-          down: 3,
-        },
-        // 2 3 1 1
-        {
-          a_first: "2",
-          p_first: "3",
-          a_second: "1",
-          p_second: "1",
-          top: 20,
-          down: 2,
-        },
-        // 3 2 2 1
-        {
-          a_first: "3",
-          p_first: "2",
-          a_second: "2",
-          p_second: "1",
-          top: 31,
-          down: 13,
-        },
-        // 2 3 1 2
-        {
-          a_first: "2",
-          p_first: "3",
-          a_second: "1",
-          p_second: "2",
-          top: 24,
-          down: 6,
-        },
-        // 2 2 1 1
-        {
-          a_first: "2",
-          p_first: "2",
-          a_second: "1",
-          p_second: "1",
-          top: 19,
-          down: 1,
-        },
-        // 1 2 3 1
-        {
-          a_first: "1",
-          p_first: "2",
-          a_second: "3",
-          p_second: "1",
-          top: 7,
-          down: 25,
-        },
-        // 1 3 2 1
-        {
-          a_first: "1",
-          p_first: "3",
-          a_second: "2",
-          p_second: "1",
-          top: 9,
-          down: 27,
-        },
-        // 1 3 2 2
-        {
-          a_first: "1",
-          p_first: "3",
-          a_second: "2",
-          p_second: "2",
-          top: 10,
-          down: 28,
-        },
-        // 2 2 3 1
-        {
-          a_first: "2",
-          p_first: "2",
-          a_second: "3",
-          p_second: "1",
-          top: 15,
-          down: 33,
-        },
-        // 1 2 2 1
-        {
-          a_first: "1",
-          p_first: "2",
-          a_second: "2",
-          p_second: "1",
-          top: 5,
-          down: 23,
-        },
-        // 18
-      ],
       combinations: [],
+      primedSpacebar1: true,
+      primedSpacebar2: false,
+      primedSlider: false,
+      currentlyFading: false,
+      reaction_time: 0,
+      trialTimer: 0,
     };
   },
   beforeMount() {
     this.buildCombinations();
   },
-  // created: function () {
-  //   let parent = this
-  //   window.addEventListener('keyup', function(event) {
-  //     if (parent.show) {
-  //       if (event.keyCode == 32) {
-  //         parent.priorAvatar();
-  //         var d = new Date();
-  //         var n = d.getTime();
-  //         parent.trial_started = n;
-  //       } else if (event.keyCode == 37 && parent.prediction != null) {
-  //         parent.otherChoice();
-  //       } else if (event.keyCode == 39 && parent.prediction != null) {
-  //         parent.selfChoice();
-  //       } else if (event.keyCode == 65 && parent.prediction == null) {
-  //         // Prediction A
-  //         parent.predictUp();
-  //       } else if (event.keyCode == 90 && parent.prediction == null) {
-  //         // Prediction Z
-  //         parent.predictDown();
-  //       }
-  //     }
-  //   });
-  // },
-  computed: {
-    prior_choice_style() {
-      return `opacity: ${this.show_prior}; transition: opacity 0.5s;`;
-    },
-    current_choice_style() {
-      return `opacity: ${this.show_current}; transition: opacity 0.5s;`;
-    },
-  },
-  methods: {
-    nextUp() {
-      this.index += 1;
-      if (this.index >= this.colors.length) {
-        this.index = 0;
+  mounted() {
+    this.$root.$on("bv::modal::show", (bvEvent, modalId) => {
+      if (modalId != "modal-center") {
+        return;
       }
-      this.scenarioColor = `height: 280px; backgroundColor: ${
-        this.colors[this.index]
-      };`;
-    },
-    helper() {
-      alert("click the avatar!");
-    },
-    priorAvatar() {
-      this.show_current = 1;
-      this.arrow_num = this.combinations[this.current_avatar].a_c;
-    },
-    predictUp() {
-      this.current_arrow = "Arrows Group Green Top.png";
-      this.prediction = 0;
-      this.show_cur_num = true;
-    },
-    predictDown() {
-      this.current_arrow = "Arrows Group Green Bottom.png";
-      this.prediction = 1;
-      this.show_cur_num = true;
-    },
-    otherChoice() {
-      this.ChoiceHelper(1);
-    },
-    selfChoice() {
-      this.ChoiceHelper(0);
-    },
-    ChoiceHelper(input) {
+      // Close the tutorial modal (page_73), stop the instruction time period timer
+      this.hide_tutorial();
       var d = new Date();
       var n = d.getTime();
-      this.combinations[this.current_avatar].reaction_time =
-        n - this.trial_started;
+      this.$emit("timesync", n);
+    });
+  },
+  // Event listener for all keyboard events
+
+  created: function () {
+    let parent = this;
+    window.addEventListener("keydown", function (event) {
+      // parent.opacity_presskey = "100%";
+
+      if (parent.show) {
+        // Space
+        if (event.keyCode == 32 && parent.primedSpacebar1 && !parent.primedSpacebar2) {
+            // parent.combinations[parent.current_avatar].form = parent.form.sim_score;
+            parent.primedSpacebar1 = false;
+            parent.primedSpacebar2 = false;
+            parent.primedSlider = false;
+            parent.primedRemind = false;
+            var d1 = new Date();
+            var n1 = d1.getTime();
+            parent.trial_started = n1;
+            parent.arrow_num = parent.combinations[parent.current_avatar].a_c_present;
+            parent.dots_style = "position: absolute; width: 100%; height: auto; top: -100px; opacity: 100%; transition: opacity 0.5s;"; 
+            parent.opacity_presskey = "0%"
+            setTimeout(function () {
+                if (parent.arrow_num == "2") {
+                parent.choice_up_style = "position: absolute; width: 100%; height: auto; top: -100px; opacity: 100%; transition: opacity 0.1s;";  
+                } else {
+                parent.choice_dn_style = "position: absolute; width: 100%; height: auto; top: -100px; opacity: 100%; transition: opacity 0.1s;";};}, 500); 
+            setTimeout(function () {
+                parent.primedSlider = true;
+                parent.slider_style = "marginTop: 38.85%; opacity: 100%; transition: opacity 0.5s;"}, 1250);       
+            setTimeout(function () {
+                parent.primedSpacebar2 = true}, 1750);
+            // parent.combinations[parent.current_avatar].form = parent.form.sim_score;
+
+        } else if (event.keyCode == 32 && parent.primedSpacebar2 && !parent.primedSpacebar1 && parent.form.sim_score !== "") {
+            var d2 = new Date();
+            var n2 = d2.getTime();
+            parent.combinations[parent.current_avatar].reaction_time = (n2 - parent.trial_started) * 0.001;
+            parent.combinations[parent.current_avatar].form = parent.form.sim_score;
+            parent.primedSpacebar2 = false;
+            parent.primedSlider = false;
+            parent.dots_style = "position: absolute; width: 100%; height: auto; top: -100px; opacity: 0%; transition: opacity 0.5s;"; 
+            parent.choice_up_style = "position: absolute; width: 100%; height: auto; top: -100px; opacity: 0%; transition: opacity 0.5s;";  
+            parent.choice_dn_style = "position: absolute; width: 100%; height: auto; top: -100px; opacity: 0%; transition: opacity 0.5s;";  
+
+            parent.avatar_1A_style = "position: absolute; max-width: 8.5%; max-height: auto; left: 5.4%; top: 45.4%; opacity: 0%; transition: opacity 0.5s;";
+            parent.avatar_1B_style = "position: absolute; max-width: 8.5%; max-height: auto; left: 52.3%; top: 9.0%; opacity: 0%; transition: opacity 0.5s;";
+            parent.avatar_2A_style = "position: absolute; max-width: 8.5%; max-height: auto; left: 52.0%; top: 45.4%; opacity: 0%; transition: opacity 0.5s;";
+            parent.avatar_2B_style = "position: absolute; max-width: 8.5%; max-height: auto; left: 63.6%; top: 9.0%; opacity: 0%; transition: opacity 0.5s;";
+            parent.primary_images_style = "opacity: 0%; transition: opacity 0.5s;";
+            parent.slider_style = "marginTop: 38.85%; opacity: 0%; transition: opacity 0.5s;"
+            parent.opacity_presskey = "0%"
+            parent.ChoiceHelper();
+            // parent.resetSlider();
+
+            setTimeout(function () {
+                parent.primary_images_style = "opacity: 100%; transition: opacity 0.25s;";
+                parent.avatar_1A_style = "position: absolute; max-width: 8.5%; max-height: auto; left: 5.4%; top: 45.4%; opacity: 100%; transition: opacity 0.25s;";
+                parent.avatar_1B_style = "position: absolute; max-width: 8.5%; max-height: auto; left: 52.3%; top: 9.0%; opacity: 100%; transition: opacity 0.25s;";
+                parent.avatar_2A_style = "position: absolute; max-width: 8.5%; max-height: auto; left: 52.0%; top: 45.4%; opacity: 100%; transition: opacity 0.25s;";
+                parent.avatar_2B_style = "position: absolute; max-width: 8.5%; max-height: auto; left: 63.6%; top: 9.0%; opacity: 100%; transition: opacity 0.25s;";                
+                parent.primedSpacebar1 = true;
+                parent.resetSlider();
+            }, 1000); 
+        } 
+      }
+    });
+  },
+
+  methods: {
+    resetSlider() {this.form.sim_score = ""},
+    // Helper Function that handles the data flow when a participant decides to trust or distrust an avatar
+
+
+    ChoiceHelper(input) {
+      this.fading = true;
+      this.free_space = false;
+      var d = new Date();
+      var n = d.getTime();
+      this.combinations[this.current_avatar].reaction_time_trust =
+        (n - this.trial_started) * 0.001;
       this.trial_started = 0;
-      this.combinations[this.current_avatar].reaction_time *= 0.001;
-      this.show_current = 0;
-      this.show_prior = 0;
       let parent = this;
       this.current_progress += 1;
       this.combinations[this.current_avatar].trust = input;
-      this.combinations[
-        this.current_avatar
-      ].trial_order = this.current_progress;
+      this.combinations[this.current_avatar].trial_order = this.current_progress;
+      this.combinations[this.current_avatar].avatar_id1 = this.avatar_list[this.current_avatar];
+      this.combinations[this.current_avatar].avatar_id2 = this.avatar_list_2[this.current_avatar];
       setTimeout(function () {
-        parent.current_arrow = "Arrows 1.png";
-        parent.prediction = null;
-        parent.show_cur_num = false;
         parent.current_avatar += 1;
+      }, 400);
+      setTimeout(function () {
+
+        parent.show_cur_num = false;
+        // parent.current_avatar += 1;
         parent.$emit("blockThreeDone", parent.combinations);
         if (parent.current_avatar == parent.max_avatar) {
-          parent.show = false;
-          alert("Block #3 finished");
-          parent.b_show_1 = false;
+        //   parent.$bvModal.hide("modal-center");
+          parent.$bvModal.hide("modal-center-3");
+          alert("Experiment #3 finished");
+          // FIXME: connect this to the survey pages
+          // parent.b_show_1 = false;
+        //   parent.$bvModal.show("modal-center-FR1");  //This takes the participant to the written response section.
+          parent.$bvModal.show("modal-center-survey1"); //This takes the participant to the survey section.
+        }
+        if (
+          parent.current_avatar == 12 ||
+          parent.current_avatar == 24 ||
+          parent.current_avatar == 36 ||
+          parent.current_avatar == 48 ||
+          parent.current_avatar == 162
+        ) {
+          parent.showModal();
+          parent.countDown();
+          // 1000 = 1s
         }
         parent.show_prior = 1;
-        parent.arrow_num = "1";
+      }, 750);
+    },
+    hide_tutorial() {
+        // this.$bvModal.hide("modal-center");
+        this.$bvModal.hide("modal-center-SimInstr");
+    //   this.$bvModal.hide("modal-center-instruction73");
+    },
+    showModal() {
+      if (this.rb_sec < 10) {
+        this.rb_seczero = "0";
+      }
+      this.rb_shown = true;
+      this.$refs["my-modal"].show();
+    },
+    hideModal() {
+      this.rb_shown = false;
+      this.rb_min = 0;
+      this.rb_sec = 15;
+      this.rb_seczero = "";
+      this.$refs["my-modal"].hide();
+    },
+
+    // Helper function to identify the payoff type { M/P H/S }
+    trial_identifier(top_left, top_right, bot_left, bot_right) {
+
+      if (
+        (Number(top_left) - Number(bot_left)) *
+          (Number(top_right) - Number(bot_right)) >
+        0
+      ) {
+        return "WP";
+      } else {
+        return "HS";
+      }
+    },
+
+    // Helper function for rest break count downs
+    countDown() {
+      let parent = this;
+      if (this.rb_shown == false) {
+        parent.rb_sec = 15;
+        parent.rb_min = 0;
+        parent.rb_seczero = "";
+        return;
+      }
+      setTimeout(function () {
+        parent.rb_sec -= 1;
+        if (parent.rb_sec < 10) {
+          parent.rb_seczero = "0";
+        } else {
+          parent.rb_seczero = "";
+        }
+        if (parent.rb_min == 0 && parent.rb_sec == 0) {
+          parent.hideModal();
+          parent.rb_sec = 15;
+          parent.rb_min = 0;
+          parent.rb_seczero = "";
+        }
+        if (parent.rb_sec == 0) {
+          parent.rb_sec = 59;
+          parent.rb_min -= 1;
+          return;
+        }
+        parent.countDown();
       }, 1000);
     },
+
     shuffle(array) {
       var currentIndex = array.length,
         temporaryValue,
@@ -476,7 +446,6 @@ export default {
         // Pick a remaining element...
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-
         // And swap it with the current element.
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
@@ -485,99 +454,175 @@ export default {
 
       return array;
     },
+
+    no_twins(array) {
+        // "Returns two shuffeled lists with no twins."
+        // "Twins are two values with the same index in"
+        // "both lists.  This prevents identical avatars."
+
+        // I don't know how to get the commented code to work because I'm not familiar 
+        // with javascript.  It works in Python.  I created a hack solution at the bottom.
+
+        var shuffle_lst_1 = this.shuffle(array);
+        var shuffle_lst_2 = this.shuffle(array);
+        var twins_idxs = [];
+        var twins_vals = [];
+
+        console.log("WTF?")
+
+        // for (i = 0; i < array.length; i++) {console.log("WTF?")}
+
+        // for (i = 0; i < shuffle_lst_1.length; i++) {
+        //     var val1 = shuffle_lst_1[i];
+        //     var val2 = shuffle_lst_2[i];
+
+        //     if (val1 == val2) {
+        //         twins_idxs.push(i);
+        //         twins_vals.push(val1);}
+        //         }
+
+        // while (twins_vals.length > 0) {
+
+        //     if (twins_vals.length % 2 == 1) {
+        //         var count = 0;
+        //         while (twins_idxs.includes(count)) {count += 1}
+        //         shuffle_lst_2[twins_idxs[0]] = shuffle_lst_2[count];
+        //         shuffle_lst_2[count] = twins_idxs[0];
+        //         twins_idxs.shift();
+        //         twins_vals.shift();
+        //     } else {
+        //         shuffle_lst_2[twins_idxs[0]] = twins_vals[1];
+        //         shuffle_lst_2[twins_idxs[1]] = twins_vals[0];
+        //         twins_idxs.shift();
+        //         twins_vals.shift();
+        //         twins_idxs.shift();
+        //         twins_vals.shift();}}
+                
+        // Hack solution here.  It assumes that the number of trials is less than half of the number of avatars.
+        var evens_lst = array.filter(number => number % 2 == 0);
+        var oddss_lst = array.filter(number => number % 2 == 1);
+        var shuffle_lst_1 = this.shuffle(evens_lst);
+        var shuffle_lst_2 = this.shuffle(oddss_lst);
+
+
+        return [shuffle_lst_1, shuffle_lst_2];},
+  
+
+    // Helper function for vertical positioning balance
+    flipPayOff(struct) {
+      var temp_struct = Object.assign({}, struct);
+      var temp_1 = temp_struct["a_first"];
+      var temp_2 = temp_struct["p_first"];
+      // eslint-disable-next-line no-console
+      temp_struct["a_first"] = temp_struct["a_second"];
+      temp_struct["p_first"] = temp_struct["p_second"];
+      temp_struct["a_second"] = temp_1;
+      temp_struct["p_second"] = temp_2;
+      return temp_struct;
+    },
+    // Core function in this file
+    // buildCombinations constructs an array that contains all information needed to carry out a randomized block #1
+    // This array also contains data slots that will be filled as the participants progress
     buildCombinations() {
-      var i, k, j, o, t;
-      var first_segment = [];
-      var second_segment = [];
-      for (i = 0; i < this.avatar_choices.length; i++) {
-        for (k = 0; k < this.player_payoff.length; k++) {
-          for (j = 0; j < this.avatar_payoff.length; j++) {
-            for (o = 0; o < this.prior_payoff.length; o++) {
-              for (t = 1; t < 5; t++) {
-                var new_comb = {
-                  a_c: this.avatar_choices[i],
-                  pl_p: this.player_payoff[k],
-                  a_p: this.avatar_payoff[j],
-                  pr_p: this.prior_payoff[o],
-                  belief: t,
-                  reaction_time: null,
-                  trust_condition: null,
-                  trial_order: null,
-                  game_condition:
-                    this.avatar_choices[i] == "2"
-                      ? this.prior_payoff[o].top
-                      : this.prior_payoff[o].down,
-                  trust: null,
-                  t_pr_p: Object.assign({}, this.prior_payoff[o]),
-                };
-                if (
-                  this.player_payoff[k] == "3/2" &&
-                  this.avatar_payoff[j].a_first == "3"
-                ) {
-                  new_comb.trust_condition = 1;
-                } else if (
-                  this.player_payoff[k] == "2" &&
-                  this.avatar_payoff[j].a_first == "3"
-                ) {
-                  new_comb.trust_condition = 2;
-                } else if (
-                  this.player_payoff[k] == "5/2" &&
-                  this.avatar_payoff[j].a_first == "3"
-                ) {
-                  new_comb.trust_condition = 3;
-                } else if (
-                  this.player_payoff[k] == "3/2" &&
-                  this.avatar_payoff[j].a_first == "2"
-                ) {
-                  new_comb.trust_condition = 4;
-                } else if (
-                  this.player_payoff[k] == "2" &&
-                  this.avatar_payoff[j].a_first == "2"
-                ) {
-                  new_comb.trust_condition = 5;
-                } else if (
-                  this.player_payoff[k] == "5/2" &&
-                  this.avatar_payoff[j].a_first == "2"
-                ) {
-                  new_comb.trust_condition = 6;
-                }
-                // True belief, nothing changes
-                if (t == 1) {
-                  // #3 False belief, swap avatar payoff
-                } else if (t == 3) {
-                  new_comb.t_pr_p.a_first = new_comb.pr_p.a_second;
-                  new_comb.t_pr_p.a_second = new_comb.pr_p.a_first;
-                  // #4 False belief, swap player payoff
-                } else if (t == 4) {
-                  new_comb.t_pr_p.p_first = new_comb.pr_p.p_second;
-                  new_comb.t_pr_p.p_second = new_comb.pr_p.p_first;
-                  // #2 False belief, swap both payoff
-                } else {
-                  new_comb.t_pr_p.a_first = new_comb.pr_p.a_second;
-                  new_comb.t_pr_p.a_second = new_comb.pr_p.a_first;
-                  new_comb.t_pr_p.p_first = new_comb.pr_p.p_second;
-                  new_comb.t_pr_p.p_second = new_comb.pr_p.p_first;
-                }
-                if (o < 8) {
-                  first_segment.push(new_comb);
-                } else {
-                  second_segment.push(new_comb);
-                }
-              }
-            }
+      var i = 0
+      var trials = []
+      for (i = 0; i < this.max_avatar; i++) {
+        var new_comb = {
+          label: this.payoff_structure_data[i]["Label"],
+          As1: this.payoff_structure_data[i]["As1"],
+          Ao1: this.payoff_structure_data[i]["Ao1"],
+          Bs1: this.payoff_structure_data[i]["Bs1"],
+          Bo1: this.payoff_structure_data[i]["Bo1"],
+          As2: this.payoff_structure_data[i]["As2"],
+          Ao2: this.payoff_structure_data[i]["Ao2"],
+          Bs2: this.payoff_structure_data[i]["Bs2"],
+          Bo2: this.payoff_structure_data[i]["Bo2"],
+          // 2 means up and 3 means down
+          a_c: "2",
+          // following are original dots data
+          Original_As1: this.payoff_structure_data[i]["As1"],
+          Original_Ao1: this.payoff_structure_data[i]["Ao1"],
+          Original_Bs1: this.payoff_structure_data[i]["Bs1"],
+          Original_Bo1: this.payoff_structure_data[i]["Bo1"],
+          Original_As2: this.payoff_structure_data[i]["As2"],
+          Original_Ao2: this.payoff_structure_data[i]["Ao2"],
+          Original_Bs2: this.payoff_structure_data[i]["Bs2"],
+          Original_Bo2: this.payoff_structure_data[i]["Bo2"],
+          a_c_present: "2",
+          // 1 means flipped and 0 means not flipped
+          enctr_1_reverse: Math.floor(Math.random() * 2),
+          enctr_2_reverse: Math.floor(Math.random() * 2),
+          enctr_1_type: this.trial_identifier(this.payoff_structure_data[i]["As1"], this.payoff_structure_data[i]["Ao1"], this.payoff_structure_data[i]["Bs1"], this.payoff_structure_data[i]["Bo1"]),
+          enctr_2_type: this.trial_identifier(this.payoff_structure_data[i]["As2"], this.payoff_structure_data[i]["Ao2"], this.payoff_structure_data[i]["Bs2"], this.payoff_structure_data[i]["Bo2"]),
+          vert_pos: null,
+          keypress: "",
+          trust: null,
+          prediction: null,
+          reaction_time_trust: null,
+          reaction_time_prediction: null,
+          trial_order: null,
+          trial_number: String(i + 1),
+          avatar_id1: null,
+          avatar_id2: null,
+        }
+        if (new_comb.enctr_1_reverse == 1) {
+          var tempLeft, tempRight
+          tempLeft = new_comb.As1
+          tempRight = new_comb.Ao1
+          new_comb.As1 = new_comb.Bs1
+          new_comb.Ao1 = new_comb.Bo1
+          new_comb.Bs1 = tempLeft
+          new_comb.Bo1 = tempRight
+          // temp here flipped the enctr type by munipulating the string
+          let temp = new_comb.enctr_1_type[1] + new_comb.enctr_1_type[0];
+          new_comb.enctr_1_type = temp;
+          // Flipping the avatar's choice in ectr1 to reflect the flipped pay off structure
+          if (new_comb.a_c == "2") {
+            new_comb.a_c_present = "3";
           }
         }
+        if (new_comb.enctr_2_reverse == 1) {
+          var tempLeft, tempRight
+          tempLeft = new_comb.As2
+          tempRight = new_comb.Ao2
+          new_comb.As2 = new_comb.Bs2
+          new_comb.Ao2 = new_comb.Bo2
+          new_comb.Bs2 = tempLeft
+          new_comb.Bo2 = tempRight
+
+          let temp = new_comb.enctr_2_type[1] + new_comb.enctr_2_type[0];
+          new_comb.enctr_2_type = temp;
+        }
+        if (i >= 222) {
+          new_comb.enctr_1_type = "CC"
+        } else if (i >= 216) {
+          new_comb.enctr_1_type = "BB"
+        }
+        new_comb.vert_pos = new_comb.enctr_1_type + new_comb.enctr_2_type;
+        trials.push(new_comb)
       }
-      first_segment = this.shuffle(first_segment);
-      second_segment = this.shuffle(second_segment);
-      first_segment.push(...second_segment);
-      this.combinations = first_segment;
-      this.combinations = this.shuffle(this.combinations);
+      trials = this.shuffle(trials);
+      // eslint-disable-next-line no-console
+      console.log("combinations!")
+      // eslint-disable-next-line no-console
+      console.log(trials)
+      this.combinations = trials;
+    },
+    
+    pad(n, width, z) {
+      z = z || "0";
+      n = n + "";
+      // eslint-disable-next-line no-console
+      console.log(
+        n.length >= width ? n : new Array(width - n.length + 1).join(z) + n
+      );
+      return n.length >= width
+        ? n
+        : new Array(width - n.length + 1).join(z) + n;
     },
   },
 };
 </script>
-
 
 <style scoped>
 h3 {
@@ -594,7 +639,6 @@ li {
 a {
   color: #42b983;
 }
-
 .b-col {
   transition: background-color 0.3s;
 }
