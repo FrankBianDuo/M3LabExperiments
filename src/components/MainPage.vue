@@ -970,7 +970,7 @@ export default {
         //     // eslint-disable-next-line no-console
         //     console.log(e);
         //   });
-        Vue.axios.put(response.data, this.$papa.unparse(this.blockOneResults));
+        Vue.axios.put("https://fathomless-coast-21413.herokuapp.com/" + response.data, this.$papa.unparse(this.blockOneResults));
         parent.data_sent_to_s3 = true;
       });
     },
