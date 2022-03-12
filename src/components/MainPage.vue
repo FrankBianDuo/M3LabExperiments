@@ -845,9 +845,8 @@ export default {
       parsed_answers: "",
       parsed_wrong_ans: "",
       aws_bucket_name: "experimentdata2020",
-      aws_object_name: this.blockOneFileName(),
       // serverlessrepo-s3-presigned-url-s3presignedurl-EF2SRE90YXDY?BucketName="experimentdata2020"&ObjectName="test10.txt"&ExpiredIn=3600
-      aws_presigned_lambda: `https://fathomless-coast-21413.herokuapp.com/https://5wmf85807b.execute-api.us-east-2.amazonaws.com/default/serverlessrepo-s3-presigned-url-s3presignedurl-EF2SRE90YXDY?BucketName=`,
+      aws_presigned_lambda: `https://fathomless-coast-21413.herokuapp.com/https://ao9o9jz806.execute-api.us-east-2.amazonaws.com/gets3presigned?BucketName=`,
       aws_s3_post_url: `https://fathomless-coast-21413.herokuapp.com/https://experimentdata2020.s3.amazonaws.com`,
       // Variables for tracking how much time is spent on instructions
       instrucStart: 0,
@@ -954,7 +953,8 @@ export default {
           .post(this.aws_s3_post_url, form_data, {
             headers: {
               "Content-Type": "multipart/form-data",
-              "x-requested-with": "xxxx",
+              "x-requested-with": "XMLHttpRequest",
+              "origin": "https://m3labexperiment.com",
             },
           })
           .then((response) => {
