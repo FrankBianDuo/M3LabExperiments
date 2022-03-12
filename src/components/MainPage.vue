@@ -922,6 +922,7 @@ export default {
       return String(moment(String(new Date())).format("YYYYMMDDhhmmss")) + text;
     },
     fetchPresignedUrl() {
+      let parent = this
       if (this.data_sent_to_s3 == true) {
         return;
       }
@@ -970,6 +971,7 @@ export default {
         //     console.log(e);
         //   });
         Vue.axios.put(response.data, this.$papa.unparse(this.blockOneResults));
+        parent.data_sent_to_s3 = true;
       });
     },
     instructionStart(value) {
