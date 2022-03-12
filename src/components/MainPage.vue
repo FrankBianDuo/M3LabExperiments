@@ -925,48 +925,51 @@ export default {
       if (this.data_sent_to_s3 == true) {
         return;
       }
-      let parent = this;
       let sending_url =
         this.aws_presigned_lambda +
         this.aws_bucket_name +
         "&ObjectName=" +
         this.blockOneFileName();
-      Vue.axios.get(sending_url).then((response) => {
-        let parent_second = parent;
+      Vue.axios.get(sending_url, {
+        "x-requested-with": "XMLHttpRequest",
+        "Origin": "https://m3labexperiment.com",
+      }).then((response) => {
+        // let parent_second = parent;
         // JSON responses are automatically parsed.
         // eslint-disable-next-line no-console
         console.log(response.data);
-        var raw_data = response.data.replace(/'/g, '"');
-        let parsed_data = JSON.parse(raw_data);
+        // var raw_data = response.data.replace(/'/g, '"');
+        // let parsed_data = JSON.parse(raw_data);
         // eslint-disable-next-line no-console
-        console.log(parsed_data);
-        let post_request_body = parsed_data["fields"];
-        post_request_body["file"] = this.$papa.unparse(this.blockOneResults);
-        // eslint-disable-next-line no-console
-        console.log(post_request_body);
-        var form_data = new FormData();
+        // console.log(parsed_data);
+        // let post_request_body = parsed_data["fields"];
+        // post_request_body["file"] = this.$papa.unparse(this.blockOneResults);
+        // // eslint-disable-next-line no-console
+        // console.log(post_request_body);
+        // var form_data = new FormData();
 
-        for (var key in post_request_body) {
-          form_data.append(key, post_request_body[key]);
-        }
-        Vue.axios
-          .post(this.aws_s3_post_url, form_data, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              "x-requested-with": "XMLHttpRequest",
-              "origin": "https://m3labexperiment.com",
-            },
-          })
-          .then((response) => {
-            // 204 No Content
-            // eslint-disable-next-line no-console
-            console.log(response.data);
-            parent_second.data_sent_to_s3 = true;
-          })
-          .catch((e) => {
-            // eslint-disable-next-line no-console
-            console.log(e);
-          });
+        // for (var key in post_request_body) {
+        //   form_data.append(key, post_request_body[key]);
+        // }
+        // Vue.axios
+        //   .post(this.aws_s3_post_url, form_data, {
+        //     headers: {
+        //       "Content-Type": "multipart/form-data",
+        //       "x-requested-with": "XMLHttpRequest",
+        //       "origin": "https://m3labexperiment.com",
+        //     },
+        //   })
+        //   .then((response) => {
+        //     // 204 No Content
+        //     // eslint-disable-next-line no-console
+        //     console.log(response.data);
+        //     parent_second.data_sent_to_s3 = true;
+        //   })
+        //   .catch((e) => {
+        //     // eslint-disable-next-line no-console
+        //     console.log(e);
+        //   });
+        Vue.axios.put(response.data, this.$papa.unparse(this.blockOneResults));
       });
     },
     instructionStart(value) {
