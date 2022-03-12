@@ -6,8 +6,9 @@ exports.handler = async (event) => {
     
     // Set the Region 
     AWS.config.update({
-      accessKeyId: 'AKIA5ZLY3JU5VGDNM46F',
-      secretAccessKey: '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',
+      // fill these two lines in
+      accessKeyId: '',
+      secretAccessKey: '',
       region: 'us-east-2',
       signatureVersion: 'v4'
     });
