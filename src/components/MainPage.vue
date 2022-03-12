@@ -926,12 +926,12 @@ export default {
       if (this.data_sent_to_s3 == true) {
         return;
       }
-      let sending_url =
+      let sending_url_1 =
         this.aws_presigned_lambda +
         this.aws_bucket_name +
         "&ObjectName=" +
         this.blockOneFileName();
-      Vue.axios.get(sending_url, {
+      Vue.axios.get(sending_url_1, {
         "x-requested-with": "XMLHttpRequest",
         "Origin": "https://m3labexperiment.com",
       }).then((response) => {
@@ -940,12 +940,12 @@ export default {
         parent.data_sent_to_s3 = true;
       });
       //Same thing for Experiment 3.
-      let sending_url =
+      let sending_url_2 =
         this.aws_presigned_lambda +
         this.aws_bucket_name +
         "&ObjectName=" +
         this.blockThreeFileName();
-      Vue.axios.get(sending_url, {
+      Vue.axios.get(sending_url_2, {
         "x-requested-with": "XMLHttpRequest",
         "Origin": "https://m3labexperiment.com",
       }).then((response) => {
