@@ -218,8 +218,8 @@ export default {
     //       .map((x, i) => i)
     //   ),
 
-      avatar_list: this.no_twins(Array(324).fill().map((x, i) => i))[0],
-      avatar_list_2: this.no_twins(Array(324).fill().map((x, i) => i))[1],
+      avatar_list: this.no_twins_hack(Array(324).fill().map((x, i) => i), Array(324).fill().map((x, i) => i))[0],
+      avatar_list_2: this.no_twins_hack(Array(324).fill().map((x, i) => i), Array(324).fill().map((x, i) => i))[1],
       current_avatar: 0,
       current_progress: 0,
       current_arrow: "Dot Boxes.png",
@@ -455,57 +455,55 @@ export default {
       return array;
     },
 
-    no_twins(array) {
+    no_twins(array1, array2) {
         // "Returns two shuffeled lists with no twins."
         // "Twins are two values with the same index in"
         // "both lists.  This prevents identical avatars."
-
-        // I don't know how to get the commented code to work because I'm not familiar 
-        // with javascript.  It works in Python.  I created a hack solution at the bottom.
-
-        var shuffle_lst_1 = this.shuffle(array);
-        var shuffle_lst_2 = this.shuffle(array);
+        var shuffle_lst_1 = this.shuffle(array1);
+        var shuffle_lst_2 = this.shuffle(array2);
         var twins_idxs = [];
         var twins_vals = [];
-
-        console.log("WTF?")
-
-        // for (i = 0; i < array.length; i++) {console.log("WTF?")}
-
-        // for (i = 0; i < shuffle_lst_1.length; i++) {
-        //     var val1 = shuffle_lst_1[i];
-        //     var val2 = shuffle_lst_2[i];
-
-        //     if (val1 == val2) {
-        //         twins_idxs.push(i);
-        //         twins_vals.push(val1);}
-        //         }
-
-        // while (twins_vals.length > 0) {
-
-        //     if (twins_vals.length % 2 == 1) {
-        //         var count = 0;
-        //         while (twins_idxs.includes(count)) {count += 1}
-        //         shuffle_lst_2[twins_idxs[0]] = shuffle_lst_2[count];
-        //         shuffle_lst_2[count] = twins_idxs[0];
-        //         twins_idxs.shift();
-        //         twins_vals.shift();
-        //     } else {
-        //         shuffle_lst_2[twins_idxs[0]] = twins_vals[1];
-        //         shuffle_lst_2[twins_idxs[1]] = twins_vals[0];
-        //         twins_idxs.shift();
-        //         twins_vals.shift();
-        //         twins_idxs.shift();
-        //         twins_vals.shift();}}
-                
-        // Hack solution here.  It assumes that the number of trials is less than half of the number of avatars.
-        var evens_lst = array.filter(number => number % 2 == 0);
-        var oddss_lst = array.filter(number => number % 2 == 1);
-        var shuffle_lst_1 = this.shuffle(evens_lst);
-        var shuffle_lst_2 = this.shuffle(oddss_lst);
-
-
+        for (i = 0; i < shuffle_lst_1.length; i++) {
+            var val1 = shuffle_lst_1[i];
+            var val2 = shuffle_lst_2[i];
+            if (val1 == val2) {
+                twins_idxs.push(i);
+                twins_vals.push(val1);}}
+        while (twins_vals.length > 0) {
+            if (twins_vals.length % 2 == 1) {
+                var count = 0;
+                while (twins_idxs.includes(count)) {count += 1}
+                shuffle_lst_2[twins_idxs[0]] = shuffle_lst_2[count];
+                shuffle_lst_2[count] = twins_idxs[0];
+                twins_idxs.shift();
+                twins_vals.shift();
+            } else {
+                shuffle_lst_2[twins_idxs[0]] = twins_vals[1];
+                shuffle_lst_2[twins_idxs[1]] = twins_vals[0];
+                twins_idxs.shift();
+                twins_vals.shift();
+                twins_idxs.shift();
+                twins_vals.shift();}}
+        for (i = 0; i < shuffle_lst_1.length; i++) {
+            if (shuffle_lst_1[i] == shuffle_lst_2[i]) {
+                console.log(shuffle_lst_1[i]);
+                console.log(shuffle_lst_2[i]);
+            } else {
+                console.log("We're good!");}}
         return [shuffle_lst_1, shuffle_lst_2];},
+
+    no_twins_hack(array1, array2) {
+        // no_twins() is a better version of this function but I can't get it to work.
+        // I've tested the logic in Python and an online compiler but there is still
+        // something I don't get about coding in Vuejs.  This assumes that the number
+        // of trials is less than half of the number of avatars.
+        var evens_lst = array1.filter(number => number % 2 == 0);
+        var oddss_lst = array2.filter(number => number % 2 == 1);
+        var shuffle_lst_1a = this.shuffle(evens_lst);
+        var shuffle_lst_2a = this.shuffle(oddss_lst);
+        var shuffle_lst_1b = shuffle_lst_1a.concat(shuffle_lst_2a);
+        var shuffle_lst_2b = shuffle_lst_2a.concat(shuffle_lst_1a);
+        return [shuffle_lst_1b, shuffle_lst_2b];},
   
 
     // Helper function for vertical positioning balance
