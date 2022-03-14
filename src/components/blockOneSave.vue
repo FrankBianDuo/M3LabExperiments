@@ -679,7 +679,7 @@ export default {
         parent.current_avatar += 1;
         parent.global_size_ectr_1 =
           "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.5s;";
-      }, 400);
+      }, 325);
       setTimeout(function () {
         parent.fading = false;
 
@@ -716,7 +716,7 @@ export default {
         parent.arrow_style_one =
           "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%; transition: opacity 0.15s;";
         parent.reset_ectr2_visuals();
-      }, 750);
+      }, 1000);
     },
     shuffle(array) {
       var currentIndex = array.length,
