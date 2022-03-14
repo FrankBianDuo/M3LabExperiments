@@ -1,9 +1,9 @@
 <template>
   <!-- Here is the template section, where all the HTML code takes action -->
   <b-modal
-    id="modal-center"
+    id="modal-center-2"
     size="xl"
-    title="Experiment 1"
+    title="Experiment 2"
     v-model="show"
     :hide-footer="true"
     :header-bg-variant="headerBgVariant"
@@ -214,7 +214,8 @@ import datasheet_sample from "./newSample4.json";
 // The origional payoff structures come from "./payoff.json", so to revert back just delete the '2'.
 import payoff_structure from "./payoff4.json";
 export default {
-  name: "BlockOne",
+    name: "BlockTwo",
+  // name: "BlockOne",
   props: ["participant_name"],
   components: {},
   data() {
@@ -688,10 +689,10 @@ export default {
         parent.prediction = null;
         parent.show_cur_num = false;
         // parent.current_avatar += 1;
-        parent.$emit("blockOneDone", parent.combinations);
+        parent.$emit("blockTwoDone", parent.combinations);
         if (parent.current_avatar == parent.max_avatar) {
-          parent.$bvModal.hide("modal-center");
-          alert("Block #1 finished");
+          parent.$bvModal.hide("modal-center-2");
+          alert("Experiment #2 finished");
           // FIXME: connect this to the survey pages
           // parent.b_show_1 = false;
           parent.$bvModal.show("modal-center-FR1");

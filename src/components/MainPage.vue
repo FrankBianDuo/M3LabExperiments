@@ -359,7 +359,8 @@
 <script>
 import moment from "moment";
 import BlockOne from "./blockOne.vue";
-import BlockTwo from "./blockTwo.vue";
+import BlockTwo from "./blockOneSave.vue";
+// import BlockTwo from "./blockTwo.vue";
 // import BlockThree from "./blockThreeb.vue";
 import BlockThree from "./blockThree.vue";
 import BotStopper from "./tutorialPages/BotStopper.vue";
@@ -1247,6 +1248,7 @@ export default {
     blockTwoFinished(results) {
       // this.b_show_2 = false
       // this.b_show_3 = true
+      this.b_show_2 = true;
       this.finished_2 = true;
       this.blockTwoResults = this.processTwoResults(results);
     },    
@@ -1399,6 +1401,147 @@ export default {
       output.sort(this.blockOneSort);
       return output;
     },
+    processTwoResults(raw) {
+      var i;
+      var output = [];
+      var triplets_id = {}
+      var triplets_response = {}
+      // eslint-disable-next-line no-console
+      console.log(this.participant_generated_id);
+      for (i = 0; i < raw.length; i++) {
+        // if (raw[i].triplets in triplets_id) {
+        //   triplets_id[raw[i].triplets] += "I"
+        // } else {
+        //   triplets_id[raw[i].triplets] = "I"
+        // }
+        triplets_id[raw[i].triplets] += "I"
+        var enctr_1_flipped = raw[i].enctr_1_reverse.toString();
+        // eslint-disable-next-line no-console
+        console.log("enctr_1_flipped: " + enctr_1_flipped);
+        var enctr_2_flipped = raw[i].enctr_2_reverse.toString();
+        // eslint-disable-next-line no-console
+        console.log("enctr_2_flipped: " + enctr_2_flipped);
+        // eslint-disable-next-line no-console
+        console.log(enctr_1_flipped + enctr_2_flipped);
+        var triplet_rank = triplets_id[raw[i].triplets].length
+        var current = {
+          Participant_ID: this.participant_generated_id,
+          Trial_Number: raw[i].trial_number,
+          Room1: raw[i].encnt1_cond,
+          Room2: raw[i].encnt2_cond,
+          Label: raw[i].label,
+          Vertical_Position_Lett: raw[i].vert_pos,
+          Vertical_Position_Num: this.vertPositMatch(raw[i].vert_pos),
+          Vertical_Position: "\"" + enctr_1_flipped + enctr_2_flipped + "\"",
+          Triplets: raw[i].triplets,
+          Triplet_Order: triplet_rank,
+          Trial_order: raw[i].trial_order,
+          Trial_order_segment: String(1 + Math.floor(i / 23)),
+          Avatar_ID: raw[i].avatar_id,
+          // Block_order: "123",
+          // Atomic_Choice: this.atomic_choice(raw[i].trial_number, raw[i].encnt2_cond),
+          GJE: this.GJE(raw[i].OriginalM1AvatarPayoffA, raw[i].OriginalM1ParticipantPayoffA, raw[i].OriginalM1AvatarPayoffB, raw[i].OriginalM1ParticipantPayoffB),
+          Atomic_Choice: raw[i].choice_type,
+          Choice_Deg: raw[i].choice_deg,
+          Sure_Thing: raw[i].sure_thing,
+          
+          RightSideUpDown: this.UpDown(raw[i].keypress, raw[i].enctr_1_reverse),
+          Key_Press: raw[i].keypress,
+          Prediction: raw[i].prediction,
+          Pred_RT: raw[i].reaction_time_prediction,
+          Betting_Choice: raw[i].trust,
+          Betting_RT: raw[i].reaction_time_trust,
+          Resp_Comb: this.resp_comb(raw[i].prediction, raw[i].trust),
+          P_Comb: null,
+          C_Comb: null,
+          Res_Comb: null,
+          Control_Rat: null,
+          Subject_Prob: null,
+          // Similarity_Score: raw[i].form,       //Testing importing experiment 3 results here.
+          // Reaction_Time: raw[i].reaction_time, //Testing importing experiment 3 results here.
+
+          // InstructionTimeSpent: this.instrucTime,
+          // InstructionAnswers: this.parsed_answers,
+          // InstructionWrongAns: this.parsed_wrong_ans,
+
+          // Survey_1: this.end_survey_form.optn_1_1 + this.end_survey_form.optn_1_2 + this.end_survey_form.optn_1_3 + this.end_survey_form.optn_1_4,
+          // Survey_2: this.end_survey_form.optn_2_1 + this.end_survey_form.optn_2_2 + this.end_survey_form.optn_2_3 + this.end_survey_form.optn_2_4,
+          // Survey_3: this.end_survey_form.optn_3_1 + this.end_survey_form.optn_3_2 + this.end_survey_form.optn_3_3 + this.end_survey_form.optn_3_4,
+          // Survey_4: this.end_survey_form.optn_4_1 + this.end_survey_form.optn_4_2 + this.end_survey_form.optn_4_3 + this.end_survey_form.optn_4_4,
+
+          // // 'Inst_Rat': this.instRat(raw[i].prediction, raw[i].trust),
+          // // 'Rat_Sure': this.ratSure(),
+          // // 'Rat_Act': this.ratAct(),
+          // // 'Rat_Deg': this.ratDeg(),
+          // // 'Red_Flag': this.redFlag(raw),
+          // // The generating functions here are still bugged... using None values for now
+
+          // // Similarity_Score_1: this.raw[i].sim_score,
+          // // Similarity_Score_2: this.similarity_scores.simi_score,
+          // // Similarity: this.raw[i].sim_score,
+          // Date: this.end_survey_form.date,
+          // Age: this.end_survey_form.optn_1_3,
+          // Gender: this.end_survey_form.gender,
+          // Old_bro: this.end_survey_form.olderBro,
+          // Old_sis: this.end_survey_form.olderSis,
+          // Yng_bro: this.end_survey_form.youngerBro,
+          // Yng_sis: this.end_survey_form.youngerSis,
+          // Happy: this.end_survey_form.happy,
+          // Love: this.end_survey_form.love,
+          // English: this.end_survey_form.english,
+          // School: this.end_survey_form.school,
+          // Money: this.end_survey_form.money,
+          // Gods: this.end_survey_form.gods,
+          // Political: this.end_survey_form.political,
+          // Attractive: this.end_survey_form.attractive,
+          // Power: this.end_survey_form.power,
+          // Country: this.end_survey_form.country,
+          // Race: this.end_survey_form.race,
+          // sleep01: this.end_survey_form.sleep01,
+          // sleep02: this.end_survey_form.sleep02,
+          // bigfive01: this.end_survey_form.bigfive01,
+          // bigfive02: this.end_survey_form.bigfive02,
+          // bigfive03: this.end_survey_form.bigfive03,
+          // bigfive04: this.end_survey_form.bigfive04,
+          // bigfive05: this.end_survey_form.bigfive05,
+          // bigfive06: this.end_survey_form.bigfive06,
+          // bigfive07: this.end_survey_form.bigfive07,
+          // bigfive08: this.end_survey_form.bigfive08,
+          // bigfive09: this.end_survey_form.bigfive09,
+          // bigfive10: this.end_survey_form.bigfive10,
+          // Agreement: this.end_survey_form.agree,
+          // WRQ01: this.FRResults[1],
+          // WRQ02: this.FRResults[2],
+          // WRQ03: this.FRResults[3],
+          // WRQ04: this.FRResults[4],
+          // WRQ05: this.FRResults[5],
+          // WRQ06: this.FRResults[6],
+          // WRQ07: this.FRResults[7],
+          // WRQ08: this.FRResults[8],
+          // WRQ09: this.FRResults[9],
+          // WRQ10: this.FRResults[10],
+          // WRQ11: this.FRResults[11],
+          // WRQ12: this.FRResults[12],
+          // WRQ13: this.FRResults[13],
+        };
+        if (raw[i].triplets in triplets_response) {
+          triplets_response[raw[i].triplets] += (',' + current.Resp_Comb)
+        } else {
+          triplets_response[raw[i].triplets] = current.Resp_Comb
+        }
+        
+        output.push(current);
+      }
+      for (var k = 0; k < output.length; k++) {
+        output[k].Res_Comb = triplets_response[output[k].Triplets]
+        output[k].P_Comb = this.pcomb(triplets_response[output[k].Triplets])
+        output[k].C_Comb = this.ccomb(triplets_response[output[k].Triplets])
+        output[k].Control_Rat = this.control_rat(output[k].C_Comb)
+        output[k].Subject_Prob = this.subject_prob(output[k].C_Comb)
+      }
+      output.sort(this.blockOneSort);
+      return output;
+    },    
     pcomb(res_sequence) {
       if (res_sequence.length != 8) {
         return "empty"
@@ -1487,28 +1630,28 @@ export default {
 
       return "\'" + first_symbol  + second_symbol
     },
-    processTwoResults(raw) {
-      var output = [];
-      for (var i = 0; i < raw.length; i++) {
-        var current = {
-          participant_name: this.form.name,
-          "Pay Off Structure": raw[i].game_condition,
-          "Avatar Present": raw[i].avatar,
-          "Template Selected": raw[i].choice,
-          Date: this.form.date,
-          Gender: this.form.optn_1_4,
-          "RA Present": this.form.ra,
-          "Block Order": "123",
-          Age: this.form.optn_1_3,
-          "Younger Brother(s)": this.form.youngerBro,
-          "Younger Sister(s)": this.form.youngerSis,
-          "Older Brother(s)": this.form.olderBro,
-          "Older Sister(s)": this.form.olderSis,
-        };
-        output.push(current);
-      }
-      return output;
-    },
+    // processTwoResults(raw) {
+    //   var output = [];
+    //   for (var i = 0; i < raw.length; i++) {
+    //     var current = {
+    //       participant_name: this.form.name,
+    //       "Pay Off Structure": raw[i].game_condition,
+    //       "Avatar Present": raw[i].avatar,
+    //       "Template Selected": raw[i].choice,
+    //       Date: this.form.date,
+    //       Gender: this.form.optn_1_4,
+    //       "RA Present": this.form.ra,
+    //       "Block Order": "123",
+    //       Age: this.form.optn_1_3,
+    //       "Younger Brother(s)": this.form.youngerBro,
+    //       "Younger Sister(s)": this.form.youngerSis,
+    //       "Older Brother(s)": this.form.olderBro,
+    //       "Older Sister(s)": this.form.olderSis,
+    //     };
+    //     output.push(current);
+    //   }
+    //   return output;
+    // },
     // To be removed
     tuneNum(input) {
       if (input == "1") {

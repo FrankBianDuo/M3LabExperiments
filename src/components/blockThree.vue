@@ -315,7 +315,7 @@ export default {
                 parent.avatar_2B_style = "position: absolute; max-width: 8.5%; max-height: auto; left: 63.6%; top: 9.0%; opacity: 100%; transition: opacity 0.25s;";                
                 parent.primedSpacebar1 = true;
                 parent.resetSlider();
-            }, 1000); 
+            }, 1200); 
         } 
       }
     });
@@ -342,7 +342,7 @@ export default {
       this.combinations[this.current_avatar].avatar_id2 = this.avatar_list_2[this.current_avatar];
       setTimeout(function () {
         parent.current_avatar += 1;
-      }, 400);
+      }, 325);
       setTimeout(function () {
 
         parent.show_cur_num = false;
