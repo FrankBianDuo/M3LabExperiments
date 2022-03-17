@@ -731,7 +731,7 @@ export default {
         // parent.av_idx2 += 1;
         parent.global_size_ectr_1 =
           "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.5s;";
-      }, 325);
+      }, 400);
       setTimeout(function () {
         parent.fading = false;
 

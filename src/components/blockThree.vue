@@ -342,7 +342,7 @@ export default {
       this.combinations[this.current_avatar].avatar_id2 = this.avatar_list_2[this.current_avatar];
       setTimeout(function () {
         parent.current_avatar += 1;
-      }, 325);
+      }, 400);
       setTimeout(function () {
 
         parent.show_cur_num = false;

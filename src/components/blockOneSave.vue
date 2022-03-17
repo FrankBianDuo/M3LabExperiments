@@ -210,9 +210,9 @@
 
 <script>
 import trialOneTrialData from "./trialData.js";
-import datasheet_sample from "./newSample4.json";
+import datasheet_sample from "./newSample3.json";
 // The origional payoff structures come from "./payoff.json", so to revert back just delete the '2'.
-import payoff_structure from "./payoff4.json";
+import payoff_structure from "./payoff3.json";
 export default {
     name: "BlockTwo",
   // name: "BlockOne",
@@ -679,7 +679,7 @@ export default {
         parent.current_avatar += 1;
         parent.global_size_ectr_1 =
           "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.5s;";
-      }, 325);
+      }, 400);
       setTimeout(function () {
         parent.fading = false;
 
