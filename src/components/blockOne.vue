@@ -47,7 +47,7 @@
           :style="this.global_size_ectr_1"
           :src="
             require(`../assets/Dots/E1 UB${
-              this.combinations[this.current_avatar].M1AvatarPayoffA
+              this.combinations[this.current_avatar].As1
             }.png`)
           "
         />
@@ -55,7 +55,7 @@
           :style="this.global_size_ectr_1"
           :src="
             require(`../assets/Dots/E1 UP${
-              this.combinations[this.current_avatar].M1ParticipantPayoffA
+              this.combinations[this.current_avatar].Ao1
             }.png`)
           "
         />
@@ -63,7 +63,7 @@
           :style="this.global_size_ectr_1"
           :src="
             require(`../assets/Dots/E1 DB${
-              this.combinations[this.current_avatar].M1AvatarPayoffB
+              this.combinations[this.current_avatar].Bs1
             }.png`)
           "
         />
@@ -71,7 +71,7 @@
           :style="this.global_size_ectr_1"
           :src="
             require(`../assets/Dots/E1 DP${
-              this.combinations[this.current_avatar].M1ParticipantPayoffB
+              this.combinations[this.current_avatar].Bo1
             }.png`)
           "
         />
@@ -103,13 +103,21 @@
           :src="require(`../assets/Centered Atoms/E1 Dot Box Black.png`)"
           :style="this.arrow_style_one"
         />
-        <img
+        <!-- <img
           :src="require(`../assets/Centered Atoms/E1 Dot Box Choice Up.png`)"
           :style="this.arrow_style_two"
         />
         <img
           :src="require(`../assets/Centered Atoms/E1 Dot Box Choice Dn.png`)"
           :style="this.arrow_style_three"
+        /> -->
+        <img
+          :src="require(`../assets/Centered Atoms/E1 Dot Box Choice Up.png`)"
+          :style="this.op_choice_up"
+        />
+        <img
+          :src="require(`../assets/Centered Atoms/E1 Dot Box Choice Dn.png`)"
+          :style="this.op_choice_dn"
         />
         <!-- ^^^^^^^^^^^^^^ -->
         <img :src="require('../assets/Centered Atoms/E1 You.png')" :style="this.global_size" />
@@ -132,7 +140,7 @@
           :style="this.global_size"
           :src="
             require(`../assets/Dots/E2 UB${
-              this.combinations[this.current_avatar].M2AvatarPayoffA
+              this.combinations[this.current_avatar].As2
             }.png`)
           "
         />
@@ -140,7 +148,7 @@
           :style="this.global_size"
           :src="
             require(`../assets/Dots/E2 UP${
-              this.combinations[this.current_avatar].M2ParticipantPayoffA
+              this.combinations[this.current_avatar].Ao2
             }.png`)
           "
         />
@@ -148,7 +156,7 @@
           :style="this.global_size"
           :src="
             require(`../assets/Dots/E2 DB${
-              this.combinations[this.current_avatar].M2AvatarPayoffB
+              this.combinations[this.current_avatar].Bs2
             }.png`)
           "
         />
@@ -156,7 +164,7 @@
           :style="this.global_size"
           :src="
             require(`../assets/Dots/E2 DP${
-              this.combinations[this.current_avatar].M2ParticipantPayoffB
+              this.combinations[this.current_avatar].Bo2
             }.png`)
           "
         />
@@ -167,7 +175,7 @@
         <img
           :src="
             require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.combinations[this.current_avatar].av_man2,
+              this.combinations[this.current_avatar].av_man1,
               4
             )}.png`)
           "
@@ -210,7 +218,7 @@
           :style="this.global_size_control_box"
           :src="
             require(`../assets/Dots/E2 CP${
-              this.combinations[this.current_avatar].KeepDots
+              this.combinations[this.current_avatar].sure_thing
             }.png`)
           "
         />
@@ -229,17 +237,17 @@
 </template>
 
 <script>
-import trialOneTrialData from "./trialData.js";
-import datasheet_sample from "./newSample5.json"; //It should be 5
+// import trialOneTrialData from "./trialData.js";
+// import datasheet_sample from "./newSample5.json"; //It should be 5
 // The origional payoff structures come from "./payoff.json", so to revert back just delete the '2'.
-import payoff_structure from "./payoff5.json"; //It should be 5
+import payoff_structure from "./payoff10.json"; //It should be 5
 export default {
   name: "BlockOne",
   props: ["participant_name"],
   components: {},
   data() {
     return {
-      datasheet_sample_data: datasheet_sample,
+      // datasheet_sample_data: datasheet_sample,
       payoff_structure_data: payoff_structure,
       windowsize: "height: 600px;",
       global_size: "position: absolute; width: 70%; height: auto; top: 50px;",
@@ -311,12 +319,17 @@ export default {
       holder_stype: "White",
       arrow_style_one:
         "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%; transition: opacity 0.5s;",
-      arrow_style_two:
+      // arrow_style_two:
+      //   "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.5s;",
+      // arrow_style_three:
+      //   "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.5s;",
+      op_choice_up:
         "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.5s;",
-      arrow_style_three:
+      op_choice_dn:
         "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.5s;",
       arrow_num: "1",
       avatar_num: "1",
+      the_choice: null,
       // This generates an array from 0 to 323
       avatar_list: this.shuffle(
         Array(324)
@@ -331,11 +344,11 @@ export default {
       prediction: null,
       // How many games to run 216 + 8 + 6
       // max_avatar: 234,
-      max_avatar: 216,
+      max_avatar: 160,
       trial_started: 0,
       avatar_choices: ["3", "2"],
       player_payoff: ["1.5", "2", "2.5"],
-      enctr_2_payoff: [
+      response_phase_payoff: [
         {
           p_first: "3",
           a_first: "1.5",
@@ -349,7 +362,7 @@ export default {
           a_second: "1.5",
         },
       ],
-      enctr_1_payoff: trialOneTrialData,
+      // observation_phase_payoff: trialOneTrialData,
       combinations: [],
     };
   },
@@ -539,20 +552,35 @@ export default {
         "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%; transition: opacity 0.5s;";
       let parent = this;
       setTimeout(function () {
-        parent.arrow_num =
-          parent.combinations[parent.current_avatar].a_c_present;
+        // parent.the_choice = parent.combinations[parent.current_avatar].op_choice;
+        parent.the_choice = parent.combinations[parent.current_avatar].observation_phase_choice;
+        // parent.arrow_num =
+        //   parent.combinations[parent.current_avatar].a_c_present;
         parent.arrow_style_one =
           "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.5s;";
-        if (parent.arrow_num == "2") {
-          parent.arrow_style_two =
-            "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%; transition: opacity 0.5s;";
-          // eslint-disable-next-line no-console
-          console.log("arrow 2");
+        // if (parent.arrow_num == "2") {
+        //   parent.arrow_style_two =
+        //     "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%; transition: opacity 0.5s;";
+        //   // eslint-disable-next-line no-console
+        //   console.log("arrow 2");
+        // } else {
+        //   parent.arrow_style_three =
+        //     "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%; transition: opacity 0.5s;";
+        //   // eslint-disable-next-line no-console
+        //   console.log("arrow 3");
+        // }
+        if (parent.the_choice == 0) {
+        // if (parent.op_choice == "up") {
+          parent.op_choice_up = "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%; transition: opacity 0.5s;";
+          console.log("Choose up");
+        } else if (parent.the_choice == 1) {
+        // } else if (parent.op_choice == "dn") {
+          parent.op_choice_dn = "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%; transition: opacity 0.5s;";
+          console.log("Choose dn");
         } else {
-          parent.arrow_style_three =
-            "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%; transition: opacity 0.5s;";
-          // eslint-disable-next-line no-console
-          console.log("arrow 3");
+          parent.op_choice_up = "position: absolute; width: 70%; height: auto; top: 50px; opacity: 50%; transition: opacity 0.5s;";
+          parent.op_choice_dn = "position: absolute; width: 70%; height: auto; top: 50px; opacity: 50%; transition: opacity 0.5s;";
+          console.log("Error!  No Choice!");
         }
       }, 1000);
       setTimeout(function () {
@@ -570,7 +598,7 @@ export default {
         "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%;";
       this.global_size_control_box =
         "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%;";
-      if (this.combinations[this.current_avatar].enctr_2_reverse == 1) {
+      if (this.combinations[this.current_avatar].response_phase_reverse == 1) {
         this.prediction = 0;
       } else {
         this.prediction = 1;
@@ -589,7 +617,7 @@ export default {
       this.global_size_control_box =
         "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%;";
       // this.current_arrow = 'Pred Dn.png'
-      if (this.combinations[this.current_avatar].enctr_2_reverse == 1) {
+      if (this.combinations[this.current_avatar].response_phase_reverse == 1) {
         this.prediction = 1;
       } else {
         this.prediction = 0;
@@ -750,6 +778,7 @@ export default {
           // parent.$bvModal.show("modal-center-FR1");
           // parent.$bvModal.show("modal-center-3");
           parent.$bvModal.show("modal-center-SimInstr");
+          // parent.$bvModal.show("modal-center-survey1");
         }
         if (
           parent.current_avatar == 12 ||
@@ -763,10 +792,12 @@ export default {
           // 1000 = 1s
         }
         parent.show_prior = 1;
-        parent.arrow_style_two =
-          "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.15s;";
-        parent.arrow_style_three =
-          "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.15s;";
+        // parent.arrow_style_two =
+        //   "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.15s;";
+        // parent.arrow_style_three =
+        //   "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.15s;";
+        parent.op_choice_up = "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.15s;";
+        parent.op_choice_dn = "position: absolute; width: 70%; height: auto; top: 50px; opacity: 0%; transition: opacity 0.15s;";
         parent.arrow_style_one =
           "position: absolute; width: 70%; height: auto; top: 50px; opacity: 100%; transition: opacity 0.15s;";
         parent.reset_ectr2_visuals();
@@ -811,6 +842,36 @@ export default {
       temp_struct["p_second"] = temp_2;
       return temp_struct;
     },
+    suf_choice(avatar_n, as1, ao1, bs1, bo1) {
+      var pds = as1 - bs1;
+      var pdo = ao1 - bo1;
+      if (avatar_n == 1) {
+        var value_s = 1;
+        var value_o = 1;
+      } else if (avatar_n == 2) {
+        var value_s = 1;
+        var value_o = 0;
+      } else if (avatar_n == 3) {
+        var value_s = 1;
+        var value_o = -1;
+      } else {
+        var value_s = -1;
+        var value_o = 0;
+      }   
+      var utility_A = value_s *  pds       + value_o *  pdo;
+      var utility_B = value_s * (pds * -1) + value_o * (pdo * -1);   
+      if (utility_A > utility_B) {
+        var choose_this = 0;
+      } else if (utility_A < utility_B) {
+        var choose_this = 1;
+      } else {
+        var choose_this = String(Math.floor(Math.random()));
+      } 
+      console.log(avatar_n, value_s, value_o, as1, ao1, bs1, bo1, utility_A, utility_B, choose_this)
+      // return [choose_this, avatar_n, value_s, value_o, as1, ao1, bs1, bo1, utility_A, utility_B, choose_this]
+      return choose_this           
+    },
+
     // Core function in this file
     // buildCombinations constructs an array that contains all information needed to carry out a randomized block #1
     // This array also contains data slots that will be filled as the participants progress
@@ -818,186 +879,109 @@ export default {
       var i = 0
       var trials = []
       var av_roles_1 = this.shuffle([8, 56, 107, 123, 154, 204, 239, 274, 297]);
-      var av_roles_2 = []
-      for (var ele of this.shuffle([8, 56, 107, 123, 154, 204, 239, 274, 297])) {
-        if (ele != av_roles_1[0]) {
-          av_roles_2.push(ele)
-        }
-      }
-      for (i = 0; i < this.max_avatar; i++) {
-        var halfway = Math.ceil(this.max_avatar / 2);
-        var pds = this.payoff_structure_data[i]["M1AvatarPayoffA"] - this.payoff_structure_data[i]["M1AvatarPayoffB"];
-        var pdo = this.payoff_structure_data[i]["M1ParticipantPayoffA"] - this.payoff_structure_data[i]["M1ParticipantPayoffB"];
-        var New_Av1 = 0;
-        var New_Av2 = 0;
 
-        if (i < halfway) {               // First half of trials
-          if (pds == 0 && pdo == 0) {
-            var New_Av1 = av_roles_1[0]; // R1: Baseline
-            var New_Av2 = av_roles_1[0]; // R2: Baseline
-          } else if (pds < 0 && pdo > 0) {
-            var New_Av1 = av_roles_1[1]; // R1: Helpful
-            var New_Av2 = av_roles_1[1]; // R2: Helpful           
-          } else if (pds == 0 && pdo > 0) {
-            var New_Av1 = av_roles_1[2]; // R1: Benevolant
-            var New_Av2 = av_roles_1[2]; // R2: Benevolant           
-          } else if (pds > 0 && pdo > 0) {
-            var New_Av1 = av_roles_1[3]; // R1: Win-win
-            var New_Av2 = av_roles_1[3]; // R2: Win-win           
-          } else if (pds > 0 && pdo == 0) {
-            var New_Av1 = av_roles_1[4]; // R1: Gainful
-            var New_Av2 = av_roles_1[4]; // R2: Gainful           
-          } else if (pds > 0 && pdo < 0) {
-            var New_Av1 = av_roles_1[5]; // R1: Selfish
-            var New_Av2 = av_roles_1[5]; // R2: Selfish           
-          } else if (pds == 0 && pdo < 0) {
-            var New_Av1 = av_roles_1[6]; // R1: Sadistic
-            var New_Av2 = av_roles_1[6]; // R2: Sadistic           
-          } else if (pds < 0 && pdo < 0) {
-            var New_Av1 = av_roles_1[7]; // R1: Malicious
-            var New_Av2 = av_roles_1[7]; // R2: Malicious           
-          } else if (pds < 0 && pdo == 0) {
-            var New_Av1 = av_roles_1[8]; // R1: Masochistic
-            var New_Av2 = av_roles_1[8]; // R2: Masochistic           
-          } 
-        } else {                         // Second half of trials
-          if (pds == 0 && pdo == 0) {
-            var New_Av1 = av_roles_1[0]; // R1: Baseline
-            var New_Av2 = av_roles_1[0]; // R2: Baseline
-          } else if (pds < 0 && pdo > 0) {
-            var New_Av1 = av_roles_2[0]; // R1: Helpful
-            var New_Av2 = av_roles_2[0]; // R2: Helpful           
-          } else if (pds == 0 && pdo > 0) {
-            var New_Av1 = av_roles_2[1]; // R1: Benevolant
-            var New_Av2 = av_roles_2[1]; // R2: Benevolant           
-          } else if (pds > 0 && pdo > 0) {
-            var New_Av1 = av_roles_2[2]; // R1: Win-win
-            var New_Av2 = av_roles_2[2]; // R2: Win-win           
-          } else if (pds > 0 && pdo == 0) {
-            var New_Av1 = av_roles_2[3]; // R1: Gainful
-            var New_Av2 = av_roles_2[3]; // R2: Gainful           
-          } else if (pds > 0 && pdo < 0) {
-            var New_Av1 = av_roles_2[4]; // R1: Selfish
-            var New_Av2 = av_roles_2[4]; // R2: Selfish           
-          } else if (pds == 0 && pdo < 0) {
-            var New_Av1 = av_roles_2[5]; // R1: Sadistic
-            var New_Av2 = av_roles_2[5]; // R2: Sadistic           
-          } else if (pds < 0 && pdo < 0) {
-            var New_Av1 = av_roles_2[6]; // R1: Malicious
-            var New_Av2 = av_roles_2[6]; // R2: Malicious           
-          } else if (pds < 0 && pdo == 0) {
-            var New_Av1 = av_roles_2[7]; // R1: Masochistic
-            var New_Av2 = av_roles_2[7]; // R2: Masochistic           
-          }           
-        }
+      for (i = 0; i < this.max_avatar; i++) {
 
         var new_comb = {
+          triplet: this.payoff_structure_data[i]["Triplet"],
           label: this.payoff_structure_data[i]["Label"],
-          M1AvatarPayoffA: this.payoff_structure_data[i]["M1AvatarPayoffA"],
-          M1ParticipantPayoffA: this.payoff_structure_data[i]["M1ParticipantPayoffA"],
-          M1AvatarPayoffB: this.payoff_structure_data[i]["M1AvatarPayoffB"],
-          M1ParticipantPayoffB: this.payoff_structure_data[i]["M1ParticipantPayoffB"],
-          M2AvatarPayoffA: this.payoff_structure_data[i]["M2AvatarPayoffA"],
-          M2ParticipantPayoffA: this.payoff_structure_data[i]["M2ParticipantPayoffA"],
-          M2AvatarPayoffB: this.payoff_structure_data[i]["M2AvatarPayoffB"],
-          M2ParticipantPayoffB: this.payoff_structure_data[i]["M2ParticipantPayoffB"],
-          KeepDots: this.payoff_structure_data[i]["KeepDots"],
+          As1: this.payoff_structure_data[i]["As1"],
+          Ao1: this.payoff_structure_data[i]["Ao1"],
+          Bs1: this.payoff_structure_data[i]["Bs1"],
+          Bo1: this.payoff_structure_data[i]["Bo1"],
+          As2: this.payoff_structure_data[i]["As2"],
+          Ao2: this.payoff_structure_data[i]["Ao2"],
+          Bs2: this.payoff_structure_data[i]["Bs2"],
+          Bo2: this.payoff_structure_data[i]["Bo2"],
+          sure_thing: this.payoff_structure_data[i]["ST"],
           // 2 means up and 3 means down
-          a_c: "2",
+          // a_c: "2",
+          // a_c: this.op_choice,
           // following are original dots data
-          OriginalM1AvatarPayoffA: this.payoff_structure_data[i]["M1AvatarPayoffA"],
-          OriginalM1ParticipantPayoffA: this.payoff_structure_data[i]["M1ParticipantPayoffA"],
-          OriginalM1AvatarPayoffB: this.payoff_structure_data[i]["M1AvatarPayoffB"],
-          OriginalM1ParticipantPayoffB: this.payoff_structure_data[i]["M1ParticipantPayoffB"],
-          OriginalM2AvatarPayoffA: this.payoff_structure_data[i]["M2AvatarPayoffA"],
-          OriginalM2ParticipantPayoffA: this.payoff_structure_data[i]["M2ParticipantPayoffA"],
-          OriginalM2AvatarPayoffB: this.payoff_structure_data[i]["M2AvatarPayoffB"],
-          OriginalM2ParticipantPayoffB: this.payoff_structure_data[i]["M2ParticipantPayoffB"],
-          a_c_present: "2",
+          Original_As1: this.payoff_structure_data[i]["As1"],
+          Original_Ao1: this.payoff_structure_data[i]["Ao1"],
+          Original_Bs1: this.payoff_structure_data[i]["Bs1"],
+          Original_Bo1: this.payoff_structure_data[i]["Bo1"],
+          Original_As2: this.payoff_structure_data[i]["As2"],
+          Original_Ao2: this.payoff_structure_data[i]["Ao2"],
+          Original_Bs2: this.payoff_structure_data[i]["Bs2"],
+          Original_Bo2: this.payoff_structure_data[i]["Bo2"],
+          // a_c_present: "2",
 
+          observation_phase_choice: this.suf_choice(this.payoff_structure_data[i]["Avatar"], this.payoff_structure_data[i]["As1"], this.payoff_structure_data[i]["Ao1"], this.payoff_structure_data[i]["Bs1"], this.payoff_structure_data[i]["Bo1"]),
+          Original_choice: this.suf_choice(this.payoff_structure_data[i]["Avatar"], this.payoff_structure_data[i]["As1"], this.payoff_structure_data[i]["Ao1"], this.payoff_structure_data[i]["Bs1"], this.payoff_structure_data[i]["Bo1"]),
+          avatar_type: this.payoff_structure_data[i]["Avatar"],
           // This makes the avatar images depend on the payoff structures. 
-          av_man1: New_Av1,
-          av_man2: New_Av2,
+          av_man1: av_roles_1[this.payoff_structure_data[i]["Avatar"]],
 
           // 1 means flipped and 0 means not flipped
-          enctr_1_reverse: Math.floor(Math.random() * 2),
-          enctr_2_reverse: Math.floor(Math.random() * 2),
-          enctr_1_type: this.payoff_categorizer(this.payoff_structure_data[i]["M1AvatarPayoffA"], this.payoff_structure_data[i]["M1ParticipantPayoffA"], this.payoff_structure_data[i]["M1AvatarPayoffB"], this.payoff_structure_data[i]["M1ParticipantPayoffB"]),
-          enctr_2_type: this.payoff_categorizer(this.payoff_structure_data[i]["M2AvatarPayoffA"], this.payoff_structure_data[i]["M2ParticipantPayoffA"], this.payoff_structure_data[i]["M2AvatarPayoffB"], this.payoff_structure_data[i]["M2ParticipantPayoffB"]),
-          // enctr_1_type: this.trial_identifier(this.payoff_structure_data[i]["M1AvatarPayoffA"], this.payoff_structure_data[i]["M1ParticipantPayoffA"], this.payoff_structure_data[i]["M1AvatarPayoffB"], this.payoff_structure_data[i]["M1ParticipantPayoffB"]),
-          // enctr_2_type: this.trial_identifier(this.payoff_structure_data[i]["M2AvatarPayoffA"], this.payoff_structure_data[i]["M2ParticipantPayoffA"], this.payoff_structure_data[i]["M2AvatarPayoffB"], this.payoff_structure_data[i]["M2ParticipantPayoffB"]),
-          // current_avatar: this.paytype_identifier(this.payoff_structure_data[i]["M1AvatarPayoffA"], this.payoff_structure_data[i]["M1ParticipantPayoffA"], this.payoff_structure_data[i]["M1AvatarPayoffB"], this.payoff_structure_data[i]["M1ParticipantPayoffB"]),
+          observation_phase_reverse: Math.floor(Math.random() * 2),
+          response_phase_reverse: Math.floor(Math.random() * 2),
+          // observation_phase_reverse: 0, //Temporarily disabling flipping 
+          // response_phase_reverse: 0,    //Temporarily disabling flipping 
+          observation_phase_type: this.payoff_categorizer(this.payoff_structure_data[i]["As1"], this.payoff_structure_data[i]["Ao1"], this.payoff_structure_data[i]["Bs1"], this.payoff_structure_data[i]["Bo1"]),
+          response_phase_type: this.payoff_categorizer(this.payoff_structure_data[i]["As2"], this.payoff_structure_data[i]["Ao2"], this.payoff_structure_data[i]["Bs2"], this.payoff_structure_data[i]["Bo2"]),
+          // observation_phase_type: this.trial_identifier(this.payoff_structure_data[i]["As1"], this.payoff_structure_data[i]["Ao1"], this.payoff_structure_data[i]["Bs1"], this.payoff_structure_data[i]["Bo1"]),
+          // response_phase_type: this.trial_identifier(this.payoff_structure_data[i]["As2"], this.payoff_structure_data[i]["Ao2"], this.payoff_structure_data[i]["Bs2"], this.payoff_structure_data[i]["Bo2"]),
+          // current_avatar: this.paytype_identifier(this.payoff_structure_data[i]["As1"], this.payoff_structure_data[i]["Ao1"], this.payoff_structure_data[i]["Bs1"], this.payoff_structure_data[i]["Bo1"]),
           vert_pos: null,
           keypress: "",
           trust: null,
           prediction: null,
           reaction_time_trust: null,
           reaction_time_prediction: null,
-          encnt1_cond: this.datasheet_sample_data[i]["Encnt1_Cond"],
-          // encnt1_cond: "N/A",
-          encnt2_cond: this.datasheet_sample_data[i]["Encnt2_Cond"],
-          // encnt2_cond: "N/A",
+
           trial_order: null,
           trial_number: String(i + 1),
           // avatar_id: null,
           // avatar_id: New_Av1,
-
+        }
         
-          // Some fixed column values
-          choice_type: this.datasheet_sample_data[i]["Choice_Type"],
-          choice_deg: this.datasheet_sample_data[i]["Choice_Deg"],
-          sure_thing: this.datasheet_sample_data[i]["Sure_Thing"],
-          // @Frank: uncomment this line to have triplets
-          triplets: this.datasheet_sample_data[i]["Triplets"],
-          // choice_type: "N/A",
-          // choice_deg: "N/A",
-          // sure_thing: "N/A",
-          // triplets: "N/A",
-        }
-        if (i < halfway) {
-          new_comb.avatar_id = New_Av1
-        } else {
-          new_comb.avatar_id = New_Av2
-        }
-        if (new_comb.enctr_1_reverse == 1) {
+
+        // new_comb.avatar_id = New_Av1
+        if (new_comb.observation_phase_reverse == 1) {
           var tempLeft, tempRight
-          tempLeft = new_comb.M1AvatarPayoffA
-          tempRight = new_comb.M1ParticipantPayoffA
-          new_comb.M1AvatarPayoffA = new_comb.M1AvatarPayoffB
-          new_comb.M1ParticipantPayoffA = new_comb.M1ParticipantPayoffB
-          new_comb.M1AvatarPayoffB = tempLeft
-          new_comb.M1ParticipantPayoffB = tempRight
+          tempLeft = new_comb.As1
+          tempRight = new_comb.Ao1
+          new_comb.As1 = new_comb.Bs1
+          new_comb.Ao1 = new_comb.Bo1
+          new_comb.Bs1 = tempLeft
+          new_comb.Bo1 = tempRight
           // temp here flipped the enctr type by munipulating the string
-          let temp = new_comb.enctr_1_type[1] + new_comb.enctr_1_type[0];
-          new_comb.enctr_1_type = temp;
+          let temp = new_comb.observation_phase_type[1] + new_comb.observation_phase_type[0];
+          new_comb.observation_phase_type = temp;
           // Flipping the avatar's choice in ectr1 to reflect the flipped pay off structure
-          if (new_comb.a_c == "2") {
-            new_comb.a_c_present = "3";
+          // if (new_comb.a_c == "2") {
+          //   new_comb.a_c_present = "3";
+          // } else if (new_comb.a_c == "3") {
+          //   new_comb.a_c_present = "2";
+          // }
+          if (new_comb.observation_phase_choice == 0) {
+            new_comb.observation_phase_choice = 1;
+          } else if (new_comb.observation_phase_choice == 1) {
+            new_comb.observation_phase_choice = 0;
           }
         }
-        if (new_comb.enctr_2_reverse == 1) {
+        if (new_comb.response_phase_reverse == 1) {
           var tempLeft, tempRight
-          tempLeft = new_comb.M2AvatarPayoffA
-          tempRight = new_comb.M2ParticipantPayoffA
-          new_comb.M2AvatarPayoffA = new_comb.M2AvatarPayoffB
-          new_comb.M2ParticipantPayoffA = new_comb.M2ParticipantPayoffB
-          new_comb.M2AvatarPayoffB = tempLeft
-          new_comb.M2ParticipantPayoffB = tempRight
+          tempLeft = new_comb.As2
+          tempRight = new_comb.Ao2
+          new_comb.As2 = new_comb.Bs2
+          new_comb.Ao2 = new_comb.Bo2
+          new_comb.Bs2 = tempLeft
+          new_comb.Bo2 = tempRight
 
-          let temp = new_comb.enctr_2_type[1] + new_comb.enctr_2_type[0];
-          new_comb.enctr_2_type = temp;
+          let temp = new_comb.response_phase_type[1] + new_comb.response_phase_type[0];
+          new_comb.response_phase_type = temp;
         }
-        // if (i >= 222) {
-        //   new_comb.enctr_1_type = "CC"
-        // } else if (i >= 216) {
-        //   new_comb.enctr_1_type = "BB"
-        // }
-        new_comb.vert_pos = new_comb.enctr_1_type + new_comb.enctr_2_type;
+
+        // console.log("This is where the arrow flips!", new_comb.a_c_present)
+        new_comb.vert_pos = new_comb.observation_phase_type + new_comb.response_phase_type;
         // new_comb.av_woman = New_Av1;
         trials.push(new_comb);
       }
-      // trials = this.shuffle(trials);
-      trials = this.halfHalfShuffel(trials);
+      trials = this.shuffle(trials);
+      // trials = this.halfHalfShuffel(trials);
       // eslint-disable-next-line no-console
       console.log("combinations!")
       // eslint-disable-next-line no-console

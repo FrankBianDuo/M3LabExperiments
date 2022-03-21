@@ -1274,50 +1274,69 @@ export default {
         //   triplets_id[raw[i].triplets] = "I"
         // }
         triplets_id[raw[i].triplets] += "I"
-        var enctr_1_flipped = raw[i].enctr_1_reverse.toString();
+        var observation_phase_flipped = raw[i].observation_phase_reverse.toString();
         // eslint-disable-next-line no-console
-        console.log("enctr_1_flipped: " + enctr_1_flipped);
-        var enctr_2_flipped = raw[i].enctr_2_reverse.toString();
+        console.log("observation_phase_flipped: " + observation_phase_flipped);
+        var response_phase_flipped = raw[i].response_phase_reverse.toString();
         // eslint-disable-next-line no-console
-        console.log("enctr_2_flipped: " + enctr_2_flipped);
+        console.log("response_phase_flipped: " + response_phase_flipped);
         // eslint-disable-next-line no-console
-        console.log(enctr_1_flipped + enctr_2_flipped);
+        console.log(observation_phase_flipped + response_phase_flipped);
         var triplet_rank = triplets_id[raw[i].triplets].length
         var current = {
           Participant_ID: this.participant_generated_id,
           Trial_Number: raw[i].trial_number,
-          Room1: raw[i].encnt1_cond,
-          Room2: raw[i].encnt2_cond,
+          Triplet: raw[i].triplet,
+          // Trial_Number: raw[i].trial_number,
+          // Room1: raw[i].encnt1_cond,
+          // Room2: raw[i].encnt2_cond,
           Label: raw[i].label,
           // Vertical_Position_Lett: raw[i].vert_pos,
           // Vertical_Position_Num: this.vertPositMatch(raw[i].vert_pos),
-          Vertical_Position: "\"" + enctr_1_flipped + enctr_2_flipped + "\"",
-          Triplets: raw[i].triplets,
-          Triplet_Order: triplet_rank,
+          Vertical_Position: "\"" + observation_phase_flipped + response_phase_flipped + "\"",
+          // Triplets: raw[i].triplets,
+          // Triplet_Order: triplet_rank,
           Trial_order: raw[i].trial_order,
           Trial_order_segment: String(1 + Math.floor(i / 23)),
-          Avatar_ID: raw[i].avatar_id,
+          // Avatar_Pic: raw[i].avatar_id,
+          Avatar_Pic: raw[i].av_man1,
+          Avatar: raw[i].avatar_type,
           // Block_order: "123",
           // Atomic_Choice: this.atomic_choice(raw[i].trial_number, raw[i].encnt2_cond),
-          GJE: this.GJE(raw[i].OriginalM1AvatarPayoffA, raw[i].OriginalM1ParticipantPayoffA, raw[i].OriginalM1AvatarPayoffB, raw[i].OriginalM1ParticipantPayoffB),
-          Atomic_Choice: raw[i].choice_type,
-          Choice_Deg: raw[i].choice_deg,
+          Choice: raw[i].Original_choice,
+          Pay_As1: raw[i].Original_As1,
+          Pay_Ao1: raw[i].Original_Ao1,
+          Pay_Bs1: raw[i].Original_Bs1,
+          Pay_Bo1: raw[i].Original_Bo1,
+          Pay_As2: raw[i].Original_As2,
+          Pay_Ao2: raw[i].Original_Ao2,
+          Pay_Bs2: raw[i].Original_Bs2,
+          Pay_Bo2: raw[i].Original_Bo2,
           Sure_Thing: raw[i].sure_thing,
+          Payoff_Difference_Self_1: raw[i].Original_As1 - raw[i].Original_Bs1,
+          Payoff_Difference_Other_1: raw[i].Original_Ao1 - raw[i].Original_Bo1,
+          Outcome_Disparity_1: raw[i].Original_As1 - raw[i].Original_Ao1,
+          Payoff_Difference_Self_2: raw[i].Original_As2 - raw[i].Original_Bs2,
+          Payoff_Difference_Other_2: raw[i].Original_Ao2 - raw[i].Original_Bo2,
+          Outcome_Disparity_2: raw[i].Original_As2 - raw[i].Original_Ao2,
+
+          // GJE: this.GJE(raw[i].OriginalM1AvatarPayoffA, raw[i].OriginalM1ParticipantPayoffA, raw[i].OriginalM1AvatarPayoffB, raw[i].OriginalM1ParticipantPayoffB),
+          // Atomic_Choice: raw[i].choice_type,
+          // Choice_Deg: raw[i].choice_deg,
+
           
-          RightSideUpDown: this.UpDown(raw[i].keypress, raw[i].enctr_1_reverse),
+          RightSideUpDown: this.UpDown(raw[i].keypress, raw[i].observation_phase_reverse),
           Key_Press: raw[i].keypress,
           Prediction: raw[i].prediction,
           Pred_RT: raw[i].reaction_time_prediction,
           Betting_Choice: raw[i].trust,
           Betting_RT: raw[i].reaction_time_trust,
           Resp_Comb: this.resp_comb(raw[i].prediction, raw[i].trust),
-          P_Comb: null,
-          C_Comb: null,
-          Res_Comb: null,
-          Control_Rat: null,
-          Subject_Prob: null,
-          // Similarity_Score: raw[i].form,       //Testing importing experiment 3 results here.
-          // Reaction_Time: raw[i].reaction_time, //Testing importing experiment 3 results here.
+          Prediction_Combo: null,
+          Betting_Combo: null,
+          // Res_Comb: null,
+          Betting_Rationality: null,
+          Betting_Probability: null,
 
           InstructionTimeSpent: this.instrucTime,
           InstructionAnswers: this.parsed_answers,
@@ -1392,11 +1411,11 @@ export default {
         output.push(current);
       }
       for (var k = 0; k < output.length; k++) {
-        output[k].Res_Comb = triplets_response[output[k].Triplets]
-        output[k].P_Comb = this.pcomb(triplets_response[output[k].Triplets])
-        output[k].C_Comb = this.ccomb(triplets_response[output[k].Triplets])
-        output[k].Control_Rat = this.control_rat(output[k].C_Comb)
-        output[k].Subject_Prob = this.subject_prob(output[k].C_Comb)
+        // output[k].Res_Comb = triplets_response[output[k].Triplets]
+        output[k].Prediction_Combo = this.pcomb(triplets_response[output[k].Triplets])
+        output[k].Betting_Combo = this.ccomb(triplets_response[output[k].Triplets])
+        output[k].Betting_Rationality = this.control_rat(output[k].C_Comb)
+        output[k].Betting_Probability = this.subject_prob(output[k].C_Comb)
       }
       output.sort(this.blockOneSort);
       return output;

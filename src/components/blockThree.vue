@@ -153,7 +153,8 @@
 </template>
 
 <script>
-import payoff_structure from "./payoff6.json";
+// import payoff_structure from "./payoff6.json";
+import payoff_structure from "./payoff11.json";
 export default {
   name: "BlockThree",
   props: ["participant_name"],
@@ -226,7 +227,8 @@ export default {
       show_cur_num: false,
       prediction: null,
       form: {sim_score: ""},
-      max_avatar: 169,
+      // max_avatar: 169,
+      max_avatar: 25,
       // max_avatar: 3,     // Change this.  I'm just checking for transitioning between modals.
       trial_started: 0,
       combinations: [],
