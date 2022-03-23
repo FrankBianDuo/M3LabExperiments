@@ -1268,40 +1268,38 @@ export default {
       // eslint-disable-next-line no-console
       console.log(this.participant_generated_id);
       for (i = 0; i < raw.length; i++) {
-        // if (raw[i].triplets in triplets_id) {
-        //   triplets_id[raw[i].triplets] += "I"
-        // } else {
-        //   triplets_id[raw[i].triplets] = "I"
-        // }
-        triplets_id[raw[i].triplets] += "I"
+        if (raw[i].triplet in triplets_id) {
+          triplets_id[raw[i].triplet] += "I"
+        } else {
+          triplets_id[raw[i].triplet] = "I"
+        }
+        // triplets_id[raw[i].triplet] += "I"
         var observation_phase_flipped = raw[i].observation_phase_reverse.toString();
         // eslint-disable-next-line no-console
-        console.log("observation_phase_flipped: " + observation_phase_flipped);
+        // console.log("observation_phase_flipped: " + observation_phase_flipped);
         var response_phase_flipped = raw[i].response_phase_reverse.toString();
         // eslint-disable-next-line no-console
-        console.log("response_phase_flipped: " + response_phase_flipped);
+        // console.log("response_phase_flipped: " + response_phase_flipped);
         // eslint-disable-next-line no-console
         console.log(observation_phase_flipped + response_phase_flipped);
-        var triplet_rank = triplets_id[raw[i].triplets].length
+        var triplet_rank = triplets_id[raw[i].triplet].length
         var current = {
           Participant_ID: this.participant_generated_id,
           Trial_Number: raw[i].trial_number,
+          Trial_order: raw[i].trial_order,
+          Trial_order_segment: String(1 + Math.floor(i / 16)),
           Triplet: raw[i].triplet,
+          Triplet_Order: triplet_rank,
           // Trial_Number: raw[i].trial_number,
           // Room1: raw[i].encnt1_cond,
           // Room2: raw[i].encnt2_cond,
           Label: raw[i].label,
           // Vertical_Position_Lett: raw[i].vert_pos,
           // Vertical_Position_Num: this.vertPositMatch(raw[i].vert_pos),
-          Vertical_Position: "\"" + observation_phase_flipped + response_phase_flipped + "\"",
-          // Triplets: raw[i].triplets,
-          // Triplet_Order: triplet_rank,
-          Trial_order: raw[i].trial_order,
-          Trial_order_segment: String(1 + Math.floor(i / 23)),
+
           // Avatar_Pic: raw[i].avatar_id,
           Avatar_Pic: raw[i].av_man1,
           Avatar: raw[i].avatar_type,
-          // Block_order: "123",
           // Atomic_Choice: this.atomic_choice(raw[i].trial_number, raw[i].encnt2_cond),
           Choice: raw[i].Original_choice,
           Pay_As1: raw[i].Original_As1,
@@ -1320,11 +1318,10 @@ export default {
           Payoff_Difference_Other_2: raw[i].Original_Ao2 - raw[i].Original_Bo2,
           Outcome_Disparity_2: raw[i].Original_As2 - raw[i].Original_Ao2,
 
-          // GJE: this.GJE(raw[i].OriginalM1AvatarPayoffA, raw[i].OriginalM1ParticipantPayoffA, raw[i].OriginalM1AvatarPayoffB, raw[i].OriginalM1ParticipantPayoffB),
           // Atomic_Choice: raw[i].choice_type,
           // Choice_Deg: raw[i].choice_deg,
 
-          
+          Vertical_Position: "\"" + observation_phase_flipped + response_phase_flipped + "\"",
           RightSideUpDown: this.UpDown(raw[i].keypress, raw[i].observation_phase_reverse),
           Key_Press: raw[i].keypress,
           Prediction: raw[i].prediction,
@@ -1402,20 +1399,20 @@ export default {
           // WRQ12: this.FRResults[12],
           // WRQ13: this.FRResults[13],
         };
-        if (raw[i].triplets in triplets_response) {
-          triplets_response[raw[i].triplets] += (',' + current.Resp_Comb)
+        if (raw[i].triplet in triplets_response) {
+          triplets_response[raw[i].triplet] += (',' + current.Resp_Comb)
         } else {
-          triplets_response[raw[i].triplets] = current.Resp_Comb
+          triplets_response[raw[i].triplet] = current.Resp_Comb
         }
         
         output.push(current);
       }
       for (var k = 0; k < output.length; k++) {
         // output[k].Res_Comb = triplets_response[output[k].Triplets]
-        output[k].Prediction_Combo = this.pcomb(triplets_response[output[k].Triplets])
-        output[k].Betting_Combo = this.ccomb(triplets_response[output[k].Triplets])
-        output[k].Betting_Rationality = this.control_rat(output[k].C_Comb)
-        output[k].Betting_Probability = this.subject_prob(output[k].C_Comb)
+        output[k].Prediction_Combo = this.pcomb(triplets_response[output[k].Triplet])
+        output[k].Betting_Combo = this.ccomb(triplets_response[output[k].Triplet])
+        output[k].Betting_Rationality = this.control_rat(output[k].Betting_Combo)
+        output[k].Betting_Probability = this.subject_prob(output[k].Betting_Combo)
       }
       output.sort(this.blockOneSort);
       return output;
@@ -1563,7 +1560,7 @@ export default {
     },    
     pcomb(res_sequence) {
       if (res_sequence.length != 8) {
-        return "empty"
+        return "X"
       }
       var result = ""
       if (res_sequence[1] == 'O') {
@@ -1585,7 +1582,7 @@ export default {
     },
     ccomb(res_sequence) {
       if (res_sequence.length != 8) {
-        return "empty"
+        return "X"
       }
       var result = ""
       if (res_sequence[0] == 'A') {
@@ -1611,7 +1608,7 @@ export default {
       } else if (choices == "NNB" || choices == "NBN" || choices == "NBB" || choices == "BNB") {
         return 0
       } else {
-        return "N"
+        return "X"
       }
     },
     subject_prob(choices) {
