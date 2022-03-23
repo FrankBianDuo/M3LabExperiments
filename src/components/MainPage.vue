@@ -1742,15 +1742,16 @@ export default {
       console.log(this.participant_generated_id);
       for (i = 0; i < raw.length; i++) {
         var enctr_1_flipped = raw[i].enctr_1_reverse.toString();
-        console.log("enctr_1_flipped: " + enctr_1_flipped);
-        var enctr_2_flipped = raw[i].enctr_2_reverse.toString();
-        console.log("enctr_2_flipped: " + enctr_2_flipped);
-        console.log(enctr_1_flipped + enctr_2_flipped);
+        // console.log("enctr_1_flipped: " + enctr_1_flipped);
+        // var enctr_2_flipped = raw[i].enctr_2_reverse.toString();
+        // console.log("enctr_2_flipped: " + enctr_2_flipped);
+        // console.log(enctr_1_flipped + enctr_2_flipped);
         var current = {
           Participant_ID: this.participant_generated_id,
           Trial_Number: raw[i].trial_number,
           Label: raw[i].label,
-          Vertical_Position: "\"" + enctr_1_flipped + enctr_2_flipped + "\"",
+          // Vertical_Position: "\"" + enctr_1_flipped + enctr_2_flipped + "\"",
+          Vertical_Position: "\"" + enctr_1_flipped + "\"",
           Trial_order_segment: String(1 + Math.floor(i / 13)),
           Trial_order: raw[i].trial_order,
           Avatar_ID1: raw[i].avatar_id1,
