@@ -551,7 +551,7 @@ export default {
           a_c_present: "2",
           // 1 means flipped and 0 means not flipped
           enctr_1_reverse: Math.floor(Math.random() * 2),
-          enctr_2_reverse: Math.floor(Math.random() * 2),
+          // enctr_2_reverse: Math.floor(Math.random() * 2),
           enctr_1_type: this.trial_identifier(this.payoff_structure_data[i]["As1"], this.payoff_structure_data[i]["Ao1"], this.payoff_structure_data[i]["Bs1"], this.payoff_structure_data[i]["Bo1"]),
           enctr_2_type: this.trial_identifier(this.payoff_structure_data[i]["As2"], this.payoff_structure_data[i]["Ao2"], this.payoff_structure_data[i]["Bs2"], this.payoff_structure_data[i]["Bo2"]),
           vert_pos: null,
@@ -581,7 +581,7 @@ export default {
             new_comb.a_c_present = "3";
           }
         }
-        if (new_comb.enctr_2_reverse == 1) {
+        if (new_comb.enctr_1_reverse == 1) {
           var tempLeft, tempRight
           tempLeft = new_comb.As2
           tempRight = new_comb.Ao2
@@ -593,6 +593,18 @@ export default {
           let temp = new_comb.enctr_2_type[1] + new_comb.enctr_2_type[0];
           new_comb.enctr_2_type = temp;
         }
+        // if (new_comb.enctr_2_reverse == 1) {
+        //   var tempLeft, tempRight
+        //   tempLeft = new_comb.As2
+        //   tempRight = new_comb.Ao2
+        //   new_comb.As2 = new_comb.Bs2
+        //   new_comb.Ao2 = new_comb.Bo2
+        //   new_comb.Bs2 = tempLeft
+        //   new_comb.Bo2 = tempRight
+
+        //   let temp = new_comb.enctr_2_type[1] + new_comb.enctr_2_type[0];
+        //   new_comb.enctr_2_type = temp;
+        // }
         if (i >= 222) {
           new_comb.enctr_1_type = "CC"
         } else if (i >= 216) {
