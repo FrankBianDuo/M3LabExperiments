@@ -93,7 +93,7 @@ export default {
         }
       }
       if (wrong_questions.length == 0) {
-        this.$bvModal.show("modal-center");
+        this.$bvModal.show("modal-center-prediction-task");
       } else {
         this.$bvModal.show(
           "modal-center-instruction" + (Number(this.page_num) + 1).toString()

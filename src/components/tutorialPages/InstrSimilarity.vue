@@ -1,6 +1,6 @@
 <template>
   <b-modal
-    id="modal-center-SimInstr"
+    id="modal-center-similarity-task-instructions"
     size="xl"
     centered
     title="Instructions for similarity task"
@@ -17,10 +17,8 @@
   >
     <b-container class="align-bottom" :style="this.windowsize">
 
-      <img
-        :src="require('../../assets/Instructions/Text Only Pages/Similarity Instructions.png')"
-        style="width: 86%; height: auto; transform: translate(-50%, 0%); margin-left: 50%;"
-      />
+      <img :src="require('../../assets/Instructions/Text Only Pages/Similarity Instructions.png')"
+        style="width: 86%; height: auto; transform: translate(-50%, 0%); margin-left: 50%;" />
       <b-form>
 
         <b-form-group id="input-group-1" label="Dissimilar ---------------------------------------------------------------------------------------------------------------------------------------------------- Similar" label-for="input-1" style="transform: translate(0%, 24%);">
@@ -34,28 +32,19 @@
               max="1"
               step="0.01"
             ></b-form-input>
-            <!-- <b-input-group-append is-text class="text-monospace">
-              {{ form.sim_score.toFixed(2) }}
-            </b-input-group-append> -->
           </b-input-group>
         </b-form-group>
 
       </b-form>
     </b-container>
-    <!-- <b-button
-      @click="$bvModal.hide('modal-center-SimInstr')"
-      v-b-modal.modal-center
-      variant="outline-primary"
-      size="lg"
-    >Back</b-button> -->
-    <!-- <b-button style="float: right;" @click="$bvModal.hide('modal-center-SimInstr')" variant="success" size="lg" v-b-modal.modal-center-EndInstr>Next</b-button> -->
+
     <b-button
       style="float: right;"
       :disabled="this.wait"
-      @click="$bvModal.hide('modal-center-SimInstr')"
+      @click="$bvModal.hide('modal-center-similarity-task-instructions')"
       variant="success"
       size="lg"
-      v-b-modal.modal-center-3
+      v-b-modal.modal-center-similarity-task
     >Next</b-button>
   </b-modal>
 </template>
@@ -63,7 +52,7 @@
 
 <script>
 export default {
-  name: "SimInstr",
+  name: "similarity-task-instuctions",
   props: ["windowsize"],
   components: {},
   data() {

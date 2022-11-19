@@ -1,9 +1,9 @@
 <template>
   <!-- Here is the template section, where all the HTML code takes action -->
   <b-modal
-    id="modal-center-3"
+    id="modal-center-similarity-task"
     size="xl"
-    title="Experiment 3"
+    title="Similarity Task"
     v-model="show"
     :hide-footer="true"
     :header-bg-variant="headerBgVariant"
@@ -34,26 +34,53 @@
         class="justify-content-center align-items-center my-1"
         :style="this.primary_images_style">
         <img :src="require('../assets/Similarity/background.png')" :style="this.global_size" />
+
+        <!-- <img :src="require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+                this.combinations[this.current_avatar].avatar_idL, 4)}.png`)" :style="this.avatar_left_style"/>
+        <img :src="require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+            this.combinations[this.current_avatar].avatar_idR, 4)}.png`)" :style="this.avatar_rght_style"/> -->
+
         <img
           :src="
             require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.avatar_list[this.current_avatar], 4)}.png`)"
+              this.combinations[this.current_avatar].avatar_id1, 4)}.png`)"
           :style="this.avatar_1A_style" />
         <img
           :src="
             require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.avatar_list[this.current_avatar], 4)}.png`)"
+              this.combinations[this.current_avatar].avatar_id1, 4)}.png`)"
           :style="this.avatar_1B_style" />
         <img
           :src="
             require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.avatar_list_2[this.current_avatar], 4)}.png`)"
+              this.combinations[this.current_avatar].avatar_id2, 4)}.png`)"
           :style="this.avatar_2A_style" />
         <img
           :src="
             require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.avatar_list_2[this.current_avatar], 4)}.png`)"
+              this.combinations[this.current_avatar].avatar_id2, 4)}.png`)"
           :style="this.avatar_2B_style" />
+
+        <!-- <img
+          :src="
+            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.avatar_list1[this.current_avatar], 4)}.png`)"
+          :style="this.avatar_1A_style" />
+        <img
+          :src="
+            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.avatar_list1[this.current_avatar], 4)}.png`)"
+          :style="this.avatar_1B_style" />
+        <img
+          :src="
+            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.avatar_list2[this.current_avatar], 4)}.png`)"
+          :style="this.avatar_2A_style" />
+        <img
+          :src="
+            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.avatar_list2[this.current_avatar], 4)}.png`)"
+          :style="this.avatar_2B_style" /> -->
 
 
         <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_1A_style" />
@@ -154,9 +181,11 @@
 
 <script>
 // import payoff_structure from "./payoff6.json";
-import payoff_structure from "./payoff11.json";
+import payoff_structure from "./payoffSimilarity2.json";
+import usedavataridsbypred from "./Prediction.vue";
+import usedavataridsbymatch from "./Matching.vue";
 export default {
-  name: "BlockThree",
+  name: "similarity-task",
   props: ["participant_name"],
   components: {},
   data() {
@@ -212,15 +241,10 @@ export default {
 
       arrow_num: "1",
       avatar_num: "1",
-      // This generates an array from 0 to 323
-    //   avatar_list: this.shuffle(
-    //     Array(324)
-    //       .fill()
-    //       .map((x, i) => i)
-    //   ),
-
-      avatar_list: this.no_twins_hack(Array(324).fill().map((x, i) => i), Array(324).fill().map((x, i) => i))[0],
-      avatar_list_2: this.no_twins_hack(Array(324).fill().map((x, i) => i), Array(324).fill().map((x, i) => i))[1],
+      // avatar_list1: [],
+      // avatar_list2: [],
+      // avatar_list1: this.no_twins_hack(Array(324).fill().map((x, i) => i), Array(324).fill().map((x, i) => i))[0],
+      // avatar_list2: this.no_twins_hack(Array(324).fill().map((x, i) => i), Array(324).fill().map((x, i) => i))[1],
       current_avatar: 0,
       current_progress: 0,
       current_arrow: "Dot Boxes.png",
@@ -228,8 +252,8 @@ export default {
       prediction: null,
       form: {sim_score: ""},
       // max_avatar: 169,
-      max_avatar: 25,
-      // max_avatar: 3,     // Change this.  I'm just checking for transitioning between modals.
+      max_avatar: 81,
+      // max_avatar: 5,     // Change this.  I'm just checking for transitioning between modals.
       trial_started: 0,
       combinations: [],
       primedSpacebar1: true,
@@ -245,7 +269,7 @@ export default {
   },
   mounted() {
     this.$root.$on("bv::modal::show", (bvEvent, modalId) => {
-      if (modalId != "modal-center") {
+      if (modalId != "modal-center-similarity-task") {
         return;
       }
       // Close the tutorial modal (page_73), stop the instruction time period timer
@@ -340,8 +364,8 @@ export default {
       this.current_progress += 1;
       this.combinations[this.current_avatar].trust = input;
       this.combinations[this.current_avatar].trial_order = this.current_progress;
-      this.combinations[this.current_avatar].avatar_id1 = this.avatar_list[this.current_avatar];
-      this.combinations[this.current_avatar].avatar_id2 = this.avatar_list_2[this.current_avatar];
+      // this.combinations[this.current_avatar].avatar_id1 = this.avatar_list1[this.current_avatar];
+      // this.combinations[this.current_avatar].avatar_id2 = this.avatar_list2[this.current_avatar];
       setTimeout(function () {
         parent.current_avatar += 1;
       }, 400);
@@ -349,11 +373,11 @@ export default {
 
         parent.show_cur_num = false;
         // parent.current_avatar += 1;
-        parent.$emit("blockThreeDone", parent.combinations);
+        parent.$emit("similarityTaskDone", parent.combinations);
         if (parent.current_avatar == parent.max_avatar) {
         //   parent.$bvModal.hide("modal-center");
-          parent.$bvModal.hide("modal-center-3");
-          alert("Experiment #3 finished");
+          parent.$bvModal.hide("modal-center-similarity-task");
+          alert("Similarity task finished!");
           // FIXME: connect this to the survey pages
           // parent.b_show_1 = false;
         //   parent.$bvModal.show("modal-center-FR1");  //This takes the participant to the written response section.
@@ -375,7 +399,7 @@ export default {
     },
     hide_tutorial() {
         // this.$bvModal.hide("modal-center");
-        this.$bvModal.hide("modal-center-SimInstr");
+        this.$bvModal.hide("modal-center-similarity-task-instructions");
     //   this.$bvModal.hide("modal-center-instruction73");
     },
     showModal() {
@@ -457,55 +481,30 @@ export default {
       return array;
     },
 
-    no_twins(array1, array2) {
-        // "Returns two shuffeled lists with no twins."
-        // "Twins are two values with the same index in"
-        // "both lists.  This prevents identical avatars."
-        var shuffle_lst_1 = this.shuffle(array1);
-        var shuffle_lst_2 = this.shuffle(array2);
-        var twins_idxs = [];
-        var twins_vals = [];
-        for (i = 0; i < shuffle_lst_1.length; i++) {
-            var val1 = shuffle_lst_1[i];
-            var val2 = shuffle_lst_2[i];
-            if (val1 == val2) {
-                twins_idxs.push(i);
-                twins_vals.push(val1);}}
-        while (twins_vals.length > 0) {
-            if (twins_vals.length % 2 == 1) {
-                var count = 0;
-                while (twins_idxs.includes(count)) {count += 1}
-                shuffle_lst_2[twins_idxs[0]] = shuffle_lst_2[count];
-                shuffle_lst_2[count] = twins_idxs[0];
-                twins_idxs.shift();
-                twins_vals.shift();
-            } else {
-                shuffle_lst_2[twins_idxs[0]] = twins_vals[1];
-                shuffle_lst_2[twins_idxs[1]] = twins_vals[0];
-                twins_idxs.shift();
-                twins_vals.shift();
-                twins_idxs.shift();
-                twins_vals.shift();}}
-        for (i = 0; i < shuffle_lst_1.length; i++) {
-            if (shuffle_lst_1[i] == shuffle_lst_2[i]) {
-                console.log(shuffle_lst_1[i]);
-                console.log(shuffle_lst_2[i]);
-            } else {
-                console.log("We're good!");}}
-        return [shuffle_lst_1, shuffle_lst_2];},
+    // no_twins(array) {
+    //   `Returns two shuffeled lists with no twins.
+    //   Twins are two values with the same index in
+    //   both lists.  This prevents identical avatars.`
+    //   var array_ = this.shuffle(array);
+    //   var evens_lst = array_.filter(number => number % 2 == 0);
+    //   var oddss_lst = array_.filter(number => number % 2 == 1);
+    //   var shuffled1 = evens_lst.concat(oddss_lst);
+    //   var shuffled2 = oddss_lst.concat(evens_lst);
+    //   return [shuffled1, shuffled2];},   
 
-    no_twins_hack(array1, array2) {
-        // no_twins() is a better version of this function but I can't get it to work.
-        // I've tested the logic in Python and an online compiler but there is still
-        // something I don't get about coding in Vuejs.  This assumes that the number
-        // of trials is less than half of the number of avatars.
-        var evens_lst = array1.filter(number => number % 2 == 0);
-        var oddss_lst = array2.filter(number => number % 2 == 1);
-        var shuffle_lst_1a = this.shuffle(evens_lst);
-        var shuffle_lst_2a = this.shuffle(oddss_lst);
-        var shuffle_lst_1b = shuffle_lst_1a.concat(shuffle_lst_2a);
-        var shuffle_lst_2b = shuffle_lst_2a.concat(shuffle_lst_1a);
-        return [shuffle_lst_1b, shuffle_lst_2b];},
+    no_twins(array) {
+      `Returns two shuffeled lists with no twins.
+      Twins are two values with the same index in
+      both lists.  This prevents identical avatars.
+      Notice that this function is the mirror oppo
+      site of no_twins() in Matching.vue.  This
+      prevents twins between the tasks.`
+      var yarra = array.reverse()
+      var oddnumbers = array.filter(number => number % 2 == 1)
+      var srebmunddo = yarra.filter(number => number % 2 == 1)
+      oddnumbers = this.shuffle(oddnumbers)
+      srebmunddo = this.shuffle(srebmunddo)
+      return [oddnumbers, srebmunddo]},   
   
 
     // Helper function for vertical positioning balance
@@ -526,6 +525,26 @@ export default {
     buildCombinations() {
       var i = 0
       var trials = []
+
+      var illegal_avatars = Array(324).fill().map((x, 
+        i) => i).filter(number => {return number % 9 === 0;})
+      var avatarids = Array(324).fill().map((x, i) => i)
+      for (i = 0; i < 324; i++) {
+        "Ensuring that each task uses different avatars."
+        let illegal_idx = avatarids.indexOf(illegal_avatars[i])
+        if (illegal_idx > -1) {avatarids.splice(illegal_idx, 1)}
+      }
+      avatarids = this.no_twins(avatarids)
+
+      // var illegal_avatars = usedavataridsbymatch.concat(usedavataridsbypred)
+      // var avatarids = this.shuffle(Array(324).fill().map((x, i) => i))
+      // for (i = 0; i < 324; i++) {
+      //     "Removing avatars I want to use later in the experiment."
+      //     let illegal_idx = avatarids.indexOf(illegal_avatars[i])
+      //     if (illegal_idx > -1) {avatarids.splice(illegal_idx, 1)}
+      // }
+      // avatarids = this.no_twins(avatarids)
+      // var usedavataridsbysimil = avatarids.slice(0, this.max_avatar + 1)
       for (i = 0; i < this.max_avatar; i++) {
         var new_comb = {
           label: this.payoff_structure_data[i]["Label"],
@@ -562,8 +581,10 @@ export default {
           reaction_time_prediction: null,
           trial_order: null,
           trial_number: String(i + 1),
-          avatar_id1: null,
-          avatar_id2: null,
+          // avatar_id1: null,
+          // avatar_id2: null,
+          avatar_id1: avatarids[0][i],
+          avatar_id2: avatarids[1][i],
         }
         if (new_comb.enctr_1_reverse == 1) {
           var tempLeft, tempRight
@@ -593,18 +614,8 @@ export default {
           let temp = new_comb.enctr_2_type[1] + new_comb.enctr_2_type[0];
           new_comb.enctr_2_type = temp;
         }
-        // if (new_comb.enctr_2_reverse == 1) {
-        //   var tempLeft, tempRight
-        //   tempLeft = new_comb.As2
-        //   tempRight = new_comb.Ao2
-        //   new_comb.As2 = new_comb.Bs2
-        //   new_comb.Ao2 = new_comb.Bo2
-        //   new_comb.Bs2 = tempLeft
-        //   new_comb.Bo2 = tempRight
 
-        //   let temp = new_comb.enctr_2_type[1] + new_comb.enctr_2_type[0];
-        //   new_comb.enctr_2_type = temp;
-        // }
+
         if (i >= 222) {
           new_comb.enctr_1_type = "CC"
         } else if (i >= 216) {

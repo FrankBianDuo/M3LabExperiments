@@ -14,7 +14,7 @@
       <div style="text-align: center;">
         <!-- Text -->
         <img
-          :src="require('../../assets/Instructions/Instr01_Intro/meetpeeps.png')"
+          :src="require('../../assets/Instructions/Instr01_Intro/meetpeeps_v1.png')"
           v-bind:style="{ opacity: this.opacity_meetpeeps, transition: 'opacity 1.6s', maxWidth: '68%', height: 'auto', marginTop: '13.5%', transform: 'translate(-50%, 0)', position: 'absolute', }"
         />
 
@@ -32,11 +32,11 @@
           v-bind:style="{ opacity: this.opacity_text_behavior, transition: 'opacity 0.8s', maxWidth: '75%', height: 'auto', marginTop: '0%', transform: 'translate(-50%, 0)', position: 'absolute', }"
         />
         <img
-          :src="require('../../assets/Instructions/Instr01_Intro/Intro_text04_avatars.png')"
+          :src="require('../../assets/Instructions/Instr01_Intro/Intro_text04_avatars_v1.png')"
           v-bind:style="{ opacity: this.opacity_text_avatars, transition: 'opacity 0.8s', maxWidth: '75%', height: 'auto', marginTop: '0%', transform: 'translate(-50%, 0)', position: 'absolute', }"
         />
         <img
-          :src="require('../../assets/Instructions/Instr01_Intro/Intro_text05_watch.png')"
+          :src="require('../../assets/Instructions/Instr01_Intro/Intro_text05_watch_v1.png')"
           v-bind:style="{ opacity: this.opacity_text_watch, transition: 'opacity 0.8s', maxWidth: '75%', height: 'auto', marginTop: '0%', transform: 'translate(-50%, 0)', position: 'absolute', }"
         />
       </div>

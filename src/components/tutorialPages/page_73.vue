@@ -104,7 +104,7 @@ export default {
       console.log("to block1");
       // eslint-disable-next-line no-console
       console.log("modal-center-instruction" + this.page_num);
-      this.$bvModal.show("modal-center");                   // This takes the participant from the instructions to Experiment 1
+      this.$bvModal.show("modal-center-prediction-task");                   // This takes the participant from the instructions to Experiment 1
       // this.$bvModal.show("modal-center-3");                    // This takes the participant from the instructions to Experiment 3
     },
     reveal_False() {
