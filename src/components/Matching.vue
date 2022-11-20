@@ -170,7 +170,7 @@
         let remd_style = "position: absolute; max-width: 46%; max-height: auto; left: 26.8%; top: 80%;"
         window.addEventListener("keydown", function (event) {
             "speedup artificially speeds up experiment for efficient testing."
-            let speedup = 0.4;
+            let speedup = 1;
             if (parent.show) {
                 if (event.keyCode == 32 && parent.primedSpacebar) {
                     var d1 = new Date();

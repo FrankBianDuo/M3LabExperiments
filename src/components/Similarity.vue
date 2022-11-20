@@ -174,7 +174,7 @@
     </b-container>
     <b-modal ref="my-modal" hide-footer title="Rest Break">
       <h3 align="center">0{{ this.rb_min }}:{{ this.rb_seczero }}{{ this.rb_sec }}</h3>
-      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Back to Experiment</b-button>
+      <b-button class="mt-3" variant="outline-danger" block @click="hideRestBreak">Back to Experiment</b-button>
     </b-modal>
   </b-modal>
 </template>
@@ -341,7 +341,7 @@ export default {
                 parent.avatar_2B_style = "position: absolute; max-width: 8.5%; max-height: auto; left: 63.6%; top: 9.0%; opacity: 100%; transition: opacity 0.25s;";                
                 parent.primedSpacebar1 = true;
                 parent.resetSlider();
-            }, 1200); 
+            }, 1400); 
         } 
       }
     });
@@ -370,46 +370,28 @@ export default {
         parent.current_avatar += 1;
       }, 400);
       setTimeout(function () {
-
         parent.show_cur_num = false;
-        // parent.current_avatar += 1;
         parent.$emit("similarityTaskDone", parent.combinations);
         if (parent.current_avatar == parent.max_avatar) {
-        //   parent.$bvModal.hide("modal-center");
           parent.$bvModal.hide("modal-center-similarity-task");
           alert("Similarity task finished!");
-          // FIXME: connect this to the survey pages
-          // parent.b_show_1 = false;
-        //   parent.$bvModal.show("modal-center-FR1");  //This takes the participant to the written response section.
-          parent.$bvModal.show("modal-center-survey1"); //This takes the participant to the survey section.
+          parent.$bvModal.show("modal-center-survey1");
         }
-        if (
-          parent.current_avatar == 12 ||
-          parent.current_avatar == 24 ||
-          parent.current_avatar == 36 ||
-          parent.current_avatar == 48 ||
-          parent.current_avatar == 162
-        ) {
-          parent.showModal();
-          parent.countDown();
-          // 1000 = 1s
+        if (parent.current_avatar % 12 == 0 && parent.current_avatar < parent.max_avatar) {
+          parent.showRestBreakModal();
+          parent.countDownRestBreak();
         }
         parent.show_prior = 1;
       }, 750);
     },
-    hide_tutorial() {
-        // this.$bvModal.hide("modal-center");
-        this.$bvModal.hide("modal-center-similarity-task-instructions");
-    //   this.$bvModal.hide("modal-center-instruction73");
-    },
-    showModal() {
-      if (this.rb_sec < 10) {
-        this.rb_seczero = "0";
-      }
+    hide_tutorial() {this.$bvModal.hide("modal-center-similarity-task-instructions");},
+
+    showRestBreakModal() {
+      if (this.rb_sec < 10) {this.rb_seczero = "0";}
       this.rb_shown = true;
       this.$refs["my-modal"].show();
     },
-    hideModal() {
+    hideRestBreak() {
       this.rb_shown = false;
       this.rb_min = 0;
       this.rb_sec = 15;
@@ -432,7 +414,7 @@ export default {
     },
 
     // Helper function for rest break count downs
-    countDown() {
+    countDownRestBreak() {
       let parent = this;
       if (this.rb_shown == false) {
         parent.rb_sec = 15;
@@ -448,7 +430,7 @@ export default {
           parent.rb_seczero = "";
         }
         if (parent.rb_min == 0 && parent.rb_sec == 0) {
-          parent.hideModal();
+          parent.hideRestBreak();
           parent.rb_sec = 15;
           parent.rb_min = 0;
           parent.rb_seczero = "";
@@ -458,7 +440,7 @@ export default {
           parent.rb_min -= 1;
           return;
         }
-        parent.countDown();
+        parent.countDownRestBreak();
       }, 1000);
     },
 

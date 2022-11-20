@@ -57,7 +57,7 @@
       @click="$bvModal.hide('modal-center-BotStopper')"
       variant="outline-primary"
       size="lg"
-      v-b-modal.modal-center-Consent
+      v-b-modal.modal-center-Consent-page-1
     >Next</b-button>
   </b-modal>
 </template>
