@@ -6,7 +6,7 @@
       (1) Complete the instructions, (2) prediction task, (3) matching task, (4) similarity task and (4) the survey.  Ignore the 
       <br />Written response section.  Your data will automatically be sent to our server once you see the completion URL.  If you   
       <br />never see the URL, then click 'Send Data', download your data files, and save them.  Do not email them to me directly.   
-      <br />I will work with Subject Pool to find an anonymous way to get them.  If you see the completion URL, then send it to me at  
+      <br />Email your three data files to subject pool at subject.pool@umich.edu.  If you see the URL, then email it to me at  
       <br />gregstan@umich.edu with your participant ID, shown below.  Feel free to email me questions.  NEVER refresh the page!
     </p>
     <div class="bv-example-row bv-example-row-flex-cols">
@@ -192,7 +192,7 @@
       id="modal-center-end"
       size="xl"
       centered
-      title="Loading your end of experiment URL.  If the url fails to load within 20 seconds, screenshot this page and email it as an attachment to gregstan@umich.edu to demonstrate that you completed the experiment.  If you would like to view your data files, click the grey area of this screen, and click the Download Data buttons beside each task."
+      title="Loading your end of experiment URL.  If the url fails to load within 20 seconds, screenshot this page and email it as an attachment to gregstan@umich.edu to demonstrate that you completed the experiment. Please download your three data files and email to subject pool at subject.pool@umich.edu. If you would like to view your data files, click the grey area of this screen, and click the Download Data buttons beside each task."
       :hide-footer="true"
       :header-bg-variant="headerBgVariant"
       :header-text-variant="headerTextVariant"
