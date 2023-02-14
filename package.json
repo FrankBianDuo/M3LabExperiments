@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "test": "jest"
+    "test": "jest",
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap"
   },
   "dependencies": {
     "aws-sdk": "^2.699.0",
@@ -49,6 +50,10 @@
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-bootstrap-vue": "^0.4.0",
     "vue-template-compiler": "^2.6.11"
+  },
+  "engines": {
+    "node": "12.x",
+    "npm": "6.x"
   },
   "eslintConfig": {
     "root": true,
