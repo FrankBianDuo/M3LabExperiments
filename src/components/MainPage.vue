@@ -412,6 +412,7 @@ export default {
       aws_presigned_lambda:  `https://fathomless-coast-21413.herokuapp.com/https://ao9o9jz806.execute-api.us-east-2.amazonaws.com/gets3presigned?BucketName=`,
       aws_s3_post_url: `https://fathomless-coast-21413.herokuapp.com/https://experimentdata2020.s3.amazonaws.com`,
       aws_s3_post_url2: `https://fathomless-coast-21413.herokuapp.com/https://moralitygameexperiment.s3.amazonaws.com`,
+      herokuappurl: 'https://judgmentgame.herokuapp.com',
       // Variables for tracking how much time is spent on instructions
       instrucStart: 0,
       instrucEnd: 0,

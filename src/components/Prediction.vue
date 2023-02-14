@@ -54,7 +54,7 @@
         <img :style="this.global_size" :src="require(`../assets/Dots/E2 DB${this.combinations[this.current_avatar].temp_Bs2}.png`)"/>
         <img :style="this.global_size" :src="require(`../assets/Dots/E2 DP${this.combinations[this.current_avatar].temp_Bo2}.png`)"/>
         <img :src="require('../assets/Centered Atoms/E2 Box.png')" :style="this.global_size" />
-        <img :src="require(`../assets/Feedback Trust.png`)"        :style="this.betfback_style" />
+        <!-- <img :src="require(`../assets/Feedback Trust.png`)"        :style="this.betfback_style" /> -->
 
         <img :src="require(`../assets/Avatars/Blind Avatars/avb${this.pad(
               this.combinations[this.current_avatar].avatar_id, 4)}.png`)"    :style="this.avatar_2"/>

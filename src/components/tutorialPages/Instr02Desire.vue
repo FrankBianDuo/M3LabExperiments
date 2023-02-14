@@ -19,10 +19,10 @@
     <b-container class="bv-example-row" :style="this.windowsize">
       <!-- We need to move the text upwards so that the window shrinks to normal size. -->
       <b-row class="mt-3">
-        <img :src="require('../../assets/tutorials/DotAreGood.png')" style="width: 20%; height: 20%; transform: translate(-50%, 0); margin-left: 50%; padding-bottom: 2%;">
+        <img :src="require('../../assets/Instructions/Instr02_Desire/DotAreGood.png')" style="width: 20%; height: 20%; transform: translate(-50%, 0); margin-left: 50%; padding-bottom: 2%;">
         <!-- Container -->
         <img
-          :src="require('../../assets/Instructions/Want More Dots/Dot Holder Six Correct Numbers.png')"
+          :src="require('../../assets/Instructions/Instr02_Desire/Dot Holder Six Correct Numbers.png')"
           style="width: 40%; height: 40%; transform: translate(-50%, 0); margin-left: 50%;"
         />
       </b-row>
@@ -30,40 +30,40 @@
         <div>
           <img
             @click="this.animate"
-            :src="require('../../assets/Instructions/Want More Dots/Want More/Want Av Sight 01.png')"
+            :src="require('../../assets/Instructions/Instr02_Desire/Want Av Sight 01.png')"
             v-bind:style="{ position: 'absolute', maxWidth: '8%', height: 'auto', marginTop: '8.85%', opacity: this.show_avatar, transition: 'margin-left 0.5s', marginLeft: this.shift_right1,}"
           />
           <img
-            :src="require('../../assets/Instructions/Want More Dots/Want More/Want Av Sight 02.png')"
+            :src="require('../../assets/Instructions/Instr02_Desire/Want Av Sight 02.png')"
             v-bind:style="{ position: 'absolute', maxWidth: '8%', height: 'auto', marginTop: '26.3%',  marginLeft: this.shift_left, transition: 'margin-left 0.5s',}"
           />
           <img
-            :src="require('../../assets/Instructions/Want More Dots/Want More/Want Av Sight 03.png')"
+            :src="require('../../assets/Instructions/Instr02_Desire/Want Av Sight 03.png')"
             v-bind:style="{ position: 'absolute', maxWidth: '8%', height: 'auto', marginTop: '43.7%',  marginLeft: this.shift_right2, transition: 'margin-left 0.5s',}"
           />
           <img
-            :src="require('../../assets/Instructions/Want More Dots/Want More/Want Smile Sm.png')"
+            :src="require('../../assets/Instructions/Instr02_Desire/Want Smile Sm.png')"
             v-bind:style="{ position: 'absolute', maxWidth: '8%', height: 'auto', marginTop: '8.85%',  marginLeft: this.end_right, transition: 'opacity 0.5s', opacity: this.frown_opacity_1,}"
           />
           <img
-            :src="require('../../assets/Instructions/Want More Dots/Want More/Want Smile Sm.png')"
+            :src="require('../../assets/Instructions/Instr02_Desire/Want Smile Sm.png')"
             v-bind:style="{ position: 'absolute', maxWidth: '8%', height: 'auto', marginTop: '26.3%',  marginLeft: this.end_left, transition: 'opacity 0.5s', opacity: this.frown_opacity_2}"
           />
           <img
-            :src="require('../../assets/Instructions/Want More Dots/Want More/Want Smile Big.png')"
+            :src="require('../../assets/Instructions/Instr02_Desire/Want Smile Big.png')"
             v-bind:style="{ position: 'absolute', maxWidth: '8%', height: 'auto', marginTop: '43.66%',  marginLeft: this.end_right, transition: 'opacity 0.5s', opacity: this.frown_opacity_3}"
           />
           <!-- These eyes flip and occlude the avatars normal eyes -->
           <img
-            :src="require('../../assets/Instructions/Want More Dots/Want More/Eyes 90.png')"
+            :src="require('../../assets/Instructions/Instr02_Desire/Eyes 90.png')"
             v-bind:style="{ position: 'absolute', maxWidth: '8%', height: 'auto', marginTop: '8.85%', opacity: this.show_avatar, transition: 'margin-left 0.5s', marginLeft: this.shift_right1, transform: this.trans_1  }"
           />
           <img
-            :src="require('../../assets/Instructions/Want More Dots/Want More/Eyes 180.png')"
+            :src="require('../../assets/Instructions/Instr02_Desire/Eyes 180.png')"
             v-bind:style="{ position: 'absolute', maxWidth: '8%', height: 'auto', marginTop: '26.3%',  marginLeft: this.shift_left, transition: 'margin-left 0.5s', transform: this.trans_2  }"
           />
           <img
-            :src="require('../../assets/Instructions/Want More Dots/Want More/Eyes 90.png')"
+            :src="require('../../assets/Instructions/Instr02_Desire/Eyes 90.png')"
             v-bind:style="{ position: 'absolute', maxWidth: '8%', height: 'auto', marginTop: '43.7%',  marginLeft: this.shift_right2, transform: this.trans_3, transition: 'margin-left 0.5s',}"
           />
         </div>

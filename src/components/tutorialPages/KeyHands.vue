@@ -17,7 +17,7 @@
   >
     <b-container class="align-bottom" :style="this.windowsize">
       <img
-        :src="require('../../assets/Instructions/Machines/keyhands2.png')"
+        :src="require('../../assets/Instructions/Text Only Pages/keyhands2.png')"
         v-bind:style="{ maxWidth: '56%', height: 'auto', marginTop: '0%', marginLeft: '50%', transform: 'translate(-50%, 0)', position: 'absolute', opacity: this.opacity_2, transition: 'opacity 0.4s' }"
       />
     </b-container>
