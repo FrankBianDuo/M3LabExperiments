@@ -36,12 +36,16 @@
             <img :src="require(`../assets/2AFC/feedbackA.png`)"    :style="this.feedbackA_style"/>
             <img :src="require(`../assets/2AFC/feedbackD.png`)"    :style="this.feedbackD_style"/>
 
-            <img :src="require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+            <img :src="require(`../assets/Avatars/Sighted Avatars/av${this.pad(
+                this.combinations[this.current_avatar].avatar_idL, 3)}.png`)" :style="this.avatar_left_style"/>
+            <img :src="require(`../assets/Avatars/Sighted Avatars/av${this.pad(
+                this.combinations[this.current_avatar].avatar_idR, 3)}.png`)" :style="this.avatar_rght_style"/>
+            <!-- <img :src="require(`../assets/Avatars/Blind Avatars/avb${this.pad(
                 this.combinations[this.current_avatar].avatar_idL, 4)}.png`)" :style="this.avatar_left_style"/>
             <img :src="require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-                this.combinations[this.current_avatar].avatar_idR, 4)}.png`)" :style="this.avatar_rght_style"/>
-            <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)"  :style="this.avatar_left_style"/>
-            <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)"  :style="this.avatar_rght_style"/>
+                this.combinations[this.current_avatar].avatar_idR, 4)}.png`)" :style="this.avatar_rght_style"/> -->
+            <!-- <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)"  :style="this.avatar_left_style"/>
+            <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)"  :style="this.avatar_rght_style"/> -->
     
             <img :src="require(`../assets/2AFC/dots/dots_ltb${this.combinations[
                 this.current_avatar].temp_leftAs}.png`)" :style="this.dots_main_style"/>

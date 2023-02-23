@@ -42,23 +42,23 @@
 
         <img
           :src="
-            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.combinations[this.current_avatar].avatar_id1, 4)}.png`)"
+            require(`../assets/Avatars/Sighted Avatars/av${this.pad(
+              this.combinations[this.current_avatar].avatar_id1, 3)}.png`)"
           :style="this.avatar_1A_style" />
         <img
           :src="
-            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.combinations[this.current_avatar].avatar_id1, 4)}.png`)"
+            require(`../assets/Avatars/Sighted Avatars/av${this.pad(
+              this.combinations[this.current_avatar].avatar_id1, 3)}.png`)"
           :style="this.avatar_1B_style" />
         <img
           :src="
-            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.combinations[this.current_avatar].avatar_id2, 4)}.png`)"
+            require(`../assets/Avatars/Sighted Avatars/av${this.pad(
+              this.combinations[this.current_avatar].avatar_id2, 3)}.png`)"
           :style="this.avatar_2A_style" />
         <img
           :src="
-            require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.combinations[this.current_avatar].avatar_id2, 4)}.png`)"
+            require(`../assets/Avatars/Sighted Avatars/av${this.pad(
+              this.combinations[this.current_avatar].avatar_id2, 3)}.png`)"
           :style="this.avatar_2B_style" />
 
         <!-- <img
@@ -83,10 +83,10 @@
           :style="this.avatar_2B_style" /> -->
 
 
-        <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_1A_style" />
+        <!-- <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_1A_style" />
         <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_1B_style" />
         <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_2A_style" />
-        <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_2B_style" />
+        <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)" :style="this.avatar_2B_style" /> -->
 
         <img :src="require('../assets/Similarity/you_lf.png')" :style="this.global_size" />
         <img :src="require('../assets/Similarity/you_rt.png')" :style="this.global_size" />

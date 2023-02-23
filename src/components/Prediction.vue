@@ -37,9 +37,11 @@
         <img :style="this.gstyle_room1" :src="require(`../assets/Dots/E1 DP${this.combinations[this.current_avatar].temp_Bo1}.png`)"/>
         <img :src="require('../assets/Centered Atoms/E1 Box.png')" :style="this.global_size" />
 
-        <img :src="require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-          this.combinations[this.current_avatar].avatar_id, 4)}.png`)"             :style="this.avatar_1"/>
-        <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)"         :style="this.avatar_1" />
+        <!-- <img :src="require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+          this.combinations[this.current_avatar].avatar_id, 4)}.png`)"             :style="this.avatar_1"/> -->
+        <img :src="require(`../assets/Avatars/Sighted Avatars/av${this.pad(
+          this.combinations[this.current_avatar].avatar_id, 3)}.png`)"             :style="this.avatar_1"/>
+        <!-- <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)"         :style="this.avatar_1" /> -->
         <img :src="require(`../assets/Centered Atoms/E1 Dot Box Black.png`)"     :style="this.arrow_style_one"/>
         <img :src="require(`../assets/Centered Atoms/E1 Dot Box Choice Up.png`)" :style="this.chooseup_style"/>
         <img :src="require(`../assets/Centered Atoms/E1 Dot Box Choice Dn.png`)" :style="this.choosedn_style"/>
@@ -56,9 +58,11 @@
         <img :src="require('../assets/Centered Atoms/E2 Box.png')" :style="this.global_size" />
         <!-- <img :src="require(`../assets/Feedback Trust.png`)"        :style="this.betfback_style" /> -->
 
-        <img :src="require(`../assets/Avatars/Blind Avatars/avb${this.pad(
-              this.combinations[this.current_avatar].avatar_id, 4)}.png`)"    :style="this.avatar_2"/>
-        <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)"    :style="this.avatar_2" />
+        <img :src="require(`../assets/Avatars/Sighted Avatars/av${this.pad(
+              this.combinations[this.current_avatar].avatar_id, 3)}.png`)"    :style="this.avatar_2"/>
+        <!-- <img :src="require(`../assets/Avatars/Blind Avatars/avb${this.pad(
+              this.combinations[this.current_avatar].avatar_id, 4)}.png`)"    :style="this.avatar_2"/> -->
+        <!-- <img :src="require(`../assets/Avatars/Avatar Eyes/Eyes 90.png`)"    :style="this.avatar_2" /> -->
         <img :src="require(`../assets/Centered Atoms/E2 Dot Boxes.png`)"    :style="this.global_size"/>
         <img :src="require(`../assets/Centered Atoms/Faded Arrows.png`)"    :style="this.global_size" />
         <img :src="require(`../assets/Centered Atoms/Keep Control Box Black.png`)" :style="this.gstyle_bet_arrows"/>
