@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1322.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "axois": "0.0.1-security",
     "boostrap": "^2.0.0",
     "bootstrap": "^4.3.1",
