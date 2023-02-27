@@ -9,7 +9,7 @@
     "test:unit": "vue-cli-service test:unit",
     "test": "jest",
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap",
-    "start": "cd dist && python3 -m http.server 80"
+    "start": "python3 -m http.server"
   },
   "dependencies": {
     "aws-sdk": "^2.1322.0",
