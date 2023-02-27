@@ -9,7 +9,7 @@
     "test:unit": "vue-cli-service test:unit",
     "test": "jest",
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap",
-    "start": "npm run build && cd dist && python3 -m http.server $PORT"
+    "start": "vue-cli-service serve --port 80"
   },
   "dependencies": {
     "aws-sdk": "^2.1322.0",
