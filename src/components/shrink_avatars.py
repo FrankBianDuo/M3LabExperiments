@@ -2,7 +2,7 @@ import os
 from PIL import Image
 
 path = r"../assets/Avatars/Sighted Avatars"
-# path = "C:\cygwin64\home\Gregory Stanley\playground\M3LabExperiments\src\\assets\Avatars\Sighted Avatars"
+
 for filename in os.listdir(path):
     image = Image.open(os.path.join(path, filename))
     # reduce the image dimensions
