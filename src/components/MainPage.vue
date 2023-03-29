@@ -7,7 +7,7 @@
       <br />Written response section.  Your data will automatically be sent to our server once you see the completion URL.  If you   
       <br />never see the URL, then click 'Send Data', download your data files, and save them.  Do not email them to me directly.   
       <br />Email your three data files to subject pool at subject.pool@umich.edu.  If you see the URL, then email it to me at  
-      <br />gregstan@umich.edu with your participant ID, shown below.  Feel free to email me questions.  NEVER refresh the page!
+      <br />gregstan@umich.edu with your participant ID, shown below.  Feel free to email me questions.  NEVER refresh the page!!!
     </p>
     <div class="bv-example-row bv-example-row-flex-cols">
       <!-- Button for firing the instruction modal -->
