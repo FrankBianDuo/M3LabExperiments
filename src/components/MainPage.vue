@@ -406,15 +406,17 @@ export default {
       ans_tutorial: {},
       parsed_answers: "",
       parsed_wrong_ans: "",
-      aws_bucket_name: "experimentdata2020",
+      // aws_bucket_name: "experimentdata2020",
       aws_bucket_name2: "moralitygameexperiment",
       // serverlessrepo-s3-presigned-url-s3presignedurl-EF2SRE90YXDY?BucketName="experimentdata2020"&ObjectName="test10.txt"&ExpiredIn=3600
-      aws_presigned_lambda:  `https://fathomless-coast-21413.herokuapp.com/https://ao9o9jz806.execute-api.us-east-2.amazonaws.com/gets3presigned?BucketName=`,
-      aws_s3_post_url: `https://fathomless-coast-21413.herokuapp.com/https://experimentdata2020.s3.amazonaws.com`,
+      // aws_presigned_lambda:  `https://fathomless-coast-21413.herokuapp.com/https://ao9o9jz806.execute-api.us-east-2.amazonaws.com/gets3presigned?BucketName=`,
+      aws_presigned_lambda:  `https://judgmentgame.herokuapp.com/https://ao9o9jz806.execute-api.us-east-2.amazonaws.com/gets3presigned?BucketName=`,
+      // aws_s3_post_url: `https://fathomless-coast-21413.herokuapp.com/https://experimentdata2020.s3.amazonaws.com`,
       // aws_s3_post_url2: `https://fathomless-coast-21413.herokuapp.com/https://moralitygameexperiment.s3.amazonaws.com`,
       aws_s3_post_url2: `https://judgmentgame.herokuapp.com/https://moralitygameexperiment.s3.amazonaws.com`,
       herokuappurl: 'https://judgmentgame.herokuapp.com',
       // Variables for tracking how much time is spent on instructions
+
       instrucStart: 0,
       instrucEnd: 0,
       instrucTime: 0,
@@ -488,7 +490,8 @@ export default {
         "Origin": "https://m3labexperiment.com",
       }).then((response) => {
         console.log(response.data);
-        Vue.axios.put("https://fathomless-coast-21413.herokuapp.com/" + response.data, this.$papa.unparse(this.predictionTaskResults));
+        // Vue.axios.put("https://fathomless-coast-21413.herokuapp.com/" + response.data, this.$papa.unparse(this.predictionTaskResults));
+        Vue.axios.put(this.herokuappurl + response.data, this.$papa.unparse(this.predictionTaskResults));
         // parent.data_sent_to_s3 = true;
       });
       //Same thing for Experiment 2.
@@ -502,7 +505,8 @@ export default {
         "Origin": "https://m3labexperiment.com",
       }).then((response) => {
         console.log(response.data);
-        Vue.axios.put("https://fathomless-coast-21413.herokuapp.com/" + response.data, this.$papa.unparse(this.matchingTaskResults));
+        // Vue.axios.put("https://fathomless-coast-21413.herokuapp.com/" + response.data, this.$papa.unparse(this.matchingTaskResults));
+        Vue.axios.put(this.herokuappurl + response.data, this.$papa.unparse(this.matchingTaskResults));
         // parent.data_sent_to_s3 = true;
       });    
       //Same thing for Experiment 3.
@@ -516,7 +520,8 @@ export default {
         "Origin": "https://m3labexperiment.com",
       }).then((response) => {
         console.log(response.data);
-        Vue.axios.put("https://fathomless-coast-21413.herokuapp.com/" + response.data, this.$papa.unparse(this.similarityTaskResults));
+        // Vue.axios.put("https://fathomless-coast-21413.herokuapp.com/" + response.data, this.$papa.unparse(this.similarityTaskResults));
+        Vue.axios.put(this.herokuappurl + response.data, this.$papa.unparse(this.similarityTaskResults));
         parent.data_sent_to_s3 = true;
       });      
     },
